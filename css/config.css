@@ -1,0 +1,57 @@
+@import "reset.css";
+
+#app {
+    height: 496px;
+    width: 954px;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+
+    /* background-image: url(/img/background.jpg); */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+.border {
+    border: 1px ridge #ff0000;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.column {
+    flex: 1 1 400px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+}
+
+.setup {
+/*     flex: auto; */
+    height: 40px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+.color, .role {
+    width: 60px;
+}
+.key {
+    -webkit-flex-grow: 1; 
+    flex-grow: 1;
+}
+.value {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-flex-grow: 0; 
+    flex-grow: 0;
+}
+
