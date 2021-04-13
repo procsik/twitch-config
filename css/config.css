@@ -39,7 +39,7 @@
     -webkit-flex-direction: row;
 }
 
-.color, .role {
+.color, .role, .motiv {
     width: 60px;
 }
 .key {

@@ -4,6 +4,7 @@ function main() {
     // init
     document.getElementsByName('color')[0].checked = true
     document.getElementsByName('role')[1].checked = true
+    document.getElementsByName('motiv')[0].checked = true
 
     let color = document.getElementsByClassName('color')
     for (let c of color) {
@@ -19,5 +20,11 @@ function main() {
         }
     }
     
+    let motiv = document.getElementsByClassName('motiv')
+    for (let m of motiv) {
+        m.onclick = function() {
+            m.lastElementChild.checked = true
+        }
+    }
 }
 
