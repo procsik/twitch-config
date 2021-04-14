@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="app" class="border">
-            <div class="column border">
+            <div class="column-l border">
                 <div class="border setup">
                     <div class="border key">Статус</div>
                     <div class="border value"></div>
@@ -20,7 +20,7 @@
                     <div class="border value"></div>
                 </div>
                 <div class="border setup">
-                    <div class="border key">Цветовое оформление</div>
+                    <div class="border key">Фон</div>
                     <div class="border value">
                         <div id="dark" class="border color">
                             <input type="radio" name="color" value="dark">
@@ -51,13 +51,22 @@
                     <div class="border key">Персонаж</div>
                     <div class="border value">выбор</div>
                 </div>
-                <div class="border setup">
+                <div class="border setup-c">
                     <div class="border key">Основные достижения</div>
-                    <div class="border value">выбор</div>
+                    <div class="border value">
+                        <div class="border best"></div>
+                        <div class="border best"></div>
+                    </div>
                 </div>
-                <div class="border setup">
+                <div class="border setup-c">
                     <div class="border key">Достижения</div>
-                    <div class="border value">выбор</div>
+                    <div class="border value">
+                        <div class="border best"></div>
+                        <div class="border best"></div>
+                        <div class="border best"></div>
+                        <div class="border best"></div>
+                        <div class="border best"></div>
+                    </div>
                 </div>
                 <div class="border setup">
                     <div class="border key">Демотиватор</div>
@@ -70,8 +79,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="border setup">
+                    <input id="button" type="button" value="сохранить настройки">
+                </div>
             </div>
-            <div class="column border"></div>
+            <div class="column-c border">
+                <div id="K01" class="char border" name="killer"></div>
+                <div id="K02" class="char border" name="killer"></div>
+                <div id="K03" class="char border" name="killer"></div>
+                <div id="K04" class="char border" name="killer"></div>
+                <div id="C01" class="char border" name="camper"></div>
+                <div id="C02" class="char border" name="camper"></div>
+                <div id="C03" class="char border" name="camper"></div>
+                <div id="C04" class="char border" name="camper"></div>
+                <div id="A01" class="achivments border"></div>
+                <div id="A02" class="achivments border"></div>
+                <div id="A03" class="achivments border"></div>
+                <div id="A04" class="achivments border"></div>
+            </div>
             <div class="column border"></div>
         </div>
         <script data-cfasync="false" src="js/config.js"></script>
