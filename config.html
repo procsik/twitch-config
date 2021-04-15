@@ -49,7 +49,7 @@
                 </div>
                 <div class="border setup">
                     <div class="border key">Персонаж</div>
-                    <div class="border value">выбор</div>
+                    <div class="border value" id="character">выбор</div>
                 </div>
                 <div class="border setup-c">
                     <div class="border key">Основные достижения</div>
@@ -83,22 +83,83 @@
                     <input id="button" type="button" value="сохранить настройки">
                 </div>
             </div>
-            <div class="column-c border">
-                <div id="K01" class="char border" name="killer"></div>
-                <div id="K02" class="char border" name="killer"></div>
-                <div id="K03" class="char border" name="killer"></div>
-                <div id="K04" class="char border" name="killer"></div>
-                <div id="C01" class="char border" name="camper"></div>
-                <div id="C02" class="char border" name="camper"></div>
-                <div id="C03" class="char border" name="camper"></div>
-                <div id="C04" class="char border" name="camper"></div>
-                <div id="A01" class="achivments border"></div>
-                <div id="A02" class="achivments border"></div>
-                <div id="A03" class="achivments border"></div>
-                <div id="A04" class="achivments border"></div>
+            <div id="column-c" class="column-c border">
+                <div class="char border" name="char">k
+                    <input type="radio" name="character" value="K01">
+                </div>
+                <div class="char border" name="char">k
+                    <input type="radio" name="character" value="K02">
+                </div>
+                <div class="char border" name="char">k
+                    <input type="radio" name="character" value="K03">
+                </div>
+                <div class="char border" name="char">k
+                    <input type="radio" name="character" value="K04">
+                </div>
+                <div class="char border" name="char">c
+                    <input type="radio" name="character" value="C01">
+                </div>
+                <div class="char border" name="char">c
+                    <input type="radio" name="character" value="C02">
+                </div>
+                <div class="char border" name="char">c
+                    <input type="radio" name="character" value="C03">
+                </div>
+                <div class="char border" name="char">c
+                    <input type="radio" name="character" value="C04">
+                </div>
+                <!--div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A01">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A02">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A03">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A04">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A05">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A06">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A07">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A08">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A09">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A10">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A11">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A12">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A13">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A14">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A15">
+                </div>
+                <div class="achivments border">
+                    <input type="checkbox" name="achivments" value="A16">
+                </div-->
             </div>
             <div class="column border"></div>
         </div>
+        <script data-cfasync="false" src="js/data.js"></script>
         <script data-cfasync="false" src="js/config.js"></script>
     </body>
 </html>
