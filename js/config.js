@@ -9,41 +9,14 @@ function main() {
         char: '',
         achiv: []
     })
+    let cSetup = ''
     let achivTmp = {}
 
     // achievements 
     for (let a in sortByPos(data.stats.onteh)) {
         let rowAchiv = document.createElement('div')
         rowAchiv.className = 'achivments border'
-        rowAchiv.onclick = () => {
-            if (rowAchiv.lastElementChild.checked) {
-                rowAchiv.lastElementChild.checked = false
-                rowAchiv.style.background = ''
-
-                /* if (settings.achiv[rowAchiv.lastElementChild.value]) {
-                    delete settings.achiv[rowAchiv.lastElementChild.value]
-                } */
-
-                if (settings.achiv.includes(rowAchiv.lastElementChild.value) && achivTmp[rowAchiv.lastElementChild.value]) {
-                    settings.achiv.splice(settings.achiv.indexOf(rowAchiv.lastElementChild.value),1)
-                    delete achivTmp[rowAchiv.lastElementChild.value]
-                } 
-                settings.achiv = Object.keys(sortByPos(achivTmp))
-            }
-            else if (Object.keys(settings.achiv).length < 5) {
-                rowAchiv.lastElementChild.checked = true
-                rowAchiv.style.background = '#00ff00'
-                /* if (settings.achiv[rowAchiv.lastElementChild.value] === undefined) {
-                    settings.achiv[rowAchiv.lastElementChild.value] = data.stats.onteh[a]
-                }  */
-
-                if (!settings.achiv.includes(rowAchiv.lastElementChild.value)) {
-                    //settings.achiv.push(rowAchiv.lastElementChild.value)
-                    achivTmp[rowAchiv.lastElementChild.value] = data.stats.onteh[a]
-                }
-                settings.achiv = Object.keys(sortByPos(achivTmp))
-            }
-        }
+        rowAchiv.onclick = () => changeAchiv(rowAchiv,a)
 
         let achivImg = document.createElement('div')
         achivImg.className = 'achiv-img border'
@@ -61,10 +34,10 @@ function main() {
         rowAchiv.appendChild(achivPos)
 
         let rowAchivBox = document.createElement('input')
+        rowAchivBox.hidden = true
         rowAchivBox.type = 'checkbox'
         rowAchivBox.name = 'achivments'
         rowAchivBox.value = a
-        rowAchivBox.hidden = true
         rowAchiv.appendChild(rowAchivBox)
 
         document.getElementById('column-c').appendChild(rowAchiv)
@@ -79,9 +52,9 @@ function main() {
     document.getElementsByName('motiv')[0].checked = true
     settings.motiv = document.getElementsByName('motiv')[0].value
 
-    for (let char of document.getElementsByName('char')) {
-        char.hidden = true
-    }
+    // for (let char of document.getElementsByName('char')) {
+    //     char.hidden = true
+    // }
 
     // main
 
@@ -101,6 +74,14 @@ function main() {
         }
     }
 
+    // let charSetup = document.getElementById('char')
+    // charSetup.onmousedown = () => unhide(charSetup.id)
+
+    document.getElementById('char').onmousedown = (a) => unhide(a.target.parentElement.id)
+
+    let achivSetup = document.getElementsByClassName('achiv')
+    for (let a of achivSetup) a.onmousedown = () => unhide(a.id)
+
     document.getElementById('character').onmousedown = () => {
         showChar(settings.role)
     }
@@ -114,7 +95,7 @@ function main() {
     }
     
     document.getElementById('button').onclick = function() {
-        console.log(settings)
+        console.log(settings,cSetup)
     }
 
     let char = document.getElementsByName('char')
@@ -132,6 +113,63 @@ function main() {
             else a.lastElementChild.checked = true
         }
     } */
+    function changeAchiv(elem,a) {
+        if (elem.lastElementChild.checked) {
+            elem.lastElementChild.checked = false
+            elem.style.background = ''
+    
+            /* if (settings.achiv[rowAchiv.lastElementChild.value]) {
+                delete settings.achiv[rowAchiv.lastElementChild.value]
+            } */
+    
+            if (settings.achiv.includes(elem.lastElementChild.value) && achivTmp[elem.lastElementChild.value]) {
+                settings.achiv.splice(settings.achiv.indexOf(elem.lastElementChild.value),1)
+                delete achivTmp[elem.lastElementChild.value]
+            } 
+            settings.achiv = Object.keys(sortByPos(achivTmp))
+        }
+        else if (Object.keys(settings.achiv).length < 5) {
+            elem.lastElementChild.checked = true
+            elem.style.background = '#00ff00'
+            /* if (settings.achiv[rowAchiv.lastElementChild.value] === undefined) {
+                settings.achiv[rowAchiv.lastElementChild.value] = data.stats.onteh[a]
+            }  */
+    
+            if (!settings.achiv.includes(elem.lastElementChild.value)) {
+                //settings.achiv.push(rowAchiv.lastElementChild.value)
+                achivTmp[elem.lastElementChild.value] = data.stats.onteh[a]
+            }
+            settings.achiv = Object.keys(sortByPos(achivTmp))
+        }
+    }
+
+    function unhide(a) {
+        switch(a) {
+            case "main-achiv": {
+                for (let c of document.getElementById('column-c').children) {
+                    if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
+                        c.style = "display:"
+                    }
+                    else c.style = "display: none"
+                }
+                break
+            }
+            case "achiv": {
+                for (let c of document.getElementById('column-c').children) c.style = "display:"
+                break
+            }
+            case "char": {
+                for (let c of document.getElementById('column-c').children) {
+                    if (Object.keys(c.classList).map(key => c.classList[key]).includes('char')) {
+                        c.style = "display:"
+                    }
+                    else c.style = "display: none"
+                }
+                break
+            }
+            default: break
+        }
+    }
 }
 
 function showChar(c) {
@@ -159,6 +197,12 @@ function showChar(c) {
 function sortByPos(obj) {
     let newObj = new Object()
     Object.keys(obj).sort(function(a,b){
+        /* if (obj[a].weight < obj[b].weight) return -1
+        if (obj[a].weight > obj[b].weight) return 1
+        if (obj[a].position < obj[b].position) return -1
+        if (obj[a].position > obj[b].position) return 1
+        return 0 */
+        //if (obj[a].position < obj[b].position) return obj[a].position - obj[b].position
         return obj[a].position - obj[b].position
     }).forEach(function(v){
         /* console.log(obj[v].points.toFixed()) */

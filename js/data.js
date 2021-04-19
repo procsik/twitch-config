@@ -1,5 +1,72 @@
 let data =
 {
+    "character": {
+        "char1": {
+            "id": 1,
+            "type": "killer",
+            "imgUrl": ""
+        },
+        "char2": {
+            "id": 2,
+            "type": "killer",
+            "imgUrl": ""
+        },
+        "char3": {
+            "id": 3,
+            "type": "killer",
+            "imgUrl": ""
+        },
+        "char4": {
+            "id": 4,
+            "type": "killer",
+            "imgUrl": ""
+        },
+        "char5": {
+            "id": 5,
+            "type": "killer",
+            "imgUrl": ""
+        },
+        "char6": {
+            "id": 6,
+            "type": "killer",
+            "imgUrl": ""
+        },
+        "char7": {
+            "id": 7,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char8": {
+            "id": 8,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char9": {
+            "id": 9,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char10": {
+            "id": 10,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char11": {
+            "id": 11,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char12": {
+            "id": 12,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char13": {
+            "id": 13,
+            "type": "camper",
+            "imgUrl": ""
+        }
+    },
     "config": {
 
     },
