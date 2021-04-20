@@ -7,16 +7,17 @@ function main() {
         role: '',
         motiv: '',
         char: '',
-        achiv: []
+        achiv: ["bloodpoints","survivorshealed","escaped_hatch","saved"]
     })
     let cSetup = ''
     let achivTmp = {}
-
+}
     // achievements 
     for (let a in sortByPos(data.stats.onteh)) {
         let rowAchiv = document.createElement('div')
         rowAchiv.className = 'achivments border'
         rowAchiv.onclick = () => changeAchiv(rowAchiv,a)
+        rowAchiv.style = 'display: none'
 
         let achivImg = document.createElement('div')
         achivImg.className = 'achiv-img border'
@@ -43,6 +44,26 @@ function main() {
         document.getElementById('column-c').appendChild(rowAchiv)
     }
 
+    // character
+    Object.keys(data.character).forEach(key => {
+        let character = document.createElement('div')
+        character.className = 'char border ' + data.character[key].type
+        character.style = 'display: none'
+        character.innerHTML = data.character[key].type + ' ' + data.character[key].id
+        character.onclick = () => {
+            settings.char = character.lastElementChild.value
+            character.lastElementChild.checked = true
+        }
+
+        let characterInput = document.createElement('input')
+        characterInput.type = 'radio'
+        characterInput.name = 'character'
+        characterInput.value = data.character[key].id
+        character.appendChild(characterInput)
+
+        document.getElementById('column-c').appendChild(character)
+    })
+
     document.getElementsByName('color')[0].checked = true
     settings.color = document.getElementsByName('color')[0].value
 
@@ -57,7 +78,6 @@ function main() {
     // }
 
     // main
-
     let color = document.getElementsByClassName('color')
     for (let c of color) {
         c.onmousedown = function() {
@@ -68,23 +88,22 @@ function main() {
 
     let role = document.getElementsByClassName('role')
     for (let r of role) {
-        r.onmousedown = function() {
+        r.onmousedown = () => {
             r.lastElementChild.checked = true
             settings.role = r.lastElementChild.value
         }
     }
 
-    // let charSetup = document.getElementById('char')
-    // charSetup.onmousedown = () => unhide(charSetup.id)
-
-    document.getElementById('char').onmousedown = (a) => unhide(a.target.parentElement.id)
+    document.getElementById('char').onmousedown = (a) => unhide(a.target.id)
 
     let achivSetup = document.getElementsByClassName('achiv')
-    for (let a of achivSetup) a.onmousedown = () => unhide(a.id)
-
-    document.getElementById('character').onmousedown = () => {
-        showChar(settings.role)
+    for (let a of achivSetup) a.onmousedown = () => {
+        unhide(a.id)
     }
+
+    // document.getElementById('character').onmousedown = () => {
+    //     showChar(settings.role)
+    // }
     
     let motiv = document.getElementsByClassName('motiv')
     for (let m of motiv) {
@@ -148,14 +167,23 @@ function main() {
             case "main-achiv": {
                 for (let c of document.getElementById('column-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
-                        c.style = "display:"
+                        if (settings.achiv.includes(c.lastElementChild.value)) {
+                            c.style.background = '#00FF00'
+                            c.lastElementChild.checked = true
+                        } else {
+                            c.style.background = ''
+                        }
+                        c.style.display = ''
                     }
                     else c.style = "display: none"
                 }
                 break
             }
             case "achiv": {
-                for (let c of document.getElementById('column-c').children) c.style = "display:"
+                console.log(a)
+                for (let c of document.getElementById('column-c').children) {
+                    c.style = "display:"
+                }
                 break
             }
             case "char": {
