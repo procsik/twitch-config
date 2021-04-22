@@ -13,6 +13,8 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
+
+    color: wheat;
 }
 
 .border {
@@ -23,11 +25,16 @@
 }
 
 .column-l {
-    flex: 0 0 318px;
+    width: 318px;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
     -webkit-flex-direction: column;
+
+    background-image: url('../img/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 .column-c {
     width: 318px;
@@ -42,6 +49,25 @@
     align-content: flex-start; 
 
     overflow: auto;
+
+    background-image: url('../img/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+.column {
+    flex: auto;
+    display: flex;
+    display: -webkit-flex;
+
+    flex-direction: column;
+    -webkit-flex-direction: column;
+
+    background-image: url('../img/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 .setup {
@@ -131,4 +157,115 @@
     -webkit-flex-grow: 0; 
     flex-grow: 0;
     margin-right: 5px;
+}
+
+.mi-1 {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+
+    height: 156px;
+}
+
+.ib-1 {
+    flex: auto;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+
+    -webkit-flex-grow: 0.2; 
+    flex-grow: 0.2;
+}
+#info-bloodpoints {
+    height: 30px;
+}
+#info-hours {
+    height: 30px;
+}
+#info-topachiv {
+    flex: auto;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: center;
+    justify-content: center;
+    
+}
+.topachiv {
+    width: 70px;
+    margin: 0 5px 0 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url('../img/topstats-nm.png');
+}
+
+.ip-1 {
+    flex: auto;
+    background-image: url('../img/K01.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    -webkit-flex-grow: 1; 
+    flex-grow: 1;
+}
+
+#global-stats {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+
+    height: 156px;
+    margin-top: 10px;
+
+}
+
+#gs-desc {
+    flex: auto;
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 3px;
+    margin: 0 5px 0 5px;
+
+    width: 308px;
+    position: relative;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url(../img/stats-desc.png);
+}
+
+#desc {
+    position: relative;
+    z-index: 1;
+    line-height: 20px;
+    padding-bottom: 40px;
+}
+
+#rank {
+    width: 80px;
+    height: 80px;
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    /* opacity: 0.8; */
+
+    
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url(../img/rank.png);
+
+}
+#topdbd {
+    height: 70px;
 }
