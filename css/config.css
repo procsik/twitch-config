@@ -165,7 +165,7 @@
     flex-direction: row;
     -webkit-flex-direction: row;
 
-    height: 156px;
+    height: 140px;
 }
 
 .ib-1 {
@@ -176,8 +176,8 @@
     flex-direction: column;
     -webkit-flex-direction: column;
 
-    -webkit-flex-grow: 0.2; 
-    flex-grow: 0.2;
+    -webkit-flex-grow: 0.3; 
+    flex-grow: 0.3;
 }
 #info-bloodpoints {
     height: 30px;
@@ -197,8 +197,8 @@
     
 }
 .topachiv {
-    width: 70px;
-    margin: 0 5px 0 5px;
+    width: 60px;
+    margin: 0 10px 0 10px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -212,6 +212,8 @@
     background-repeat: no-repeat;
     background-position: center;
 
+    position: relative;
+
     -webkit-flex-grow: 1; 
     flex-grow: 1;
 }
@@ -222,7 +224,7 @@
     flex-direction: column;
     -webkit-flex-direction: column;
 
-    height: 156px;
+    height: 180px;
     margin-top: 10px;
 
 }
@@ -233,7 +235,7 @@
     border-radius: 3px;
     margin: 0 5px 0 5px;
 
-    width: 308px;
+    width: 306px;
     position: relative;
 
     background-repeat: no-repeat;
@@ -243,29 +245,69 @@
 }
 
 #desc {
+    flex: auto;
     position: relative;
     z-index: 1;
+    line-height: 24px;
+    /* width: 308px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 3px;
+    margin: 0 5px 0 5px;
     line-height: 20px;
-    padding-bottom: 40px;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url(../img/stats-desc.png); */
 }
 
-#rank {
-    width: 80px;
-    height: 80px;
+#rank-k {
+    width: 90px;
+    height: 90px;
 
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 110px;
+    top: 25px;
     z-index: 0;
-    /* opacity: 0.8; */
+    opacity: 0.6;
 
     
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     background-image: url(../img/rank.png);
+}
+#rank-c {
+    width: 90px;
+    height: 90px;
 
+    position: absolute;
+    right: 5px;
+    top: 25px;
+    z-index: 0;
+    opacity: 0.6;
+
+    
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url(../img/rank.png);
 }
 #topdbd {
-    height: 70px;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+.topdbd {
+    width: 50px;
+    height: 60px;
+    margin-top: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url('../img/topstats-nm.png');
 }
