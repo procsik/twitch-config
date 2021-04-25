@@ -176,8 +176,8 @@
     flex-direction: column;
     -webkit-flex-direction: column;
 
-    -webkit-flex-grow: 0.3; 
-    flex-grow: 0.3;
+    /* -webkit-flex-grow: 0.3; 
+    flex-grow: 0.3; */
 }
 #info-bloodpoints {
     height: 30px;
@@ -192,21 +192,70 @@
     display: -webkit-flex;
     flex-direction: row;
     -webkit-flex-direction: row;
-    -webkit-justify-content: center;
-    justify-content: center;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-align-items: center;
+    align-items: center;
     
 }
 .topachiv {
-    width: 60px;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-align-items: center;
+    align-items: center;
+    box-shadow: 0px 0px 8px 2px #E8C252;
+    border-radius: 3px;
+    /* width: 52px;
+    height: 52px;
+    overflow: hidden;
     margin: 0 10px 0 10px;
+    box-shadow: 0px 0px 4px 1px #E8C252;
+    border-radius: 5%;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url('../img/topstats-nm.png');
+    background-size: auto;
+    background-image: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/381210/a884de3aafb36c5a2590c698164d4aa1baff3357.jpg); */
+    /* background-image: url('../img/topstats-nm.png'); */
+}
+#topachiv-1,#topachiv-2 {
+    width: 64px;
+    height: 64px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/381210/711084ed1e36ed2130a6f4d098d607c2a98a7f22.jpg);
 }
 
+.topachiv:hover {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url(../img/topstats-hover-4x4.png);
+    /* background-image: url(../img/topstats-hover-4x4.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;  */
+    /* border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box; */
+    /* background-image: url(../img/topstats-hover-4x4.png); */
+}
 .ip-1 {
-    flex: auto;
+
+    /* flex: auto; */
+    width: 120px;
+    height: 140px;
     background-image: url('../img/K01.png');
     background-size:contain;
     background-repeat: no-repeat;
@@ -214,8 +263,8 @@
 
     position: relative;
 
-    -webkit-flex-grow: 1; 
-    flex-grow: 1;
+    /* -webkit-flex-grow: 1; 
+    flex-grow: 1; */
 }
 
 #global-stats {
