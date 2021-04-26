@@ -1,20 +1,20 @@
 @import "reset.css";
 
 #app {
-    height: 496px;
-    width: 954px;
+    height: 400px;
+    width: 318px;
 
     display: flex;
     display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
+    flex-direction: column;
+    -webkit-flex-direction: column;
 
-    /* background-image: url(/img/background.jpg); */
+    color: wheat;
+
+    background-image: url('../img/background.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
-
-    color: wheat;
 }
 
 .border {
@@ -22,142 +22,6 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-}
-
-.column-l {
-    width: 318px;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: column;
-    -webkit-flex-direction: column;
-
-    background-image: url('../img/background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
-}
-.column-c {
-    width: 318px;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-    flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-
-    -webkit-align-content: flex-start; 
-    align-content: flex-start; 
-
-    overflow: auto;
-
-    background-image: url('../img/background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
-}
-
-.column {
-    flex: auto;
-    display: flex;
-    display: -webkit-flex;
-    width: 318px;
-
-    flex-direction: column;
-    -webkit-flex-direction: column;
-
-    background-image: url('../img/background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
-}
-
-.setup {
-/*     flex: auto; */
-    height: 40px;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-    margin: 2px 0 2px 0;
-}
-.setup-c {
-    /*     flex: auto; */
-        height: 90px;
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-        margin: 2px 0 2px 0;
-}
-
-.color, .role, .motiv {
-    width: 60px;
-}
-.key {
-    -webkit-flex-grow: 0; 
-    flex-grow: 0;
-}
-.value {
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-flex-grow: 1; 
-    flex-grow: 1;
-}
-.best {
-    width: 50px;
-    height: 60px;
-    margin: auto 5px;
-}
-
-.char {
-    height: 60px;
-    width: 50px;
-    margin: 6px;
-}
-.achivments {
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-    -webkit-align-items: center;
-    align-items: center;
-    height: 45px;
-    width: 290px;
-    margin: 5px auto;
-}
-.achivments:hover {
-    cursor: pointer;
-}
-
-.achiv-img {
-    -webkit-flex-grow: 0; 
-    flex-grow: 0;
-    width: 40px;
-    height: 40px;
-    margin-left: 5px;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    /* background-image: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/381210/a884de3aafb36c5a2590c698164d4aa1baff3357.jpg'); */
-}
-
-.achiv-name {
-    -webkit-flex-grow: 1; 
-    flex-grow: 1;
-    margin-left: 5px;
-    margin-right: 5px;
-
-}
-
-.achiv-pos {
-    -webkit-flex-grow: 0; 
-    flex-grow: 0;
-    margin-right: 5px;
 }
 
 .mi-1 {
