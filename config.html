@@ -211,10 +211,12 @@
                         <!-- <div id="desc" class="border">
                             <p>1asdasd</p>sd asd asd asd asdasdasdasda sda sdasdasd asd asda dsasdasdasdasda asdasdasda sdasdasdasda sd asdadsa
                         </div> -->
-                        <div id="desc">
+                        <div id="desc" class="border">
                             <!-- <img class="border" src="img/rank.png" width="60px" style="float: right; opacity: 0.5;" alt="a">
                             <img class="border" src="img/rank.png" width="60px" style="float: right; opacity: 0.5;" alt="a"> -->
-                            <p style="font-size: 18pt;">Logicandintuition</p>d asd asd asd asdasdasdasda sda sdasdasd asd asda dsasdasdasdasda asdasdasda sdasdasdasda sd asdadsa
+                            <span style="color: wheat; font-weight: bolder; font-size: 14pt;">
+                                {Player}
+                            </span> в публичных матчах спас(ла) <span style="font-weight: bolder; color: tomato;">{value}</span> (текущее значение <span style="font-weight: bolder; color: teal;">{value}</span>) выживших от смерти и занимет <span>{place}</span> место в глобальной статистике среди Steam игроков.
                         </div>
                         <div id="rank-k" class=""></div>
                         <div id="rank-c" class=""></div>
@@ -222,6 +224,7 @@
                 </div>
             </div>
         </div>
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
         <script data-cfasync="false" src="js/data.js"></script>
         <script data-cfasync="false" src="js/config.js"></script>
     </body>
