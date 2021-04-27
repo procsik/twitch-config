@@ -10,156 +10,80 @@
     </head>
     <body>
         <div id="app" class="">
-            <div class="column-l">
-                <div class="border setup">
-                    <div class="border key">Статус</div>
-                    <div class="border value"></div>
-                </div>
-                <div class="border setup">
-                    <div class="border key">Steam</div>
-                    <div class="border value"></div>
-                </div>
-                <div class="border setup">
-                    <div class="border key">Фон</div>
-                    <div class="border value">
-                        <div id="dark" class="border color">
-                            <input type="radio" name="color" value="dark">
-                        </div>
-                        <div id="blood" class="border color">
-                            <input type="radio" name="color" value="blood">
-                        </div>
-                        <div id="light" class="border color">
-                            <input type="radio" name="color" value="light">
-                        </div>
+            <div class="column-l column">
+                <div class="setup-box border">
+                    <div class="border setup">
+                        <div class="border key">Статус</div>
+                        <!-- <div class="border value"></div> -->
+                    </div>
+                    <div class="border setup">
+                        <div class="border key">Steam</div>
+                        <!-- <div class="border value"></div> -->
+                    </div>
+                    <div class="border setup onclick">
+                        <div class="border key">Фон</div>
+                        <!-- <div class="border value">
+                            <div id="dark" class="border color">
+                                <input type="radio" name="color" value="dark">
+                            </div>
+                            <div id="blood" class="border color">
+                                <input type="radio" name="color" value="blood">
+                            </div>
+                            <div id="light" class="border color">
+                                <input type="radio" name="color" value="light">
+                            </div>
+                        </div> -->
                     </div>
                 </div>
-                <div class="border setup">
-                    <div class="border key">Основная роль</div>
-                    <div class="border value">
-                        <div id="killer" class="border role">
-                            <input type="radio" name="role" value="killer">
-                        </div>
-                        <div id="auto" class="border role">
-                            <input type="radio" name="role" value="auto">
-                        </div>
-                        <div id="camper" class="border role">
-                            <input type="radio" name="role" value="camper">
-                        </div>
+                <div class="setup-box border">
+                    <div class="border setup onclick">
+                        <div class="border key">Основная роль</div>
+                        <!-- <div class="border value">
+                            <div id="killer" class="border role">
+                                <input type="radio" name="role" value="killer">
+                            </div>
+                            <div id="auto" class="border role">
+                                <input type="radio" name="role" value="auto">
+                            </div>
+                            <div id="camper" class="border role">
+                                <input type="radio" name="role" value="camper">
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="border setup onclick">
+                        <div class="border key">Персонаж</div>
+                        <!-- <div class="border value" id="char">выбор</div> -->
                     </div>
                 </div>
-                <div class="border setup">
-                    <div class="border key">Персонаж</div>
-                    <div class="border value" id="char">выбор</div>
-                </div>
-                <div id="main-achiv" class="border setup achiv">
-                    <div class="border key">Основные достижения</div>
-                    <div class="border value">
-                        <!-- <div class="border best"></div>
-                        <div class="border best"></div> -->
+                <div class="setup-box border">
+                    <div id="main-achiv" class="border setup achiv onclick">
+                        <div class="border key">Основные достижения</div>
+                        <!-- <div class="border value"></div> -->
                     </div>
-                </div>
-                <div id="achiv" class="border setup achiv">
-                    <div class="border key">Достижения</div>
-                    <div class="border value">
-                        <!-- <div class="border best"></div>
-                        <div class="border best"></div>
-                        <div class="border best"></div>
-                        <div class="border best"></div> -->
+                    <div id="achiv" class="border setup achiv onclick">
+                        <div class="border key">Достижения</div>
+                        <!-- <div class="border value"></div> -->
                     </div>
-                </div>
-                <div class="border setup">
-                    <div class="border key">Демотиватор</div>
-                    <div class="border value">
-                        <div id="motiv" class="border motiv">
-                            <input type="radio" name="motiv" value="true">
-                        </div>
-                        <div id="motiv" class="border motiv">
-                            <input type="radio" name="motiv" value="false">
-                        </div>
+                    <div class="border setup onclick">
+                        <div class="border key">Демотиватор</div>
+                        <!-- <div class="border value">
+                            <div id="motiv" class="border motiv">
+                                <input type="radio" name="motiv" value="true">
+                            </div>
+                            <div id="motiv" class="border motiv">
+                                <input type="radio" name="motiv" value="false">
+                            </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="border setup">
                     <input id="button" type="button" value="сохранить настройки">
                 </div>
             </div>
-            <div id="column-c" class="column-c">
-                <!-- <div class="char border" name="char">k
-                    <input type="radio" name="character" value="K01">
-                </div>
-                <div class="char border" name="char">k
-                    <input type="radio" name="character" value="K02">
-                </div>
-                <div class="char border" name="char">k
-                    <input type="radio" name="character" value="K03">
-                </div>
-                <div class="char border" name="char">k
-                    <input type="radio" name="character" value="K04">
-                </div>
-                <div class="char border" name="char">c
-                    <input type="radio" name="character" value="C01">
-                </div>
-                <div class="char border" name="char">c
-                    <input type="radio" name="character" value="C02">
-                </div>
-                <div class="char border" name="char">c
-                    <input type="radio" name="character" value="C03">
-                </div>
-                <div class="char border" name="char">c
-                    <input type="radio" name="character" value="C04">
-                </div> -->
-                <!--div class="achivments border">
-                    <div class="achiv-img border"></div>
-                    <div class="achiv-name border">2222 asdasdasd asdsdasdada asdasd adsas</div>
-                    <div class="achiv-pos border">112222</div>
-                    <input type="checkbox" name="achivments" value="A01" hidden>
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A02">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A03">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A04">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A05">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A06">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A07">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A08">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A09">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A10">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A11">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A12">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A13">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A14">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A15">
-                </div>
-                <div class="achivments border">
-                    <input type="checkbox" name="achivments" value="A16">
-                </div-->
+            <div id="column-c" class="column-c column">
+                
             </div>
-            <div class="column">
+            <div class="column-r column">
                 <div id="main-info" class="mi-1 border">
                     <div id="info-bhta" class="ib-1 border">
                         <div id="info-bloodpoints" class="border">1 234 234 234</div>
@@ -212,15 +136,16 @@
                             <p>1asdasd</p>sd asd asd asd asdasdasdasda sda sdasdasd asd asda dsasdasdasdasda asdasdasda sdasdasdasda sd asdadsa
                         </div> -->
                         <div id="desc" class="border">
+                            <div id="main-k" class="border"></div>
                             <!-- <img class="border" src="img/rank.png" width="60px" style="float: right; opacity: 0.5;" alt="a">
                             <img class="border" src="img/rank.png" width="60px" style="float: right; opacity: 0.5;" alt="a"> -->
-                            <span style="margin-left: 30px; color: wheat; font-weight: bolder; font-size: 14pt;">
+                            <span style="color: wheat; font-weight: bolder; font-size: 14pt;">
                                 {Player}
                             </span> в публичных матчах спас(ла) <span style="font-weight: bolder; color: tomato;">{value}</span> (текущее значение <span style="font-weight: bolder; color: teal;">{value}</span>) выживших от смерти и занимет <span>{place}</span> место в глобальной статистике среди Steam игроков.
                         </div>
-                        <div id="main-k" class="border"></div>
-                        <div id="rank-k" class=""></div>
-                        <div id="rank-c" class=""></div>
+                        
+                        <div id="rank-k" class="border"></div>
+                        <div id="rank-c" class="border"></div>
                     </div>
                 </div>
             </div>

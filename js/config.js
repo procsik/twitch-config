@@ -3,7 +3,7 @@ document.addEventListener("load", main())
 function main() {
     // init
     let settings = new Object({
-        color: '',
+        color: 'dark',
         role: '',
         motiv: '',
         char: '',
@@ -17,6 +17,27 @@ function main() {
     let cSetup = ''
     // let achivMainTmp = {}
     let achivTmp = {}
+
+    // COLOR
+    switch(settings.color) {
+        case "dark": {
+            for (let c of document.getElementsByClassName('column')) {
+                c.className += ' column-dark'
+            }
+            break
+        }
+        case "blood": {
+            for (let c of document.getElementsByClassName('column')) {
+                c.className += ' column-blood'
+            }
+        }
+        case "light": {
+            for (let c of document.getElementsByClassName('column')) {
+                c.className += ' column-light'
+            }
+        }
+        default: break
+    }
     
     // Object.keys(settings.achivMain)
     //     .forEach(key => achivMainTmp[settings.achivMain[key]] = data.stats.onteh[settings.achivMain[key]])
@@ -27,7 +48,6 @@ function main() {
             achivTmp[key] = {}
             settings.achiv[key].forEach(k => achivTmp[key][k] = data.stats.onteh[k])
         })
-
 
     // achievements 
     for (let a in sortByPos(data.stats.onteh)) {
@@ -81,14 +101,14 @@ function main() {
         document.getElementById('column-c').appendChild(character)
     })
 
-    document.getElementsByName('color')[0].checked = true
-    settings.color = document.getElementsByName('color')[0].value
+    // document.getElementsByName('color')[0].checked = true
+    // settings.color = document.getElementsByName('color')[0].value
 
-    document.getElementsByName('role')[1].checked = true
-    settings.role = document.getElementsByName('role')[1].value
+    // document.getElementsByName('role')[1].checked = true
+    // settings.role = document.getElementsByName('role')[1].value
 
-    document.getElementsByName('motiv')[0].checked = true
-    settings.motiv = document.getElementsByName('motiv')[0].value
+    // document.getElementsByName('motiv')[0].checked = true
+    // settings.motiv = document.getElementsByName('motiv')[0].value
 
     // for (let char of document.getElementsByName('char')) {
     //     char.hidden = true
@@ -113,7 +133,7 @@ function main() {
         }
     }
 
-    document.getElementById('char').onmousedown = (a) => unhide(a.target.id)
+    // document.getElementById('char').onmousedown = (a) => unhide(a.target.id)
 
     let achivSetup = document.getElementsByClassName('achiv')
     for (let a of achivSetup) a.onmousedown = () => {
@@ -169,14 +189,16 @@ function main() {
                         achivTmp[0][elem.lastElementChild.value] = data.stats.onteh[a]
 
                         elem.lastElementChild.checked = true
-                        elem.style.background = '#00FF00'
+                        // elem.style.background = '#00FF00'
+                        elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                     }
 
                     settings.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                     settings.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
                 } else if ((Object.keys(settings.achiv[0]).length < 2) && !elem.lastElementChild.checked) {
                     elem.lastElementChild.checked = true
-                    elem.style.background = '#00ff00'
+                    // elem.style.background = '#00ff00'
+                    elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
 
                     if (!settings.achiv[0].includes(elem.lastElementChild.value)) {
                         achivTmp[0][elem.lastElementChild.value] = data.stats.onteh[a]
@@ -199,7 +221,8 @@ function main() {
                     settings.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
                 } else if (Object.keys(settings.achiv[1]).length < 5) {
                     elem.lastElementChild.checked = true
-                    elem.style.background = '#00FF00'
+                    // elem.style.background = '#00FF00'
+                    elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
 
                     if (!settings.achiv[1].includes(elem.lastElementChild.value)) {
                         achivTmp[1][elem.lastElementChild.value] = data.stats.onteh[a]
@@ -220,10 +243,12 @@ function main() {
                 for (let c of document.getElementById('column-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {
-                            c.style.background = '#00FF00'
+                            // c.style.background = '#00FF00'
+                            c.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                             c.lastElementChild.checked = true
                         } else if (settings.achiv[1].includes(c.lastElementChild.value)) {
-                            c.style.background = '#0000FF'
+                            // c.style.background = '#0000FF'
+                            c.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
                             c.lastElementChild.checked = true
                         } else {
                             c.style.background = ''
@@ -239,9 +264,11 @@ function main() {
                 for (let c of document.getElementById('column-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {
-                            c.style.background = '#808080'
+                            // c.style.background = '#808080'
+                            c.style.backgroundImage = "url(../web/img/achiv-row-red.jpg)"
                         } else if (settings.achiv[1].includes(c.lastElementChild.value)) {
-                            c.style.background = '#00FF00'
+                            // c.style.background = '#00FF00'
+                            c.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                             c.lastElementChild.checked = true
                         } else {
                             c.style.background = ''
