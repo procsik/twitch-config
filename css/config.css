@@ -173,12 +173,8 @@
     overflow: auto;
     max-height: 300px;
 
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 #ma-text {
     position: relative;
@@ -256,9 +252,14 @@
     align-items: center; */
 }
 .char {
-    height: 60px;
-    width: 50px;
+    height: 83px;
+    width: 60px;
     margin: 6px;
+    background-image: url(../img/K01.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
 }
 .achivments {
     flex: auto;
