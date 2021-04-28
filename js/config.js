@@ -78,7 +78,7 @@ function main() {
         rowAchivBox.value = a
         rowAchiv.appendChild(rowAchivBox)
 
-        document.getElementById('column-c').appendChild(rowAchiv)
+        document.getElementById('column-c-c').appendChild(rowAchiv)
     }
 
     // character
@@ -98,7 +98,7 @@ function main() {
         characterInput.value = data.character[key].id
         character.appendChild(characterInput)
 
-        document.getElementById('column-c').appendChild(character)
+        document.getElementById('column-c-c').appendChild(character)
     })
 
     // document.getElementsByName('color')[0].checked = true
@@ -240,7 +240,7 @@ function main() {
         switch(a) {
             case "main-achiv": {
                 cSetup = 'achivMain'
-                for (let c of document.getElementById('column-c').children) {
+                for (let c of document.getElementById('column-c-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {
                             // c.style.background = '#00FF00'
@@ -261,7 +261,7 @@ function main() {
             }
             case "achiv": {
                 cSetup = 'achiv'
-                for (let c of document.getElementById('column-c').children) {
+                for (let c of document.getElementById('column-c-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {
                             // c.style.background = '#808080'
@@ -281,7 +281,7 @@ function main() {
             }
             case "char": {
                 cSetup = 'char'
-                for (let c of document.getElementById('column-c').children) {
+                for (let c of document.getElementById('column-c-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('char')) {
                         c.style = "display:"
                     }
