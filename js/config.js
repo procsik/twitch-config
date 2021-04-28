@@ -123,15 +123,16 @@ function main() {
             settings.color = c.lastElementChild.value
         }
     }
+    document.getElementById('role').onmousedown = () => unhide(document.getElementById('role').id)
 
-    let role = document.getElementsByClassName('role')
-    for (let r of role) {
-        r.onmousedown = () => {
-            cSetup = 'role'
-            r.lastElementChild.checked = true
-            settings.role = r.lastElementChild.value
-        }
-    }
+    // let role = document.getElementsByClassName('role')
+    // for (let r of role) {
+    //     r.onmousedown = () => {
+    //         cSetup = 'role'
+    //         r.lastElementChild.checked = true
+    //         settings.role = r.lastElementChild.value
+    //     }
+    // }
 
     // document.getElementById('char').onmousedown = (a) => unhide(a.target.id)
 
@@ -238,8 +239,16 @@ function main() {
 
     function unhide(a) {
         switch(a) {
+            case "role": {
+                console.log(a)
+                for (let c of document.getElementById('column-c-c').children) {
+                    
+                    c.style = "display: none"
+                }
+                break
+            }
             case "main-achiv": {
-                cSetup = 'achivMain'
+                cSetup = a
                 for (let c of document.getElementById('column-c-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {

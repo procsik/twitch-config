@@ -25,7 +25,7 @@
 }
 
 .border {
-    border: 0px ridge #ff0000;
+    border: 1px ridge #ff0000;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -55,6 +55,10 @@
     flex-direction: column;
     -webkit-flex-direction: column;
 }
+::-webkit-scrollbar { 
+    width: 0;  
+    background: transparent; 
+}
 #column-c-c {
     display: flex;
     display: -webkit-flex;
@@ -65,7 +69,10 @@
     -webkit-align-content: flex-start; 
     align-content: flex-start; 
     overflow: auto;
-    margin: 0 0 5px 0;
+    margin: 5px 0 5px 0;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 .column-r {
     display: flex;
@@ -112,17 +119,17 @@
 }
 .setup-c {
     /*     flex: auto; */
-        height: 90px;
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-        margin: 2px 0 2px 0;
+    height: 90px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    margin: 2px 0 2px 0;
 }
 
-.color, .role, .motiv {
+/* .color, .role, .motiv {
     width: 60px;
-}
+} */
 .key {
     margin-left: 10px;
     font-size: 14pt;
@@ -147,22 +154,123 @@
     height: 60px;
     margin: auto 5px;
 }
+.role {
+    width: 60px;
+    height: 60px;
+    margin: 5px 0 5px 0;
+    border-radius: 50%;
+}
+.wrapper-role {
+    margin: 0 5px 5px 5px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -webkit-align-content: flex-start; 
+    align-content: flex-start; 
+    overflow: auto;
+    max-height: 300px;
 
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#ma-text {
+    position: relative;
+    margin-left: 60px;
+}
+#mk-text {
+    position: relative;
+    margin-left: 60px;
+}
+#mc-text {
+    position: relative;
+    margin-left: 60px;
+}
+#ma-text::before {
+    content: " ";
+    width: 40px;
+    height: 40px;
+    left: -50px;
+    position: absolute;
+    background-image: url(../img/main-a.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#mc-text::before {
+    content: " ";
+    width: 25px;
+    height: 25px;
+    top: 7px;
+    left: -43px;
+    position: absolute;
+    background-image: url(../img/main-c.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#mk-text::before {
+    content: " ";
+    width: 25px;
+    height: 25px;
+    top: 7px;
+    left: -43px;
+    position: absolute;
+    background-image: url(../img/main-k.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#killer {
+    background-image: url(../img/main-k.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#auto {
+    background-image: url(../img/main-a.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#camper {
+    background-image: url(../img/main-c.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#role-value {
+    /* display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-align-items: center;
+    align-items: center; */
+}
 .char {
     height: 60px;
     width: 50px;
     margin: 6px;
 }
 .achivments {
+    flex: auto;
     display: flex;
     display: -webkit-flex;
     flex-direction: row;
     -webkit-flex-direction: row;
     -webkit-align-items: center;
     align-items: center;
-    height: 45px;
-    width: 290px;
-    margin: 5px auto;
+    height: 49px;
+    /* width: 300px; */
+    margin: 0 5px 5px 5px;
 
     border: 1px solid rgba(255, 255, 255, .5);
     border-radius: 3px;
@@ -173,15 +281,16 @@
 }
 .achivments:hover {
     cursor: pointer;
+    box-shadow: inset 0 0 50px 1px rgba(255, 255, 255, .3);
 }
 
 .achiv-img {
     -webkit-flex-grow: 0; 
     flex-grow: 0;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     margin-left: 5px;
-
+    border-radius: 3px;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -192,7 +301,7 @@
     flex-grow: 1;
     margin-left: 5px;
     margin-right: 5px;
-
+    font-size: 13pt;
 }
 
 .achiv-pos {
