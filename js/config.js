@@ -4,7 +4,7 @@ function main() {
     // init
     let settings = new Object({
         color: 'dark',
-        role: '',
+        role: 'auto',
         motiv: '',
         char: '',
         // achivMain: ["escaped","protectionhits"],
@@ -17,6 +17,7 @@ function main() {
     let cSetup = ''
     // let achivMainTmp = {}
     let achivTmp = {}
+    let newAchivTmp = {}
 
     // COLOR
     switch(settings.color) {
@@ -38,68 +39,71 @@ function main() {
         }
         default: break
     }
-    
-    // Object.keys(settings.achivMain)
-    //     .forEach(key => achivMainTmp[settings.achivMain[key]] = data.stats.onteh[settings.achivMain[key]])
-    // Object.keys(settings.achiv)
-    //     .forEach(key => achivTmp[settings.achiv[key]] = data.stats.onteh[settings.achiv[key]])
-    Object.keys(settings.achiv)
-        .forEach(key => {
-            achivTmp[key] = {}
-            settings.achiv[key].forEach(k => achivTmp[key][k] = data.stats.onteh[k])
-        })
 
-    // achievements 
-    for (let a in sortByPos(data.stats.onteh)) {
-        let rowAchiv = document.createElement('div')
-        rowAchiv.className = 'achivments border'
-        rowAchiv.onclick = () => changeAchiv(rowAchiv,a,cSetup)
-        rowAchiv.style = 'display: none'
-
-        let achivImg = document.createElement('div')
-        achivImg.className = 'achiv-img border'
-        achivImg.style.backgroundImage = 'url('+ data.stats.onteh[a].imgUrl +')'
-        rowAchiv.appendChild(achivImg)
-
-        let achivName = document.createElement('div')
-        achivName.className = 'achiv-name border'
-        achivName.innerHTML = data.stats.onteh[a].name
-        rowAchiv.appendChild(achivName)
-
-        let achivPos = document.createElement('div')
-        achivPos.className = 'achiv-pos border'
-        achivPos.innerHTML = data.stats.onteh[a].position
-        rowAchiv.appendChild(achivPos)
-
-        let rowAchivBox = document.createElement('input')
-        rowAchivBox.hidden = true
-        rowAchivBox.type = 'checkbox'
-        rowAchivBox.name = 'achivments'
-        rowAchivBox.value = a
-        rowAchiv.appendChild(rowAchivBox)
-
-        document.getElementById('column-c-c').appendChild(rowAchiv)
+    // achiv to object
+    let i = 0
+    for (let a of settings.achiv) {
+        achivTmp[i] = {}
+        for (let b of a) achivTmp[i][b] = data.stats.onteh[b]
+        i++
     }
 
+    //for (let child of document.getElementById('column-c').children) child.style.display = 'none'
+
+    // achievements 
+    // for (let a in sortByPos(data.stats.onteh)) {
+    //     let rowAchiv = document.createElement('div')
+    //     rowAchiv.className = 'achivments border'
+    //     rowAchiv.onclick = () => changeAchiv(rowAchiv,a,cSetup)
+    //     rowAchiv.style = 'display: none'
+
+    //     let achivImg = document.createElement('div')
+    //     achivImg.className = 'achiv-img border'
+    //     achivImg.style.backgroundImage = 'url('+ data.stats.onteh[a].imgUrl +')'
+    //     rowAchiv.appendChild(achivImg)
+
+    //     let achivName = document.createElement('div')
+    //     achivName.className = 'achiv-name border'
+    //     achivName.innerHTML = data.stats.onteh[a].name
+    //     rowAchiv.appendChild(achivName)
+
+    //     let achivPos = document.createElement('div')
+    //     achivPos.className = 'achiv-pos border'
+    //     achivPos.innerHTML = data.stats.onteh[a].position
+    //     rowAchiv.appendChild(achivPos)
+
+    //     let rowAchivBox = document.createElement('input')
+    //     rowAchivBox.hidden = true
+    //     rowAchivBox.type = 'checkbox'
+    //     rowAchivBox.name = 'achivments'
+    //     rowAchivBox.value = a
+    //     rowAchiv.appendChild(rowAchivBox)
+
+    //     document.getElementById('column-c-c').appendChild(rowAchiv)
+    // }
+
     // character
-    Object.keys(data.character).forEach(key => {
-        let character = document.createElement('div')
-        character.className = 'char border ' + data.character[key].type
-        character.style = 'display: none'
-        character.innerHTML = data.character[key].type + ' ' + data.character[key].id
-        character.onclick = () => {
-            settings.char = character.lastElementChild.value
-            character.lastElementChild.checked = true
-        }
+    for (let c of document.getElementsByClassName('wrapper-role')) 
+        c.style.display = c.id.includes(settings.role) ? '' : 'none'
 
-        let characterInput = document.createElement('input')
-        characterInput.type = 'radio'
-        characterInput.name = 'character'
-        characterInput.value = data.character[key].id
-        character.appendChild(characterInput)
+    // Object.keys(data.character).forEach(key => {
+    //     let character = document.createElement('div')
+    //     character.className = 'char border ' + data.character[key].type
+    //     character.style = 'display: none'
+    //     character.innerHTML = data.character[key].type + ' ' + data.character[key].id
+    //     character.onclick = () => {
+    //         settings.char = character.lastElementChild.value
+    //         character.lastElementChild.checked = true
+    //     }
 
-        document.getElementById('column-c-c').appendChild(character)
-    })
+    //     let characterInput = document.createElement('input')
+    //     characterInput.type = 'radio'
+    //     characterInput.name = 'character'
+    //     characterInput.value = data.character[key].id
+    //     character.appendChild(characterInput)
+
+    //     document.getElementById('column-c-c').appendChild(character)
+    // })
 
     // document.getElementsByName('color')[0].checked = true
     // settings.color = document.getElementsByName('color')[0].value
@@ -115,15 +119,20 @@ function main() {
     // }
 
     // main
-    let color = document.getElementsByClassName('color')
-    for (let c of color) {
-        c.onmousedown = function() {
-            cSetup = 'color'
-            c.lastElementChild.checked = true
-            settings.color = c.lastElementChild.value
-        }
-    }
+
+    // let color = document.getElementsByClassName('color')
+    // for (let c of color) {
+    //     c.onmousedown = function() {
+    //         cSetup = 'color'
+    //         c.lastElementChild.checked = true
+    //         settings.color = c.lastElementChild.value
+    //     }
+    // }
+
     document.getElementById('role').onmousedown = () => unhide(document.getElementById('role').id)
+    document.getElementById('main-auto').onmousedown = () => unhide(document.getElementById('main-auto').id)
+    document.getElementById('main-killer').onmousedown = () => unhide(document.getElementById('main-killer').id)
+    document.getElementById('main-camper').onmousedown = () => unhide(document.getElementById('main-camper').id)
 
     // let role = document.getElementsByClassName('role')
     // for (let r of role) {
@@ -239,17 +248,44 @@ function main() {
 
     function unhide(a) {
         switch(a) {
-            case "role": {
-                console.log(a)
-                for (let c of document.getElementById('column-c-c').children) {
-                    
-                    c.style = "display: none"
+            // case "role": {
+            //     for (let child of document.getElementById('column-c').children) {
+            //         if (child.id.includes(a)) {
+            //             child.style.display = ''
+            //             child.hidden = false
+            //         }
+            //         else {
+            //             child.style.display = 'none'
+            //             child.hidden = true
+            //         }
+            //     }
+            //     break
+            // }
+            case "main-auto": {
+                for (let c of document.getElementsByClassName('wrapper-role')) {
+                    if (c.id != 'wrapper-auto') c.style.display = 'none'
+                    else c.style.display = ''
+                }
+                break
+            }
+            case "main-killer": {
+                for (let c of document.getElementsByClassName('wrapper-role')) {
+                    if (c.id != 'wrapper-killer') c.style.display = 'none'
+                    else c.style.display = ''
+                }
+                break
+            }
+            case "main-camper": {
+                for (let c of document.getElementsByClassName('wrapper-role')) {
+                    if (c.id != 'wrapper-camper') c.style.display = 'none'
+                    else c.style.display = ''
                 }
                 break
             }
             case "main-achiv": {
                 cSetup = a
                 for (let c of document.getElementById('column-c-c').children) {
+                    document.getElementById('role-value').hidden = true
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {
                             // c.style.background = '#00FF00'
@@ -270,6 +306,7 @@ function main() {
             }
             case "achiv": {
                 cSetup = 'achiv'
+                document.getElementById('role-value').hidden = true
                 for (let c of document.getElementById('column-c-c').children) {
                     if (Object.keys(c.classList).map(key => c.classList[key]).includes('achivments')) {
                         if (settings.achiv[0].includes(c.lastElementChild.value)) {
@@ -298,7 +335,19 @@ function main() {
                 }
                 break
             }
-            default: break
+            default: {
+                for (let child of document.getElementById('column-c').children) {
+                    if (child.id.includes(a)) {
+                        child.style.display = ''
+                        child.hidden = false
+                    }
+                    else {
+                        child.style.display = 'none'
+                        child.hidden = true
+                    }
+                }
+                break
+            }
         }
     }
 }

@@ -22,58 +22,22 @@
                     </div>
                     <div class="border setup onclick">
                         <div class="border key">Фон</div>
-                        <!-- <div class="border value">
-                            <div id="dark" class="border color">
-                                <input type="radio" name="color" value="dark">
-                            </div>
-                            <div id="blood" class="border color">
-                                <input type="radio" name="color" value="blood">
-                            </div>
-                            <div id="light" class="border color">
-                                <input type="radio" name="color" value="light">
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <div class="setup-box border">
                     <div id="role" class="border setup onclick">
-                        <div class="border key">Основная роль</div>
-                        <!-- <div class="border value">
-                            <div id="killer" class="border role">
-                                <input type="radio" name="role" value="killer">
-                            </div>
-                            <div id="auto" class="border role">
-                                <input type="radio" name="role" value="auto">
-                            </div>
-                            <div id="camper" class="border role">
-                                <input type="radio" name="role" value="camper">
-                            </div>
-                        </div> -->
+                        <div class="border key">Роль и персонаж</div>
                     </div>
-                    <div class="border setup onclick">
-                        <div class="border key">Персонаж</div>
-                        <!-- <div class="border value" id="char">выбор</div> -->
-                    </div>
-                </div>
-                <div class="setup-box border">
                     <div id="main-achiv" class="border setup achiv onclick">
                         <div class="border key">Основные достижения</div>
-                        <!-- <div class="border value"></div> -->
                     </div>
                     <div id="achiv" class="border setup achiv onclick">
                         <div class="border key">Достижения</div>
-                        <!-- <div class="border value"></div> -->
                     </div>
+                </div>
+                <div class="setup-box border">
                     <div class="border setup onclick">
                         <div class="border key">Демотиватор</div>
-                        <!-- <div class="border value">
-                            <div id="motiv" class="border motiv">
-                                <input type="radio" name="motiv" value="true">
-                            </div>
-                            <div id="motiv" class="border motiv">
-                                <input type="radio" name="motiv" value="false">
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <div class="border setup">
@@ -81,12 +45,14 @@
                 </div>
             </div>
             <div id="column-c" class="column-c column">
-                <div id="role-value" class="setup-box border">
-                    <div class="border setup onclick">
+                <div id="role-value" class="border">
+                    <div id="main-auto" class="border setup onclick">
                         <div id="ma-text">Auto</div>
                     </div>
-                    <div id="wrapper-auto" class="wrapper-role border"></div>
-                    <div class="border setup onclick">
+                    <div id="wrapper-auto" class="wrapper-role border">
+                        <div class="char border"></div>
+                    </div>
+                    <div id="main-killer" class="border setup onclick">
                         <div id="mk-text">Main killer</div>
                     </div>
                     <div id="wrapper-killer" class="wrapper-role border">
@@ -108,21 +74,85 @@
                         <div class="char border"></div>
                         <div class="char border"></div>
                     </div>
-                    <div class="border setup onclick">
+                    <div id="main-camper" class="border setup onclick">
                         <div id="mc-text">Main survivor</div>
                     </div>
-                    <div id="wrapper-camper" class="wrapper-role border"></div>
-                    <!-- <div id="killer" class="border role border">
-                        <input type="radio" name="role" value="killer">
+                    <div id="wrapper-camper" class="wrapper-role border">
+                        <div class="char border"></div>
+                        <div class="char border"></div>
+                        <div class="char border"></div>
+                        <div class="char border"></div>
+                        <div class="char border"></div>
                     </div>
-                    <div id="auto" class="border role border">
-                        <input type="radio" name="role" value="auto">
-                    </div>
-                    <div id="camper" class="border role border">
-                        <input type="radio" name="role" value="camper">
-                    </div> -->
                 </div>
-                <div id="column-c-c" class="border"></div>
+                <div id="achiv-value" class="border">
+                    <div id="achiv-main" class="border setup onclick">
+                        <div id="am-text">Главные достижения</div>
+                    </div>
+                    <div id="wrapper-achivmain" class="wrapper-achiv border">
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                    </div>
+                    <div id="achiv-top" class="border setup onclick">
+                        <div id="at-text">Лучшие достижения</div>
+                    </div>
+                    <div id="wrapper-achivtop" class="wrapper-achiv border">
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                        <div class="achivments border">
+                            <div class="achiv-img border"></div>
+                            <div class="achiv-name border"></div>
+                            <div class="achiv-pos border"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="column-c-c" class="border">1</div>
             </div>
             <div class="column-r column">
                 <div id="main-info" class="mi-1 border">
