@@ -20,23 +20,23 @@
                         <div class="border key">Steam</div>
                         <!-- <div class="border value"></div> -->
                     </div>
-                    <div class="border setup onclick">
+                    <div id="color" class="border setup onclick-setup">
                         <div class="border key">Фон</div>
                     </div>
                 </div>
                 <div class="setup-box border">
-                    <div id="role" class="border setup onclick">
+                    <div id="role" class="border setup onclick-setup">
                         <div class="border key">Роль и персонаж</div>
                     </div>
-                    <div id="main-achiv" class="border setup achiv onclick">
+                    <!-- <div id="main-achiv" class="border setup achiv onclick">
                         <div class="border key">Основные достижения</div>
-                    </div>
-                    <div id="achiv" class="border setup achiv onclick">
+                    </div> -->
+                    <div id="achiv" class="border setup achiv onclick-setup">
                         <div class="border key">Достижения</div>
                     </div>
                 </div>
                 <div class="setup-box border">
-                    <div class="border setup onclick">
+                    <div id="motiv" class="border setup onclick-setup">
                         <div class="border key">Демотиватор</div>
                     </div>
                 </div>
@@ -45,17 +45,17 @@
                 </div>
             </div>
             <div id="column-c" class="column-c column">
-                <div id="role-value" class="border">
-                    <div id="main-auto" class="border setup onclick">
+                <div id="role-value" class="border" hidden>
+                    <div id="mainauto" class="border setup onclick-config">
                         <div id="ma-text">Auto</div>
                     </div>
-                    <div id="wrapper-auto" class="wrapper-role border">
+                    <div id="wrapper-mainauto" class="wrapper-role border">
                         <div class="char border"></div>
                     </div>
-                    <div id="main-killer" class="border setup onclick">
+                    <div id="mainkiller" class="border setup onclick-config">
                         <div id="mk-text">Main killer</div>
                     </div>
-                    <div id="wrapper-killer" class="wrapper-role border">
+                    <div id="wrapper-mainkiller" class="wrapper-role border">
                         <div class="char border"></div>
                         <div class="char border"></div>
                         <div class="char border"></div>
@@ -74,10 +74,10 @@
                         <div class="char border"></div>
                         <div class="char border"></div>
                     </div>
-                    <div id="main-camper" class="border setup onclick">
+                    <div id="maincamper" class="border setup onclick-config">
                         <div id="mc-text">Main survivor</div>
                     </div>
-                    <div id="wrapper-camper" class="wrapper-role border">
+                    <div id="wrapper-maincamper" class="wrapper-role border">
                         <div class="char border"></div>
                         <div class="char border"></div>
                         <div class="char border"></div>
@@ -152,7 +152,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="column-c-c" class="border">1</div>
+                <!-- <div id="column-c-c" class="border">1</div> -->
             </div>
             <div class="column-r column">
                 <div id="main-info" class="mi-1 border">

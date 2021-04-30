@@ -111,11 +111,11 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-.onclick:hover {
+.onclick-setup:hover {
     cursor: pointer;
     background-image: url(../img/border-top-active.png);
 }
-.onclick:active {
+.onclick-setup:active {
     background-image: url(../img/border-top-hover.png);
 }
 .setup-c {

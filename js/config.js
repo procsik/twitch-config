@@ -7,17 +7,13 @@ function main() {
         role: 'auto',
         motiv: '',
         char: '',
-        // achivMain: ["escaped","protectionhits"],
-        // achiv: ["bloodpoints","survivorshealed","escaped_hatch","saved"]
         achiv: [
             ["escaped","protectionhits"],
             ["bloodpoints","survivorshealed","escaped_hatch","saved"]
         ]
     })
     let cSetup = ''
-    // let achivMainTmp = {}
     let achivTmp = {}
-    let newAchivTmp = {}
 
     // COLOR
     switch(settings.color) {
@@ -48,7 +44,27 @@ function main() {
         i++
     }
 
-    //for (let child of document.getElementById('column-c').children) child.style.display = 'none'
+    for (let setup of document.getElementsByClassName('onclick-setup')) setup.onmousedown = () => {
+
+        for (let s of document.getElementById('column-c').children) {
+            if (s.id.includes(setup.id)) {
+                s.hidden = false
+                for (let c of s.children) {
+                    if (c.className.includes('wrapper-role')) {
+                        if (c.id.includes(settings.role)) c.style.display = 'flex'
+                        else c.style.display = 'none'
+                    }
+                    c.onmousedown = c.className.includes('onclick-config') ? function() {
+                        for (let e of document.getElementsByClassName('wrapper-role')) {
+                            e.style.display = e.id.includes(c.id) ? 'flex' : 'none'
+                        }
+                    } : ''
+                }
+            } else {
+                s.hidden = true
+            }
+        }
+    }
 
     // achievements 
     // for (let a in sortByPos(data.stats.onteh)) {
@@ -83,8 +99,8 @@ function main() {
     // }
 
     // character
-    for (let c of document.getElementsByClassName('wrapper-role')) 
-        c.style.display = c.id.includes(settings.role) ? '' : 'none'
+    // for (let c of document.getElementsByClassName('wrapper-role')) 
+    //     c.style.display = c.id.includes(settings.role) ? '' : 'none'
 
     // Object.keys(data.character).forEach(key => {
     //     let character = document.createElement('div')
@@ -129,10 +145,10 @@ function main() {
     //     }
     // }
 
-    document.getElementById('role').onmousedown = () => unhide(document.getElementById('role').id)
-    document.getElementById('main-auto').onmousedown = () => unhide(document.getElementById('main-auto').id)
-    document.getElementById('main-killer').onmousedown = () => unhide(document.getElementById('main-killer').id)
-    document.getElementById('main-camper').onmousedown = () => unhide(document.getElementById('main-camper').id)
+    // document.getElementById('role').onmousedown = () => unhide(document.getElementById('role').id)
+    // document.getElementById('main-auto').onmousedown = () => unhide(document.getElementById('main-auto').id)
+    // document.getElementById('main-killer').onmousedown = () => unhide(document.getElementById('main-killer').id)
+    // document.getElementById('main-camper').onmousedown = () => unhide(document.getElementById('main-camper').id)
 
     // let role = document.getElementsByClassName('role')
     // for (let r of role) {
@@ -145,35 +161,35 @@ function main() {
 
     // document.getElementById('char').onmousedown = (a) => unhide(a.target.id)
 
-    let achivSetup = document.getElementsByClassName('achiv')
-    for (let a of achivSetup) a.onmousedown = () => {
-        unhide(a.id)
-    }
+    // let achivSetup = document.getElementsByClassName('achiv')
+    // for (let a of achivSetup) a.onmousedown = () => {
+    //     unhide(a.id)
+    // }
 
     // document.getElementById('character').onmousedown = () => {
     //     showChar(settings.role)
     // }
     
-    let motiv = document.getElementsByClassName('motiv')
-    for (let m of motiv) {
-        m.onmousedown = function() {
-            cSetup = 'motiv'
-            m.lastElementChild.checked = true
-            settings.motiv = m.lastElementChild.value
-        }
-    }
+    // let motiv = document.getElementsByClassName('motiv')
+    // for (let m of motiv) {
+    //     m.onmousedown = function() {
+    //         cSetup = 'motiv'
+    //         m.lastElementChild.checked = true
+    //         settings.motiv = m.lastElementChild.value
+    //     }
+    // }
     
-    document.getElementById('button').onclick = function() {
-        console.log(settings,cSetup)
-    }
+    // document.getElementById('button').onclick = function() {
+    //     console.log(settings,cSetup)
+    // }
 
-    let char = document.getElementsByName('char')
-    for (let c of char) {
-        c.onmousedown = function() {
-            c.lastElementChild.checked = true
-            settings.char = c.lastElementChild.value
-        }
-    }
+    // let char = document.getElementsByName('char')
+    // for (let c of char) {
+    //     c.onmousedown = function() {
+    //         c.lastElementChild.checked = true
+    //         settings.char = c.lastElementChild.value
+    //     }
+    // }
 
     /* let achiv = document.getElementsByClassName('achivments')
     for (let a of achiv) {
