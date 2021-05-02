@@ -4,7 +4,7 @@ function main() {
     // init
     let settings = new Object({
         color: '',
-        role: 'auto',
+        role: 'mainauto',
         motiv: '',
         char: '',
         achiv: [
@@ -13,8 +13,8 @@ function main() {
         ]
     })
     let cSetup = ''
+    let cConfig = ''
     let achivTmp = {}
-    let achivBox = ''
 
     // COLOR
     switch(settings.color) {
@@ -41,7 +41,7 @@ function main() {
     for (let a in sortByPos(data.stats.onteh)) {
         let rowAchiv = document.createElement('div')
         rowAchiv.className = 'achivments border'
-        rowAchiv.onclick = () => changeAchiv(rowAchiv,a,cSetup)
+        rowAchiv.onclick = () => changeAchiv(rowAchiv,a,cConfig)
         // rowAchiv.style = 'display: none'
 
         let achivImg = document.createElement('div')
@@ -77,12 +77,24 @@ function main() {
         i++
     }
 
-    createAchiv(achivTmp)
+    createAchiv(settings.achiv)
 
     document.getElementById('role').onmousedown = () => {
+        cSetup = 'role'
+        activMenu(cSetup,'onclick-setup')
+        cConfig = ''
         document.getElementById('role-value').style.display = 'flex'
         for (let c of document.getElementById('role-value').children) {
-            if (c.className.includes('wrapper-role')) c.style.display = c.id.includes(settings.role) ? 'flex' : 'none'
+            if (c.className.includes('wrapper-role')) {
+                if (c.id.includes(settings.role)) {
+                    c.style.display = 'flex'
+                    cConfig = settings.role
+                    activMenu(cConfig,'onclick-config')
+                } else {
+                    c.style.display = 'none'
+                }
+            }
+            // c.style.display = c.id.includes(settings.role) ? 'flex' : 'none'
         }
 
         document.getElementById('achiv-value').style.display = 'none'
@@ -92,7 +104,10 @@ function main() {
         document.getElementById('achiv-value').style.display = 'flex'
         document.getElementById('wrapper-achivmain').style.display = 'flex'
         document.getElementById('wrapper-achivmain').style.order = '1'
-        cSetup = 'achivMain'
+        cSetup = 'achiv'
+        activMenu(cSetup,'onclick-setup')
+        cConfig = document.getElementById('achiv-value').firstElementChild.id
+        activMenu(cConfig,'onclick-config')
         for (let a of document.getElementsByClassName('achivments')) {
             if (settings.achiv[0].includes(a.lastElementChild.value)) {
                 a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
@@ -111,10 +126,11 @@ function main() {
 
     for (let c of document.getElementsByClassName('onclick-config')) {
         c.onmousedown = () => {
+            cConfig = c.id
+            activMenu(cConfig,'onclick-config')
             switch(c.id) {
                 case "achivmain": {
                     document.getElementById('wrapper-achivmain').style.order = '1'
-                    cSetup = 'achivMain'
 
                     for (let a of document.getElementsByClassName('achivments')) {
                         if (settings.achiv[0].includes(a.lastElementChild.value)) {
@@ -132,7 +148,6 @@ function main() {
                 }
                 case "achivtop": {
                     document.getElementById('wrapper-achivmain').style.order = '3'
-                    cSetup = 'achivTop'
 
                     for (let a of document.getElementsByClassName('achivments')) {
                         if (settings.achiv[0].includes(a.lastElementChild.value)) {
@@ -241,7 +256,7 @@ function main() {
     // }
     
     document.getElementById('button').onclick = function() {
-        console.log(settings,cSetup)
+        console.log(settings,cSetup,cConfig)
     }
 
     // let char = document.getElementsByName('char')
@@ -260,22 +275,32 @@ function main() {
         }
     } */
 
+    function activMenu(cfg,cls) {
+        for (let elem of document.getElementsByClassName(cls)) {
+            if (elem.id == cfg) elem.style.backgroundImage = "url(../web/img/border-top-hover.png)"
+            else elem.style.background = ''
+        }
+    }
+
     function createAchiv(aTmp) {
         let container = document.getElementById('info-topachiv')
+        let desc = document.getElementById('desc')
 
         while (container.firstChild) {
             container.removeChild(container.firstChild)
         }
 
-        for (let a in aTmp) {
-            for (let b in aTmp[a]) {
-                if (a == 0) {
+        let i = 0
+        for (let a of aTmp) {
+            for (let b of a) {
+                if (i == 0) {
                     let achiv = document.createElement('div')
                     achiv.className = 'topachiv'
+                    achiv.id = b
     
                     let achivImg = document.createElement('div')
                     achivImg.className = 'topachiv-img'
-                    achivImg.style.backgroundImage = 'url(' + aTmp[a][b].imgUrl +')'
+                    achivImg.style.backgroundImage = 'url(' + data.stats.onteh[b].imgUrl +')'
                     achiv.appendChild(achivImg)
     
                     let achivHover = document.createElement('div')
@@ -285,12 +310,39 @@ function main() {
                     container.appendChild(achiv)
                 }
             }
+            i++
         }
+
+        if (container.firstElementChild !== null) {
+            container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+        }
+
+        for (let a of container.children) {
+            a.onmousedown = () => {
+                for (let c of container.children) c.lastElementChild.style.background = ''
+                a.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+
+                while (desc.firstChild) desc.removeChild(desc.firstChild)
+                let msg = document.createElement('div')
+                let message = data.stats.onteh[a.id].desc
+                msg.innerHTML = message
+                    .replace('{value}',data.stats.onteh[a.id].value)
+                    .replace('{place}',data.stats.onteh[a.id].position)
+
+                let main = document.createElement('div')
+                main.id = 'main-k'
+                main.className = 'border'
+
+                desc.appendChild(main)
+                desc.appendChild(msg)
+            }
+        }
+
     }
 
     function changeAchiv(elem,a,s) {
         switch(s) {
-            case "achivMain": {
+            case "achivmain": {
                 if (elem.lastElementChild.checked) {
                     if (settings.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
                         settings.achiv[0].splice(settings.achiv[0].indexOf(elem.lastElementChild.value),1)
@@ -313,10 +365,10 @@ function main() {
                     achivTmp[0][elem.lastElementChild.value] = data.stats.onteh[a]
                     settings.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                 }
-                createAchiv(achivTmp)
+                createAchiv(settings.achiv)
                 break
             }
-            case "achivTop": {
+            case "achivtop": {
                 if (elem.lastElementChild.checked) {
                     if (settings.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
                         settings.achiv[1].splice(settings.achiv[1].indexOf(elem.lastElementChild.value),1)
