@@ -94,7 +94,6 @@ function main() {
                     c.style.display = 'none'
                 }
             }
-            // c.style.display = c.id.includes(settings.role) ? 'flex' : 'none'
         }
 
         document.getElementById('achiv-value').style.display = 'none'
@@ -165,6 +164,7 @@ function main() {
                     break
                 }
                 default: {
+                    settings.role = (c.id != 'mainauto') ? 'mainauto' : c.id
                     for (let r of document.getElementsByClassName('wrapper-role')) {
                         r.style.display = r.id.includes(c.id) ? 'flex' : 'none'
                     }
@@ -315,6 +315,7 @@ function main() {
 
         if (container.firstElementChild !== null) {
             container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+            createDesc(desc,container.firstElementChild.id)
         }
 
         for (let a of container.children) {
@@ -322,22 +323,27 @@ function main() {
                 for (let c of container.children) c.lastElementChild.style.background = ''
                 a.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
 
-                while (desc.firstChild) desc.removeChild(desc.firstChild)
-                let msg = document.createElement('div')
-                let message = data.stats.onteh[a.id].desc
-                msg.innerHTML = message
-                    .replace('{value}',data.stats.onteh[a.id].value)
-                    .replace('{place}',data.stats.onteh[a.id].position)
-
-                let main = document.createElement('div')
-                main.id = 'main-k'
-                main.className = 'border'
-
-                desc.appendChild(main)
-                desc.appendChild(msg)
+                createDesc(desc,a.id)
             }
         }
 
+    }
+
+    function createDesc(desc,nameId) {
+        while (desc.firstChild) desc.removeChild(desc.firstChild)
+
+        let msg = document.createElement('div')
+        let message = data.stats.onteh[nameId].desc
+        msg.innerHTML = message
+            .replace('{value}',data.stats.onteh[nameId].value)
+            .replace('{place}',data.stats.onteh[nameId].position)
+
+        let main = document.createElement('div')
+        main.id = 'main-k'
+        main.className = 'border'
+
+        desc.appendChild(main)
+        desc.appendChild(msg)
     }
 
     function changeAchiv(elem,a,s) {
