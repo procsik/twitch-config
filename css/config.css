@@ -25,7 +25,7 @@
 }
 
 .border {
-    border: 1px ridge #ff0000;
+    border: 0px ridge #ff0000;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -87,12 +87,12 @@
 
     -webkit-align-items: center;
     align-items: center;
-    margin: 5px 5px 4px 5px;
+    margin: 5px 5px 4px 0;
     /* vertical-align: middle;
     text-align: center; */
-    background-size: cover;
+    background-size: contain;
     background-image: url(../img/border-top.png);
-    background-position: center;
+    background-position: left;
     background-repeat: no-repeat;
 }
 .onclick-setup:hover,.onclick-config:hover {
@@ -117,7 +117,7 @@
 } */
 .key {
     margin-left: 10px;
-    font-size: 14pt;
+    font-size: 13pt;
     letter-spacing: 3px;
 
 
@@ -161,6 +161,18 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+#mainauto {
+    order: 0;
+}
+#mainkiller {
+    order: 2;
+}
+#maincamper {
+    order: 4;
+}
+/* #wrapper-char {
+    order: -3;
+} */
 .wrapper-achiv {
     /* -webkit-order: 1; */
     order: 1;
@@ -280,14 +292,29 @@
     -webkit-flex-direction: column;
 }
 .char {
+    position: relative;
     height: 93px;
     width: 70px;
     margin: 0 5px 5px 0;
-    background-image: url(../img/K01.png);
+    /* background-image: url(../img/K01.png); */
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 
+}
+.char-hover {
+    position: absolute;
+    height: 93px;
+    width: 68px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+.char-hover:hover {
+    background-image: url(../img/char-hover.png);
+}
+.char-hover:active {
+    box-shadow: inset 0 0 40px 0 rgba(255, 255, 255, .5);
 }
 .char:hover {
     cursor: pointer;
@@ -390,12 +417,13 @@
 #info-bloodpoints::after {
     content: " bp";
 }
-.ip-1 {
+#ip-1 {
 
     /* flex: auto; */
     width: 120px;
     height: 140px;
-    background-image: url('../img/K01.png');
+    /* background-image: url('../img/K01.png'); */
+    /* background-image: url(https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/9/9f/K01_charSelect_portrait.png/revision/latest?cb=20200721164223&format=original); */
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center;

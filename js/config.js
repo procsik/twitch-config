@@ -4,9 +4,9 @@ function main() {
     // init
     let settings = new Object({
         color: '',
-        role: 'mainauto',
+        role: 'mainkiller',
         motiv: '',
-        char: '',
+        char: 3,
         achiv: [
             ["escaped","protectionhits"],
             ["bloodpoints","survivorshealed","escaped_hatch","saved"]
@@ -35,6 +35,64 @@ function main() {
             }
         }
         default: break
+    }
+
+    // character
+    for (let c in data.character) {
+        let char = document.createElement('div')
+        char.className = 'char border ' + data.character[c].type
+        char.style.display = 'none'
+        char.style.backgroundImage = 'url(' + data.character[c].imgUrl + ')'
+        char.onclick = () => {
+            settings.char = parseInt(char.lastElementChild.value)
+            char.lastElementChild.checked = true
+            activeChar(settings.char)
+        }
+
+        let charHover = document.createElement('div')
+        charHover.className = 'char-hover border'
+        char.appendChild(charHover)
+
+        let charInput = document.createElement('input')
+        charInput.type = 'radio'
+        charInput.name = 'character'
+        charInput.value = data.character[c].id
+        // charInput.style.display = 'none'
+        charInput.checked = charInput.value == settings.char ? true : false
+        char.appendChild(charInput)
+
+        document.getElementById('wrapper-char').appendChild(char)
+        // switch(data.character[c].type) {
+        //     case "killer": {
+        //         let char = document.createElement('div')
+        //         char.classList = 'char border'
+        //         char.style.backgroundImage = 'url(../web/img/K01.png)'
+
+        //         let charInput = document.createElement('input')
+        //         charInput.type = 'radio'
+        //         charInput.name = 'character'
+        //         charInput.value = data.character[c].id
+        //         char.appendChild(charInput)
+
+        //         document.getElementById('wrapper-mainkiller').appendChild(char)
+        //         break
+        //     }
+        //     case "camper": {
+        //         let char = document.createElement('div')
+        //         char.classList = 'char border'
+        //         char.style.backgroundImage = 'url(../web/img/K01.png)'
+
+        //         let charInput = document.createElement('input')
+        //         charInput.type = 'radio'
+        //         charInput.name = 'character'
+        //         charInput.value = data.character[c].id
+        //         char.appendChild(charInput)
+
+        //         document.getElementById('wrapper-maincamper').appendChild(char)
+        //         break
+        //     }
+        //     default: break
+        // }
     }
 
     // achievements 
@@ -80,19 +138,23 @@ function main() {
     createAchiv(settings.achiv)
 
     document.getElementById('role').onmousedown = () => {
-        cSetup = 'role'
-        activMenu(cSetup,'onclick-setup')
+        //cSetup = 'role'
+        activMenu('role','onclick-setup')
         cConfig = ''
         document.getElementById('role-value').style.display = 'flex'
+        
         for (let c of document.getElementById('role-value').children) {
-            if (c.className.includes('wrapper-role')) {
-                if (c.id.includes(settings.role)) {
-                    c.style.display = 'flex'
-                    cConfig = settings.role
-                    activMenu(cConfig,'onclick-config')
-                } else {
-                    c.style.display = 'none'
+            if (c.id.includes(settings.role)) {
+                for (let char of document.getElementsByClassName('char')) {
+                    if (settings.role.includes(char.classList[2])) {
+                        char.style.display = ''
+                        activeChar(settings.char)
+                    }
+                    
+                    // char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
                 }
+                document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
+                activMenu(settings.role,'onclick-config')
             }
         }
 
@@ -164,10 +226,20 @@ function main() {
                     break
                 }
                 default: {
-                    settings.role = (c.id != 'mainauto') ? 'mainauto' : c.id
-                    for (let r of document.getElementsByClassName('wrapper-role')) {
-                        r.style.display = r.id.includes(c.id) ? 'flex' : 'none'
+                    if (settings.role != cConfig) {
+                        settings.role = cConfig
+
                     }
+                    document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
+                    for (let char of document.getElementsByClassName('char')) {
+                        char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
+                    }
+                    // if (c.id.includes('mainkiller')) document.getElementById('wrapper-char').style.order = '3'
+                    // else if (c.id.includes('maincamper')) document.getElementById('wrapper-char').style.order = '5'
+                    // settings.role = (c.id != 'mainauto') ? 'mainauto' : c.id
+                    // for (let r of document.getElementsByClassName('wrapper-role')) {
+                    //     r.style.display = r.id.includes(c.id) ? '' : 'none'
+                    // }
                     break
                 }
             }
@@ -279,6 +351,17 @@ function main() {
         for (let elem of document.getElementsByClassName(cls)) {
             if (elem.id == cfg) elem.style.backgroundImage = "url(../web/img/border-top-hover.png)"
             else elem.style.background = ''
+        }
+    }
+
+    function activeChar(id) {
+        for (let c of document.getElementsByClassName('char')) {
+            // c.firstElementChild.style.backgroundImage = c.lastElementChild.value == id ? "url(../web/img/char-hover.png)" : ""
+            if (c.lastElementChild.value == id) {
+                c.firstElementChild.style.backgroundImage = "url(../web/img/char-hover.png)"
+                document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ id +".png)"
+            }
+            else c.firstElementChild.style.backgroundImage = ""
         }
     }
 

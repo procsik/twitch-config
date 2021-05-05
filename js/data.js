@@ -4,65 +4,150 @@ let data =
         "char1": {
             "id": 1,
             "type": "killer",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-1.png"
         },
         "char2": {
             "id": 2,
             "type": "killer",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-2.png"
         },
         "char3": {
             "id": 3,
             "type": "killer",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-3.png"
         },
         "char4": {
             "id": 4,
             "type": "killer",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-4.png"
         },
         "char5": {
             "id": 5,
             "type": "killer",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-5.png"
         },
         "char6": {
             "id": 6,
             "type": "killer",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-6.png"
         },
         "char7": {
             "id": 7,
-            "type": "camper",
-            "imgUrl": ""
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-7.png"
         },
         "char8": {
             "id": 8,
-            "type": "camper",
-            "imgUrl": ""
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-8.png"
         },
         "char9": {
             "id": 9,
-            "type": "camper",
-            "imgUrl": ""
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-9.png"
         },
         "char10": {
             "id": 10,
-            "type": "camper",
-            "imgUrl": ""
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-10.png"
         },
         "char11": {
             "id": 11,
-            "type": "camper",
-            "imgUrl": ""
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-11.png"
         },
         "char12": {
             "id": 12,
-            "type": "camper",
-            "imgUrl": ""
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-12.png"
         },
         "char13": {
             "id": 13,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-13.png"
+        },
+        "char14": {
+            "id": 14,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-14.png"
+        },
+        "char15": {
+            "id": 15,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-15.png"
+        },
+        "char16": {
+            "id": 16,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-16.png"
+        },
+        "char17": {
+            "id": 17,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-17.png"
+        },
+        "char18": {
+            "id": 18,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-18.png"
+        },
+        "char19": {
+            "id": 19,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-19.png"
+        },
+        "char20": {
+            "id": 20,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-20.png"
+        },
+        "char21": {
+            "id": 21,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-21.png"
+        },
+        "char22": {
+            "id": 22,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-22.png"
+        },
+        "char23": {
+            "id": 23,
+            "type": "killer",
+            "imgUrl": "../web/img/characters/char-23.png"
+        },
+        "char24": {
+            "id": 24,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char25": {
+            "id": 25,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char26": {
+            "id": 26,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char27": {
+            "id": 27,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char28": {
+            "id": 28,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char29": {
+            "id": 29,
+            "type": "camper",
+            "imgUrl": ""
+        },
+        "char30": {
+            "id": 30,
             "type": "camper",
             "imgUrl": ""
         }
