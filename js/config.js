@@ -3,12 +3,13 @@ document.addEventListener("load", main())
 function main() {
     // init
     let settings = new Object({
+        player: 'Logicandintuition',
         color: '',
         role: 'mainkiller',
         motiv: '',
         char: 3,
         achiv: [
-            ["escaped","protectionhits"],
+            ["obsessionshealed","protectionhits"],
             ["bloodpoints","survivorshealed","escaped_hatch","saved"]
         ]
     })
@@ -136,6 +137,7 @@ function main() {
     }
 
     createAchiv(settings.achiv)
+    activeChar(settings.char)
 
     document.getElementById('role').onmousedown = () => {
         //cSetup = 'role'
@@ -225,15 +227,13 @@ function main() {
 
                     break
                 }
+                case "mainauto": {
+                    
+                    break
+                }
                 default: {
-                    if (settings.role != cConfig) {
-                        settings.role = cConfig
-
-                    }
-                    document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
-                    for (let char of document.getElementsByClassName('char')) {
-                        char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
-                    }
+                    changeChar(c)
+                    
                     // if (c.id.includes('mainkiller')) document.getElementById('wrapper-char').style.order = '3'
                     // else if (c.id.includes('maincamper')) document.getElementById('wrapper-char').style.order = '5'
                     // settings.role = (c.id != 'mainauto') ? 'mainauto' : c.id
@@ -417,9 +417,19 @@ function main() {
 
         let msg = document.createElement('div')
         let message = data.stats.onteh[nameId].desc
-        msg.innerHTML = message
-            .replace('{value}',data.stats.onteh[nameId].value)
-            .replace('{place}',data.stats.onteh[nameId].position)
+
+        let spanPlayer = "<span id='sPlayer'>" + settings.player + " </span>"
+
+        let classPos = ''
+        if (data.stats.onteh[nameId].status > 0) classPos = 'posUp'
+        else if ((data.stats.onteh[nameId].status < 0)) classPos = 'posDown'
+        else classPos = 'posNm'
+
+        msg.innerHTML = spanPlayer + message
+            .replace('{value}',"<span id='sValue'>" + 
+                data.stats.onteh[nameId].value + " </span>" + 
+                "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed() + "</span>)</span>")
+            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + data.stats.onteh[nameId].position + " </span>")
 
         let main = document.createElement('div')
         main.id = 'main-k'
@@ -427,6 +437,14 @@ function main() {
 
         desc.appendChild(main)
         desc.appendChild(msg)
+    }
+
+    function changeChar(c) {
+        settings.role = cConfig
+        document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
+        for (let char of document.getElementsByClassName('char')) {
+            char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
+        }
     }
 
     function changeAchiv(elem,a,s) {
@@ -479,28 +497,6 @@ function main() {
             }
             default: break
         }
-    }
-}
-
-function showChar(c) {
-    switch(c) {
-        case 'killer': {
-            for (let char of document.getElementsByName('char')) {
-                char.lastElementChild.checked = false
-                if (char.lastElementChild.value[0] == 'K') char.hidden = false
-                else char.hidden = true
-            }
-            break
-        }
-        case 'camper': {
-            for (let char of document.getElementsByName('char')) {
-                char.lastElementChild.checked = false
-                if (char.lastElementChild.value[0] == 'C') char.hidden = false
-                else char.hidden = true
-            }
-            break
-        }
-        default: break
     }
 }
 

@@ -1,4 +1,5 @@
 @import "reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 #app {
     height: 496px;
@@ -15,6 +16,7 @@
     background-size: auto;
 
     color: wheat;
+    font-family: 'Roboto', sans-serif;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -417,11 +419,23 @@
 #info-bloodpoints::after {
     content: " bp";
 }
+#ip-2 {
+    margin-top: 5px;
+    width: 110px;
+    height: 130px;
+    background-image: url('../img/characters/char-1.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    position: relative;
+}
 #ip-1 {
 
     /* flex: auto; */
-    width: 120px;
-    height: 140px;
+    margin-top: 5px;
+    width: 110px;
+    height: 130px;
     /* background-image: url('../img/K01.png'); */
     /* background-image: url(https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/9/9f/K01_charSelect_portrait.png/revision/latest?cb=20200721164223&format=original); */
     background-size:contain;
@@ -445,6 +459,12 @@
     justify-content: flex-end;
     -webkit-align-items: center;
     align-items: center;
+    /* flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: center;
+    -webkit-justify-content: center;
+    align-items: center;
+    -webkit-align-items: center; */
 }
 .topachiv {
     width: 55px;
@@ -466,6 +486,7 @@
     border-radius: 3px;
 
     margin: 0 20px 0 10px;
+    /* margin: 5px 0 0 0; */
 }
 
 .topachiv-img {
@@ -652,33 +673,66 @@
     z-index: 1;
     line-height: 22px;
     margin: 5px;
-    color: white;
+    color: #e2ce97;
+    text-shadow: 1px 1px 1px #000;
+    font-size: 10pt;
+    font-weight: bold;
+}
+#sPlayer {
+    font-weight: bold;
+    color: #ac3ee3; 
+    font-size: 12pt;
+}
+#sValue {
+    font-weight: bold;
+    color: #ff8800;  
     font-size: 11pt;
 }
+#cValueText {
+    font-style: oblique;
+}
+#cValue {
+    color: #ff8800;  
+    font-weight: bold;
+}
+#sPos {
+    font-weight: bolder;
+    font-size: 11pt;
+}
+.posUp {
+    color: #199b1e; 
+}
+.posDown {
+    color: #d41c1c; 
+}
+.posNm {
+    color: #e8c252; 
+}
 #main-k {
-    width: 45px;
-    height: 45px;
+    width: 44px;
+    height: 44px;
     
     position: relative;
     float: left;
-    margin: 0 5px 0 0;
+    margin: 0 5px 0 5px;
     opacity: 0.6;
     
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    background-image: url(../img/main-c2.png);
+    background-image: url(../img/main-k2.png);
 }
 
 #rank-k {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
 
     position: absolute;
-    left: 105px;
+    left: 150px;
     bottom: 0;
     z-index: 0;
     opacity: 0.3;
+   
     
     background-repeat: no-repeat;
     background-size: contain;
@@ -686,14 +740,15 @@
     background-image: url(../img/kr1.png);
 }
 #rank-c {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
 
     position: absolute;
-    right: 5px;
+    right: 0;
     bottom: 0;
     z-index: 0;
-    opacity: 1;
+    opacity: 0.3;
+
     
     background-repeat: no-repeat;
     background-size: contain;
