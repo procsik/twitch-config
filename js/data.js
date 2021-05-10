@@ -157,14 +157,14 @@ let data =
     },
     "stats": {
         "steam": {
-            "DBD_BloodwebPoints":569445284,
-            "DBD_CamperMaxScoreByCategory":678,
-            "DBD_GeneratorPct_float":29586.330,
-            "DBD_HealPct_float":8713.7265625,
-            "DBD_SkillCheckSuccess":119512,
-            "DBD_UnhookOrHeal":12579,
-            "DBD_Escape":9626,
-            "DBD_EscapeThroughHatch":829,
+            "DBD_BloodwebPoints":569445284, //
+            "DBD_CamperMaxScoreByCategory":678, //
+            "DBD_GeneratorPct_float":29586.330, // 70
+            "DBD_HealPct_float":8713.7265625, //
+            "DBD_SkillCheckSuccess":119512, //
+            "DBD_UnhookOrHeal":12579, // 70
+            "DBD_Escape":9626, // 60
+            "DBD_EscapeThroughHatch":829, //
             "DBD_Chapter14_Camper_Stat1":110,
             "DBD_Chapter16_Camper_Stat1_float":245.89808654785156
         },
@@ -200,7 +200,7 @@ let data =
                 "steamId":"DBD_GeneratorPct_float"
             },
             "survivorshealed":{
-                "status":-1,
+                "status":0,
                 "position":416,
                 "value":8712,
                 "id":0,
@@ -230,7 +230,7 @@ let data =
                 "steamId":"DBD_UnhookOrHeal"
             },
             "escaped":{
-                "status":-1,
+                "status":1,
                 "position":42,
                 "value":9326,
                 "id":0,

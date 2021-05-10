@@ -10,7 +10,7 @@ function main() {
         char: 3,
         achiv: [
             ["obsessionshealed","protectionhits"],
-            ["bloodpoints","survivorshealed","escaped_hatch","saved"]
+            ["escaped","survivorshealed","escaped_hatch","saved","gensrepaired"]
         ]
     })
     let cSetup = ''
@@ -58,7 +58,7 @@ function main() {
         charInput.type = 'radio'
         charInput.name = 'character'
         charInput.value = data.character[c].id
-        // charInput.style.display = 'none'
+        charInput.style.display = 'none'
         charInput.checked = charInput.value == settings.char ? true : false
         char.appendChild(charInput)
 
@@ -367,10 +367,15 @@ function main() {
 
     function createAchiv(aTmp) {
         let container = document.getElementById('info-topachiv')
+        let topdbd = document.getElementById('topdbd')
         let desc = document.getElementById('desc')
 
-        while (container.firstChild) {
-            container.removeChild(container.firstChild)
+        while (container.firstElementChild) {
+            container.removeChild(container.firstElementChild)
+        }
+
+        while (topdbd.firstElementChild) {
+            topdbd.removeChild(topdbd.firstElementChild)
         }
 
         let i = 0
@@ -391,6 +396,27 @@ function main() {
                     achiv.appendChild(achivHover)
     
                     container.appendChild(achiv)
+                } else {
+                    let topachiv = document.createElement('div')
+
+                    let status = ''
+                    if (data.stats.onteh[b].status > 0) status = 'topup'
+                    else if (data.stats.onteh[b].status < 0) status = 'topdw'
+                    else status = 'topnm'
+
+                    topachiv.id = b
+                    topachiv.className = 'topdbd ' + status
+
+                    let tophover = document.createElement('div')
+                    tophover.className = 'hover'
+                    topachiv.appendChild(tophover)
+
+                    let topdbdImg = document.createElement('div')
+                    topdbdImg.className = 'topdbd-img'
+                    topdbdImg.style.backgroundImage = 'url(../web/img/achievements/'+ data.stats.onteh[b].steamId + '.png)'
+                    tophover.appendChild(topdbdImg)
+
+                    topdbd.appendChild(topachiv)
                 }
             }
             i++
@@ -404,7 +430,18 @@ function main() {
         for (let a of container.children) {
             a.onmousedown = () => {
                 for (let c of container.children) c.lastElementChild.style.background = ''
-                a.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+                for (let c of topdbd.children) c.firstElementChild.style.background = ''
+                a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
+
+                createDesc(desc,a.id)
+            }
+        }
+
+        for (let a of topdbd.children) {
+            a.onmousedown = () => {
+                for (let c of container.children) c.lastElementChild.style.background = ''
+                for (let c of topdbd.children) c.firstElementChild.style.background = ''
+                a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
 
                 createDesc(desc,a.id)
             }
@@ -493,6 +530,7 @@ function main() {
                         elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                     }
                 }
+                createAchiv(settings.achiv)
                 break
             }
             default: break

@@ -564,6 +564,7 @@
     -webkit-flex-direction: row;
     display: flex;
     flex-direction: row;
+    height: 60px;
 }
 
 .topup {
@@ -585,6 +586,17 @@
     background-size: contain;
     background-position: right;
     background-image: url(../img/topstats-nm.png);
+}
+.topdbd-img {
+    flex: auto;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* background-size: 70%; */
+    background-size: 75%;
+    background-position: center;
+    /* background-image: url(../img/escaped.png); */
 }
 #topdbd-1 {
     flex: auto;
@@ -635,9 +647,9 @@
 
     background-repeat: no-repeat;
     background-size: contain;
-    background-size: 60%;
+    background-size: 70%;
     background-position: center;
-    background-image: url(../img/sacrifice.png);
+    background-image: url(../img/achievements/DBD_GeneratorPct_float.png);
 }
 
 
@@ -650,6 +662,9 @@
     background-size: contain;
     background-position: center;
     background-image: url(../img/topstats-hover.png);
+}
+.hover:active {
+    box-shadow: inset 0 0 30px 0 rgba(255, 255, 255, .5);
 }
 
 #gs-desc {
@@ -714,13 +729,13 @@
     
     position: relative;
     float: left;
-    margin: 0 5px 0 5px;
-    opacity: 0.6;
+    margin: 0 5px 0 0;
+    opacity: 0.5;
     
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    background-image: url(../img/main-k2.png);
+    background-image: url(../img/main-k3.png);
 }
 
 #rank-k {
