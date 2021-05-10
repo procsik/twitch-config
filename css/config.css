@@ -27,7 +27,7 @@
 }
 
 .border {
-    border: 0px ridge #ff0000;
+    border: 1px ridge #ff0000;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
