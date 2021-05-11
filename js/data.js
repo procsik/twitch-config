@@ -116,41 +116,133 @@ let data =
             "type": "killer",
             "imgUrl": "../web/img/characters/char-23.png"
         },
-        "char24": {
-            "id": 24,
+        "char101": {
+            "id": 101,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-101.png"
         },
-        "char25": {
-            "id": 25,
+        "char102": {
+            "id": 102,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-102.png"
         },
-        "char26": {
-            "id": 26,
+        "char103": {
+            "id": 103,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-103.png"
         },
-        "char27": {
-            "id": 27,
+        "char104": {
+            "id": 105,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-104.png"
         },
-        "char28": {
-            "id": 28,
+        "char105": {
+            "id": 105,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-105.png"
         },
-        "char29": {
-            "id": 29,
+        "char106": {
+            "id": 106,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-106.png"
         },
-        "char30": {
-            "id": 30,
+        "char107": {
+            "id": 107,
             "type": "camper",
-            "imgUrl": ""
+            "imgUrl": "../web/img/characters/char-107.png"
+        },
+        "char108": {
+            "id": 108,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-108.png"
+        },
+        "char109": {
+            "id": 109,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-109.png"
+        },
+        "char110": {
+            "id": 110,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-110.png"
+        },
+        "char111": {
+            "id": 111,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-111.png"
+        },
+        "char112": {
+            "id": 112,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-112.png"
+        },
+        "char113": {
+            "id": 113,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-113.png"
+        },
+        "char114": {
+            "id": 114,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-114.png"
+        },
+        "char115": {
+            "id": 115,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-115.png"
+        },
+        "char116": {
+            "id": 116,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-116.png"
+        },
+        "char117": {
+            "id": 117,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-117.png"
+        },
+        "char118": {
+            "id": 118,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-118.png"
+        },
+        "char119": {
+            "id": 119,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-119.png"
+        },
+        "char120": {
+            "id": 120,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-120.png"
+        },
+        "char121": {
+            "id": 121,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-121.png"
+        },
+        "char122": {
+            "id": 122,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-122.png"
+        },
+        "char123": {
+            "id": 123,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-123.png"
+        },
+        "char124": {
+            "id": 124,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-124.png"
+        },
+        "char125": {
+            "id": 125,
+            "type": "camper",
+            "imgUrl": "../web/img/characters/char-125.png"
         }
+        
+
     },
     "config": {
 
@@ -158,14 +250,14 @@ let data =
     "stats": {
         "timeupdate":1620721355,
         "steam": {
-            "DBD_BloodwebPoints":569445284, //
-            "DBD_CamperMaxScoreByCategory":678, //
-            "DBD_GeneratorPct_float":29586.330, // 70
-            "DBD_HealPct_float":8713.7265625, //
-            "DBD_SkillCheckSuccess":119512, //
-            "DBD_UnhookOrHeal":12579, // 70
-            "DBD_Escape":9626, // 60
-            "DBD_EscapeThroughHatch":829, //
+            "DBD_BloodwebPoints":569445284,
+            "DBD_CamperMaxScoreByCategory":678,
+            "DBD_GeneratorPct_float":29586.330,
+            "DBD_HealPct_float":8713.7265625,
+            "DBD_SkillCheckSuccess":119512,
+            "DBD_UnhookOrHeal":12579,
+            "DBD_Escape":9626,
+            "DBD_EscapeThroughHatch":829,
             "DBD_Chapter14_Camper_Stat1":110,
             "DBD_Chapter16_Camper_Stat1_float":245.89808654785156
         },

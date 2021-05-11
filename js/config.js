@@ -17,6 +17,11 @@ function main() {
     let cConfig = ''
     let achivTmp = {}
 
+    let bp = 12342525243
+    let hs = 5235
+    document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
     let lastUpdate = new Date(data.stats.timeupdate * 1000)
     lastUpdate = '* - last Steam statistics update: ' + lastUpdate.getUTCDate() + '.' + 
         lastUpdate.getUTCMonth('mm') + '.' + 
@@ -476,9 +481,9 @@ function main() {
 
         msg.innerHTML = spanPlayer + message
             .replace('{value}',"<span id='sValue'>" + 
-                data.stats.onteh[nameId].value + "</span> " + 
-                "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed() + "</span>*)</span>")
-            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + data.stats.onteh[nameId].position + " </span>")
+                data.stats.onteh[nameId].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span> " + 
+                "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
+            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + data.stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
 
         document.getElementById('last-update').innerText = lastUpdate
 

@@ -82,6 +82,7 @@
 .setup {
 /*     flex: auto; */
     /* height: 35px; */
+    position: relative;
     line-height: 40px;
     display: flex;
     display: -webkit-flex;
@@ -93,7 +94,8 @@
     margin: 5px 5px 4px 0;
     /* vertical-align: middle;
     text-align: center; */
-    background-size: contain;
+    /* background-size: cover; */
+    background-size: 100% 110%;
     background-image: url(../img/border-top.png);
     background-position: left;
     background-repeat: no-repeat;
@@ -119,7 +121,7 @@
     width: 60px;
 } */
 .key {
-    margin-left: 10px;
+    margin-left: 45px;
     font-size: 13pt;
     letter-spacing: 3px;
 
@@ -127,6 +129,38 @@
     /* -webkit-flex-grow: 0; 
     flex-grow: 0; */
 }
+.key-img {
+    position: absolute;
+    left: 12px;
+    top: 6px;
+    width: 25px;
+    height: 25px;
+    opacity: 0.6;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+#ki-status {
+    background-image: url(../img/status.png);
+}
+#ki-steam {
+    background-image: url(../img/steam.png);
+    opacity: 0.4;
+}
+#ki-color {
+    background-image: url(../img/color.png);
+}
+#ki-role {
+    background-image: url(../img/role.png);
+}
+#ki-achiv {
+    background-image: url(../img/achiv.png);
+}
+#ki-motiv {
+    background-image: url(../img/motiv.png);
+}
+
 .value {
     display: flex;
     display: -webkit-flex;
@@ -387,7 +421,7 @@
 
 .ib-1 {
     flex: auto;
-
+    padding-top: 5px;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
@@ -399,7 +433,7 @@
 
 .bphs-cont {
     position: relative;
-    height: 30px;
+    height: 25px;
     display: flex;
     display: -webkit-flex;
     flex-direction: row;
@@ -411,41 +445,33 @@
     margin-right: 5px;
 }
 
-.bphs-bg {
-    /* position: absolute;
-    height: 30px;
-    width: 100%;
-    z-index: 0;
-    background-image: url(../img/border-top.png);
-    background-size:auto;
-    background-repeat: no-repeat;
-    background-position: right;
-    transform: scale(-1,-1); */
-}
-
 .bphs-img {
     width: 25px;
     height: 25px;
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center;
-    margin-right: 5px;
+    margin-right: 3px;
     z-index: 1;
 }
 .bphs-value {
     font-style: oblique;
     font-weight: 700;
+    font-size: 10pt;
     z-index: 1;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 #bp-img {
     background-image: url(../img/bp.png);
 }
 #bp-value {
+    
+}
+#hs-value {
 
 }
 #hs-img {
-    background-image: url(../img/bp.png);
+    background-image: url(../img/hs.png);
 }
 #hs-value::after {
     content: " h";
@@ -637,61 +663,6 @@
     background-position: center;
     /* background-image: url(../img/escaped.png); */
 }
-#topdbd-1 {
-    flex: auto;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 60%;
-    background-position: center;
-    background-image: url(../img/escaped.png);
-}
-
-#topdbd-2 {
-    flex: auto;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 70%;
-    background-position: center;
-    background-image: url(../img/saved.png);
-}
-
-#topdbd-3 {
-    flex: auto;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 60%;
-    background-position: center;
-    background-image: url(../img/killed.png);
-}
-
-#topdbd-4 {
-    flex: auto;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 60%;
-    background-position: center;
-    background-image: url(../img/sacrifice.png);
-}
-#topdbd-5 {
-    flex: auto;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-size: 70%;
-    background-position: center;
-    background-image: url(../img/achievements/DBD_GeneratorPct_float.png);
-}
-
-
 .hover {
     flex: auto;
 }
@@ -789,7 +760,7 @@
     position: absolute;
     bottom: 5px;
     z-index: 0;
-    opacity: 0.5;
+    opacity: 0.4;
    
     background-repeat: no-repeat;
     background-size: contain;
