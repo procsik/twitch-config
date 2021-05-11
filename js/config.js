@@ -17,6 +17,14 @@ function main() {
     let cConfig = ''
     let achivTmp = {}
 
+    let lastUpdate = new Date(data.stats.timeupdate * 1000)
+    lastUpdate = '* - last Steam statistics update: ' + lastUpdate.getUTCDate() + '.' + 
+        lastUpdate.getUTCMonth('mm') + '.' + 
+        lastUpdate.getUTCFullYear() + ' ' +
+        lastUpdate.getUTCHours() + ':' +
+        lastUpdate.getUTCMinutes() + ':' +
+        lastUpdate.getUTCSeconds() + ' UTC'
+
     // COLOR
     switch(settings.color) {
         case "dark": {
@@ -452,6 +460,10 @@ function main() {
     function createDesc(desc,nameId) {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
+        let main = document.createElement('div')
+        main.id = settings.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.className = 'main border'
+
         let msg = document.createElement('div')
         let message = data.stats.onteh[nameId].desc
 
@@ -464,13 +476,11 @@ function main() {
 
         msg.innerHTML = spanPlayer + message
             .replace('{value}',"<span id='sValue'>" + 
-                data.stats.onteh[nameId].value + " </span>" + 
-                "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed() + "</span>)</span>")
+                data.stats.onteh[nameId].value + "</span> " + 
+                "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed() + "</span>*)</span>")
             .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + data.stats.onteh[nameId].position + " </span>")
 
-        let main = document.createElement('div')
-        main.id = 'main-k'
-        main.className = 'border'
+        document.getElementById('last-update').innerText = lastUpdate
 
         desc.appendChild(main)
         desc.appendChild(msg)
@@ -478,10 +488,24 @@ function main() {
 
     function changeChar(c) {
         settings.role = cConfig
+        changeMainInDesc(settings.role)
         document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
         for (let char of document.getElementsByClassName('char')) {
             char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
         }
+    }
+
+    function changeMainInDesc(m) {
+        let desc = document.getElementById('desc')
+        let main = document.getElementById('main-k') || document.getElementById('main-c')
+        
+        if (main) desc.removeChild(main)
+
+        let newMain = document.createElement('div')
+        newMain.className = 'main border'
+        newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+
+        desc.insertBefore(newMain, desc.firstElementChild)
     }
 
     function changeAchiv(elem,a,s) {

@@ -1,5 +1,5 @@
 @import "reset.css";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 #app {
     height: 496px;
@@ -17,6 +17,7 @@
 
     color: wheat;
     font-family: 'Roboto', sans-serif;
+    text-shadow: 1px 1px 1px #000;
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -27,7 +28,7 @@
 }
 
 .border {
-    border: 1px ridge #ff0000;
+    border: 0px ridge #ff0000;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -381,7 +382,7 @@
     flex-direction: row;
     -webkit-flex-direction: row;
 
-    height: 140px;
+    height: 130px;
 }
 
 .ib-1 {
@@ -396,28 +397,66 @@
     flex-grow: 0.3; */
 }
 
-#info-bloodpoints {
-    font-weight: bolder;
-    line-height: 30px;
-    vertical-align: middle;
-    text-align: right;
+.bphs-cont {
+    position: relative;
+    height: 30px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.bphs-bg {
+    /* position: absolute;
+    height: 30px;
+    width: 100%;
+    z-index: 0;
+    background-image: url(../img/border-top.png);
+    background-size:auto;
+    background-repeat: no-repeat;
+    background-position: right;
+    transform: scale(-1,-1); */
+}
+
+.bphs-img {
+    width: 25px;
+    height: 25px;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 5px;
+    z-index: 1;
+}
+.bphs-value {
+    font-style: oblique;
+    font-weight: 700;
+    z-index: 1;
     margin-right: 10px;
+}
+#bp-img {
+    background-image: url(../img/bp.png);
+}
+#bp-value {
+
+}
+#hs-img {
+    background-image: url(../img/bp.png);
+}
+#hs-value::after {
+    content: " h";
+    font-weight: normal;
 }
 #info-hours {
-    font-weight: bolder;
-    line-height: 30px;
-    vertical-align: middle;
-    text-align: right;
-    margin-right: 10px;
-}
-#info-hours::before,#info-bloodpoints::before {
-    content: "[] ";
-}
-#info-hours::after {
-    content: " h";
-}
-#info-bloodpoints::after {
-    content: " bp";
+    flex: auto;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row
 }
 #ip-2 {
     margin-top: 5px;
@@ -435,12 +474,12 @@
     /* flex: auto; */
     margin-top: 5px;
     width: 110px;
-    height: 130px;
+    height: 125px;
     /* background-image: url('../img/K01.png'); */
     /* background-image: url(https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/9/9f/K01_charSelect_portrait.png/revision/latest?cb=20200721164223&format=original); */
     background-size:contain;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: bottom;
 
     position: relative;
 
@@ -674,7 +713,7 @@
     margin: 5px 7px 5px 7px;
     position: relative;
 
-    height: 150px;
+    height: 160px;
 
     background-repeat: no-repeat;
     background-size: cover;
@@ -689,19 +728,20 @@
     line-height: 22px;
     margin: 5px;
     color: #e2ce97;
-    text-shadow: 1px 1px 1px #000;
     font-size: 10pt;
-    font-weight: bold;
+    font-weight: 400;
 }
 #sPlayer {
-    font-weight: bold;
+    font-weight: 900;
     color: #ac3ee3; 
     font-size: 12pt;
+    letter-spacing: 1px;
+
 }
 #sValue {
-    font-weight: bold;
+    font-weight: 900;
     color: #ff8800;  
-    font-size: 11pt;
+    font-size: 12pt;
 }
 #cValueText {
     font-style: oblique;
@@ -711,8 +751,8 @@
     font-weight: bold;
 }
 #sPos {
-    font-weight: bolder;
-    font-size: 11pt;
+    font-weight: 900;
+    font-size: 12pt;
 }
 .posUp {
     color: #199b1e; 
@@ -723,7 +763,7 @@
 .posNm {
     color: #e8c252; 
 }
-#main-k {
+.main {
     width: 44px;
     height: 44px;
     
@@ -735,38 +775,38 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+#main-k {
     background-image: url(../img/main-k3.png);
 }
-
-#rank-k {
+#main-c {
+    background-image: url(../img/main-c3.png);
+}
+.rank {
     width: 80px;
     height: 80px;
 
     position: absolute;
-    left: 150px;
-    bottom: 0;
+    bottom: 5px;
     z-index: 0;
-    opacity: 0.3;
+    opacity: 0.5;
    
-    
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+}
+#rank-k {
+    left: 140px;
     background-image: url(../img/kr1.png);
 }
 #rank-c {
-    width: 80px;
-    height: 80px;
-
-    position: absolute;
     right: 0;
-    bottom: 0;
-    z-index: 0;
-    opacity: 0.3;
-
-    
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
     background-image: url(../img/cr1.png);
+}
+#last-update {
+    position: absolute;
+    font-size: 7pt;
+    font-style: oblique;
+    bottom: 3px;
+    right: 3px;
 }

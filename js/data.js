@@ -156,6 +156,7 @@ let data =
 
     },
     "stats": {
+        "timeupdate":1620721355,
         "steam": {
             "DBD_BloodwebPoints":569445284, //
             "DBD_CamperMaxScoreByCategory":678, //
