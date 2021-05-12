@@ -245,7 +245,15 @@ let data =
 
     },
     "config": {
-
+        "player": 'Logicandintuition',
+        "color": '',
+        "role": 'mainkiller',
+        "motiv": '',
+        "char": 3,
+        "achiv": [
+            ["obsessionshealed","protectionhits"],
+            ["escaped","survivorshealed","escaped_hatch","saved","gensrepaired"]
+        ]
     },
     "stats": {
         "timeupdate":1620721355,

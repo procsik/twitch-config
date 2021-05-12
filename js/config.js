@@ -1,18 +1,25 @@
-document.addEventListener("load", main())
+document.addEventListener("load", start())
 
-function main() {
-    // init
-    let settings = new Object({
-        player: 'Logicandintuition',
-        color: '',
-        role: 'mainkiller',
-        motiv: '',
-        char: 3,
-        achiv: [
-            ["obsessionshealed","protectionhits"],
-            ["escaped","survivorshealed","escaped_hatch","saved","gensrepaired"]
-        ]
+function start() {
+    // let socket = new WebSocket('wss://demo.websocket.me/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self')
+    let socket = new WebSocket('ws://localhost:3000/')
+    socket.addEventListener('close', () => {
+        socket = null
+        setTimeout(start, 5000)
     })
+    socket.addEventListener('open', () => {
+        console.log('connected')
+        socket.send('1')
+    })
+    socket.addEventListener('message', (msg) => {
+        // console.log('ответ: ', msg.data)
+        main(JSON.parse(msg.data))
+    })
+    // main(data)
+}
+
+function main(data) {
+    // init
     let cSetup = ''
     let cConfig = ''
     let achivTmp = {}
@@ -31,7 +38,7 @@ function main() {
         lastUpdate.getUTCSeconds() + ' UTC'
 
     // COLOR
-    switch(settings.color) {
+    switch(data.config.color) {
         case "dark": {
             for (let c of document.getElementsByClassName('column')) {
                 c.className += ' column-dark'
@@ -58,9 +65,9 @@ function main() {
         char.style.display = 'none'
         char.style.backgroundImage = 'url(' + data.character[c].imgUrl + ')'
         char.onclick = () => {
-            settings.char = parseInt(char.lastElementChild.value)
+            data.config.char = parseInt(char.lastElementChild.value)
             char.lastElementChild.checked = true
-            activeChar(settings.char)
+            activeChar(data.config.char)
         }
 
         let charHover = document.createElement('div')
@@ -72,7 +79,7 @@ function main() {
         charInput.name = 'character'
         charInput.value = data.character[c].id
         charInput.style.display = 'none'
-        charInput.checked = charInput.value == settings.char ? true : false
+        charInput.checked = charInput.value == data.config.char ? true : false
         char.appendChild(charInput)
 
         document.getElementById('wrapper-char').appendChild(char)
@@ -143,14 +150,14 @@ function main() {
 
     // achiv to object
     let i = 0
-    for (let a of settings.achiv) {
+    for (let a of data.config.achiv) {
         achivTmp[i] = {}
         for (let b of a) achivTmp[i][b] = data.stats.onteh[b]
         i++
     }
 
-    createAchiv(settings.achiv)
-    activeChar(settings.char)
+    createAchiv(data.config.achiv)
+    activeChar(data.config.char)
 
     document.getElementById('role').onmousedown = () => {
         //cSetup = 'role'
@@ -159,17 +166,17 @@ function main() {
         document.getElementById('role-value').style.display = 'flex'
         
         for (let c of document.getElementById('role-value').children) {
-            if (c.id.includes(settings.role)) {
+            if (c.id.includes(data.config.role)) {
                 for (let char of document.getElementsByClassName('char')) {
-                    if (settings.role.includes(char.classList[2])) {
+                    if (data.config.role.includes(char.classList[2])) {
                         char.style.display = ''
-                        activeChar(settings.char)
+                        activeChar(data.config.char)
                     }
                     
                     // char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
                 }
                 document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
-                activMenu(settings.role,'onclick-config')
+                activMenu(data.config.role,'onclick-config')
             }
         }
 
@@ -185,10 +192,10 @@ function main() {
         cConfig = document.getElementById('achiv-value').firstElementChild.id
         activMenu(cConfig,'onclick-config')
         for (let a of document.getElementsByClassName('achivments')) {
-            if (settings.achiv[0].includes(a.lastElementChild.value)) {
+            if (data.config.achiv[0].includes(a.lastElementChild.value)) {
                 a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                 a.lastElementChild.checked = true
-            } else if (settings.achiv[1].includes(a.lastElementChild.value)) {
+            } else if (data.config.achiv[1].includes(a.lastElementChild.value)) {
                 a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
                 a.lastElementChild.checked = false
             } else {
@@ -209,10 +216,10 @@ function main() {
                     document.getElementById('wrapper-achivmain').style.order = '1'
 
                     for (let a of document.getElementsByClassName('achivments')) {
-                        if (settings.achiv[0].includes(a.lastElementChild.value)) {
+                        if (data.config.achiv[0].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                             a.lastElementChild.checked = true
-                        } else if (settings.achiv[1].includes(a.lastElementChild.value)) {
+                        } else if (data.config.achiv[1].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
                             a.lastElementChild.checked = false
                         } else {
@@ -226,10 +233,10 @@ function main() {
                     document.getElementById('wrapper-achivmain').style.order = '3'
 
                     for (let a of document.getElementsByClassName('achivments')) {
-                        if (settings.achiv[0].includes(a.lastElementChild.value)) {
+                        if (data.config.achiv[0].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-red.jpg)"
                             a.lastElementChild.checked = false
-                        } else if (settings.achiv[1].includes(a.lastElementChild.value)) {
+                        } else if (data.config.achiv[1].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                             a.lastElementChild.checked = true
                         } else {
@@ -341,7 +348,7 @@ function main() {
     // }
     
     document.getElementById('button').onclick = function() {
-        console.log(settings,cSetup,cConfig)
+        console.log(data.config,cSetup,cConfig)
     }
 
     // let char = document.getElementsByName('char')
@@ -466,13 +473,13 @@ function main() {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
         let main = document.createElement('div')
-        main.id = settings.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.id = data.config.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
 
         let msg = document.createElement('div')
         let message = data.stats.onteh[nameId].desc
 
-        let spanPlayer = "<span id='sPlayer'>" + settings.player + " </span>"
+        let spanPlayer = "<span id='sPlayer'>" + data.config.player + " </span>"
 
         let classPos = ''
         if (data.stats.onteh[nameId].status > 0) classPos = 'posUp'
@@ -492,8 +499,8 @@ function main() {
     }
 
     function changeChar(c) {
-        settings.role = cConfig
-        changeMainInDesc(settings.role)
+        data.config.role = cConfig
+        changeMainInDesc(data.config.role)
         document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
         for (let char of document.getElementsByClassName('char')) {
             char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
@@ -517,16 +524,16 @@ function main() {
         switch(s) {
             case "achivmain": {
                 if (elem.lastElementChild.checked) {
-                    if (settings.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
-                        settings.achiv[0].splice(settings.achiv[0].indexOf(elem.lastElementChild.value),1)
+                    if (data.config.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
+                        data.config.achiv[0].splice(data.config.achiv[0].indexOf(elem.lastElementChild.value),1)
                         delete achivTmp[0][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = false
                         elem.style.background = ''
                     }
-                } else if (Object.keys(settings.achiv[0]).length < 2) {
-                    if (settings.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
-                        settings.achiv[1].splice(settings.achiv[1].indexOf(elem.lastElementChild.value),1)
+                } else if (Object.keys(data.config.achiv[0]).length < 2) {
+                    if (data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
+                        data.config.achiv[1].splice(data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
                         delete achivTmp[1][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = true
@@ -536,30 +543,30 @@ function main() {
                         elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
                     }
                     achivTmp[0][elem.lastElementChild.value] = data.stats.onteh[a]
-                    settings.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
+                    data.config.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                 }
-                createAchiv(settings.achiv)
+                createAchiv(data.config.achiv)
                 break
             }
             case "achivtop": {
                 if (elem.lastElementChild.checked) {
-                    if (settings.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
-                        settings.achiv[1].splice(settings.achiv[1].indexOf(elem.lastElementChild.value),1)
+                    if (data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
+                        data.config.achiv[1].splice(data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
                         delete achivTmp[1][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = false
                         elem.style.background = ''
                     } 
-                } else if (Object.keys(settings.achiv[1]).length < 5) {
-                    if (!settings.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
+                } else if (Object.keys(data.config.achiv[1]).length < 5) {
+                    if (!data.config.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
                         achivTmp[1][elem.lastElementChild.value] = data.stats.onteh[a]
-                        settings.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
+                        data.config.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
     
                         elem.lastElementChild.checked = true
                         elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                     }
                 }
-                createAchiv(settings.achiv)
+                createAchiv(data.config.achiv)
                 break
             }
             default: break
