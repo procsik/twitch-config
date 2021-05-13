@@ -15,7 +15,7 @@ function start() {
         // console.log('ответ: ', msg.data)
         main(JSON.parse(msg.data))
     })
-    main(data)
+    // main(data)
 }
 
 function main(data) {
@@ -38,8 +38,8 @@ function main(data) {
         lastUpdateValue.getUTCMinutes() + ':' +
         lastUpdateValue.getUTCSeconds() + ' UTC'
 
-    document.getElementById('ssw-u-value-a').innerText = lastUpdate
-    document.getElementById('ssw-u-value-b').innerText = lastUpdate
+    // document.getElementById('ssw-u-value-a').innerText = lastUpdate
+    // document.getElementById('ssw-u-value-b').innerText = lastUpdate
     // COLOR
     switch(data.config.color) {
         case "dark": {
