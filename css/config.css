@@ -126,8 +126,8 @@
     letter-spacing: 3px;
 
 
-    /* -webkit-flex-grow: 0; 
-    flex-grow: 0; */
+    -webkit-flex-grow: 0; 
+    flex-grow: 0;
 }
 .key-img {
     position: absolute;
@@ -160,7 +160,29 @@
 #ki-motiv {
     background-image: url(../img/motiv.png);
 }
-
+#steam-value {
+    display: flex;
+    display: -webkit-flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-flex-grow: 1; 
+    flex-grow: 1;
+    margin-right: 5px;
+    line-height: 16px;
+    font-size: 10pt;
+}
+#steam-auth {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    border-radius: 50%;
+    -webkit-flex-grow: 0; 
+    flex-grow: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/be/bef784b1e6535fa48a8aeb05b94c799624f74b88_medium.jpg);
+}
 .value {
     display: flex;
     display: -webkit-flex;
@@ -168,8 +190,8 @@
     -webkit-flex-direction: row;
     -webkit-justify-content: center;
     justify-content: center;
-    -webkit-flex-grow: 1; 
-    flex-grow: 1;
+    -webkit-flex-grow: 0; 
+    flex-grow: 0;
 }
 .best {
     width: 50px;
