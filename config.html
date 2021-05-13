@@ -17,7 +17,7 @@
                         <div class="border key">Статус</div>
                         <!-- <div class="border value"></div> -->
                     </div>
-                    <div class="border setup onclick-setup">
+                    <div id="steam" class="border setup onclick-setup">
                         <div id="ki-steam" class="key-img border"></div>
                         <div class="border key">Steam</div>
                     </div>
@@ -50,6 +50,36 @@
                 </div>
             </div>
             <div id="column-c" class="column-c column column-dark">
+                <div id="steam-status" class="border" hidden>
+                    <div class="setup-box border">
+                        <div id="steam-status-wrapper" class="border">
+                            <div id="ssw-steam" class="border">
+                                <div id="ssw-steam-l" class="border">
+                                    <div id="ssw-steam-l-links" class="border">
+                                        <div id="ssw-steam-l-links-a" class="border"><a href="#" target="_blank">Logicandintuition.TV</a></div>
+                                        <div id="ssw-steam-l-links-b" class="border"><a href="#" target="_blank">профиль приложения</a></div>
+                                    </div>
+                                    <div id="ssw-steam-l-auth"  class="border" style="display: none;">
+                                        <div id="ssw-steam-l-auth-img" class="border"></div>
+                                    </div>
+                                </div>
+                                <div id="ssw-steam-r" class="border">
+                                    <div id="ssw-steam-r-img" class="border"></div>
+                                </div>
+                            </div>
+                            <div id="ssw-update" class="border">
+                                <div class="ssw-u border">
+                                    <div id="ssw-u-key-a" class="ssw-u-key border">Onteh update stats:</div>
+                                    <div id="ssw-u-value-a" class="ssw-u-value border"></div>
+                                </div>
+                                <div class="ssw-u border">
+                                    <div id="ssw-u-key-b" class="ssw-u-key border">Steam update stats:</div>
+                                    <div id="ssw-u-value-b" class="ssw-u-value border"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="role-value" class="border" hidden>
                     <div id="mainauto" class="border setup onclick-config">
                         <div id="ma-text">Auto</div>
@@ -105,7 +135,7 @@
             </div>
         </div>
         <!-- <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script> -->
-        <!-- <script data-cfasync="false" src="js/datas.js"></script> -->
+        <script data-cfasync="false" src="js/data.js"></script>
         <script data-cfasync="false" src="js/config.js"></script>
     </body>
 </html>

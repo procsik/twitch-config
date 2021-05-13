@@ -5,7 +5,7 @@ function start() {
     let socket = new WebSocket('ws://localhost:3000/')
     socket.addEventListener('close', () => {
         socket = null
-        setTimeout(start, 5000)
+        // setTimeout(start, 5000)
     })
     socket.addEventListener('open', () => {
         console.log('connected')
@@ -15,7 +15,7 @@ function start() {
         // console.log('ответ: ', msg.data)
         main(JSON.parse(msg.data))
     })
-    // main(data)
+    main(data)
 }
 
 function main(data) {
@@ -29,14 +29,17 @@ function main(data) {
     document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-    let lastUpdate = new Date(data.stats.timeupdate * 1000)
-    lastUpdate = '* - last Steam statistics update: ' + lastUpdate.getUTCDate() + '.' + 
-        lastUpdate.getUTCMonth('mm') + '.' + 
-        lastUpdate.getUTCFullYear() + ' ' +
-        lastUpdate.getUTCHours() + ':' +
-        lastUpdate.getUTCMinutes() + ':' +
-        lastUpdate.getUTCSeconds() + ' UTC'
+    let lastUpdateValue = new Date(data.stats.timeupdate * 1000)
+    let lastUpdateText = '* - last Steam statistics update: '
+    lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
+        lastUpdateValue.getUTCMonth('mm') + '.' + 
+        lastUpdateValue.getUTCFullYear() + ' ' +
+        lastUpdateValue.getUTCHours() + ':' +
+        lastUpdateValue.getUTCMinutes() + ':' +
+        lastUpdateValue.getUTCSeconds() + ' UTC'
 
+    document.getElementById('ssw-u-value-a').innerText = lastUpdate
+    document.getElementById('ssw-u-value-b').innerText = lastUpdate
     // COLOR
     switch(data.config.color) {
         case "dark": {
@@ -158,6 +161,15 @@ function main(data) {
 
     createAchiv(data.config.achiv)
     activeChar(data.config.char)
+    document.getElementById('steam').onmousedown = () => {
+        activMenu('steam','onclick-setup')
+        document.getElementById('steam-status').style.display = 'flex'
+
+
+        
+        document.getElementById('role-value').style.display = 'none'
+        document.getElementById('achiv-value').style.display = 'none'
+    }
 
     document.getElementById('role').onmousedown = () => {
         //cSetup = 'role'
@@ -179,7 +191,7 @@ function main(data) {
                 activMenu(data.config.role,'onclick-config')
             }
         }
-
+        document.getElementById('steam-status').style.display = 'none'
         document.getElementById('achiv-value').style.display = 'none'
     }
 
@@ -204,6 +216,7 @@ function main(data) {
             }
         }
 
+        document.getElementById('steam-status').style.display = 'none'
         document.getElementById('role-value').style.display = 'none'
     }
 
@@ -492,7 +505,7 @@ function main(data) {
                 "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
             .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + data.stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
 
-        document.getElementById('last-update').innerText = lastUpdate
+        document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
 
         desc.appendChild(main)
         desc.appendChild(msg)
