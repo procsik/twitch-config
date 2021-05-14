@@ -5,15 +5,33 @@ function start() {
     const twitch = window.Twitch.ext
     const status = 'onload'
 
+    twitch.onContext((context) => {
+        mode = context.mode
+    })
+
     twitch.onAuthorized((auth) => {
         token = auth.token
         userId = auth.userId
         channelId = auth.channelId
+
+        socket.addEventListener('open', () => {
+            console.log('connected')
+    
+            let message = {
+                type: {
+                    mode: mode,
+                    status: status
+                },
+                message: {
+                    userId: userId,
+                    token: token,
+                    channelId: channelId
+                }
+            }
+            socket.send(JSON.stringify(message))
+        })
     })
 
-    twitch.onContext((context) => {
-        mode = context.mode
-    })
 
     // let socket = new WebSocket('wss://demo.websocket.me/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self')
     let socket = new WebSocket('ws://localhost:3000/')
@@ -22,22 +40,7 @@ function start() {
         socket = null
         // setTimeout(start, 5000)
     })
-    socket.addEventListener('open', () => {
-        console.log('connected')
 
-        let message = {
-            type: {
-                mode: mode,
-                status: status
-            },
-            message: {
-                userId: userId,
-                token: token,
-                channelId: channelId
-            }
-        }
-        socket.send(JSON.stringify(message))
-    })
     socket.addEventListener('message', (msg) => {
         // console.log('ответ: ', msg.data)
         main(JSON.parse(msg.data))
