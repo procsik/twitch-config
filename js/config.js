@@ -9,20 +9,18 @@ function start() {
     })
 
     twitch.onAuthorized((auth) => {
-        token = auth.token
-        userId = auth.userId
-        channelId = auth.channelId
+        // token = auth.token
+        // userId = auth.userId
+        // channelId = auth.channelId
 
-        socket.addEventListener('open', () => {
-            console.log('connected')
-            let message = new Object()
+        let message = new Object()
 
-            message.token = auth.token
-            message.context = context
-            message.version = '15:31'
+        message.token = auth.token
+        message.context = context
+        message.version = '15:34'
 
-            connect(message)
-        })
+        connect(message)
+
     })
 
     function connect(msg) {
