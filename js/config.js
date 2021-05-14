@@ -1,13 +1,11 @@
 document.addEventListener("load", start())
 
 function start() {
-    let token, userId, channelId, mode
-    let socket = new WebSocket('ws://localhost:3000/')
     const twitch = window.Twitch.ext
-    const status = 'onload'
+    let context
 
-    twitch.onContext((context) => {
-        mode = context.mode
+    twitch.onContext((ctx) => {
+        context = ctx
     })
 
     twitch.onAuthorized((auth) => {
@@ -17,36 +15,35 @@ function start() {
 
         socket.addEventListener('open', () => {
             console.log('connected')
-    
-            let message = {
-                type: {
-                    mode: mode,
-                    status: status
-                },
-                message: {
-                    userId: userId,
-                    token: token,
-                    channelId: channelId
-                }
-            }
-            socket.send(JSON.stringify(message))
+            let message = new Object()
+
+            message.token = auth.token
+            message.context = context
+            message.version = '15:31'
+
+            connect(message)
         })
     })
 
+    function connect(msg) {
+        let socket = new WebSocket('ws://localhost:3000/')
 
-    // let socket = new WebSocket('wss://demo.websocket.me/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self')
+        socket.addEventListener('open', () => {
+            socket.send(JSON.stringify(msg))
+        })
+
+        socket.addEventListener('close', () => {
+            socket = null
+            // setTimeout(start, 5000)
+        })
     
-    // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru:3000/')
-    socket.addEventListener('close', () => {
-        socket = null
-        // setTimeout(start, 5000)
-    })
+        socket.addEventListener('message', (msg) => {
+            // console.log('ответ: ', msg.data)
+            main(JSON.parse(msg.data))
+        })
 
-    socket.addEventListener('message', (msg) => {
-        // console.log('ответ: ', msg.data)
-        main(JSON.parse(msg.data))
-    })
-    main(data)
+        main(data)
+    }
 }
 
 function main(data) {
