@@ -1,27 +1,28 @@
 document.addEventListener("load", start())
 
 function start() {
-    const twitch = window.Twitch.ext
-    let context
+    // const twitch = window.Twitch.ext
+    // let context
 
-    twitch.onContext((ctx) => {
-        context = ctx
-    })
+    // twitch.onContext((ctx) => {
+    //     context = ctx
+    // })
 
-    twitch.onAuthorized((auth) => {
-        // token = auth.token
-        // userId = auth.userId
-        // channelId = auth.channelId
+    // twitch.onAuthorized((auth) => {
+    //     // token = auth.token
+    //     // userId = auth.userId
+    //     // channelId = auth.channelId
 
-        let message = new Object()
+    //     let message = new Object()
 
-        message.token = auth.token
-        message.context = context
-        message.version = '15:34'
+    //     message.token = auth.token
+    //     message.context = context
+    //     message.version = '15:34'
 
-        connect(message)
+    //     connect(message)
 
-    })
+    // })
+    connect(msgOut)
 
     function connect(msg) {
         let socket = new WebSocket('ws://localhost:3000/')
@@ -35,9 +36,9 @@ function start() {
             // setTimeout(start, 5000)
         })
     
-        socket.addEventListener('message', (msg) => {
-            // console.log('ответ: ', msg.data)
-            main(JSON.parse(msg.data))
+        socket.addEventListener('message', (m) => {
+            console.log('ответ: ', m.data)
+            // main(JSON.parse(msg.data))
         })
 
         main(data)

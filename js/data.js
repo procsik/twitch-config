@@ -1,3 +1,15 @@
+let msgOut = 
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MjEwMDAwNDIsIm9wYXF1ZV91c2VyX2lkIjoiVTU3MDk5OTU2NyIsInVzZXJfaWQiOiI1NzA5OTk1NjciLCJjaGFubmVsX2lkIjoiNTcwOTk5NTY3Iiwicm9sZSI6ImJyb2FkY2FzdGVyIiwiaXNfdW5saW5rZWQiOnRydWUsInB1YnN1Yl9wZXJtcyI6eyJsaXN0ZW4iOlsiYnJvYWRjYXN0Iiwid2hpc3Blci1VNTcwOTk5NTY3IiwiZ2xvYmFsIl0sInNlbmQiOlsiYnJvYWRjYXN0Iiwid2hpc3Blci0qIl19fQ.3CgvBLvzqc36UzBjy8reSkaK9HRx_k-Pw6SXPbAiZH8",
+    "context": {
+        "language":"en",
+        "theme":"dark",
+        "isVideoAdShowing":false,
+        "mode":"config"
+    },
+    "version":"15:34"
+}
+
 let data =
 {
     "character": {
