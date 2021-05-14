@@ -2,6 +2,7 @@ document.addEventListener("load", start())
 
 function start() {
     let token, userId, channelId, mode
+    let socket = new WebSocket('ws://localhost:3000/')
     const twitch = window.Twitch.ext
     const status = 'onload'
 
@@ -34,7 +35,7 @@ function start() {
 
 
     // let socket = new WebSocket('wss://demo.websocket.me/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self')
-    let socket = new WebSocket('ws://localhost:3000/')
+    
     // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru:3000/')
     socket.addEventListener('close', () => {
         socket = null
