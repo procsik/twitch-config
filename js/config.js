@@ -1,31 +1,35 @@
 document.addEventListener("load", start())
 
 function start() {
-    const twitch = window.Twitch.ext
-    let context
+    // const twitch = window.Twitch.ext
+    // let context
 
-    twitch.onContext((ctx) => {
-        context = ctx
-    })
+    // twitch.onContext((ctx) => {
+    //     context = ctx
+    // })
 
-    twitch.onAuthorized((auth) => {
-        // token = auth.token
-        // userId = auth.userId
-        // channelId = auth.channelId
+    // twitch.onAuthorized((auth) => {
+    //     // token = auth.token
+    //     // userId = auth.userId
+    //     // channelId = auth.channelId
 
-        let message = new Object()
+    //     let message = new Object()
 
-        message.token = auth.token
-        message.context = context
-        message.version = '22:49'
+    //     message.token = auth.token
+    //     message.context = context
+    //     message.version = '22:49'
 
-        connect(message)
+    //     connect(message)
 
-    })
-    // connect(msgOut)
+    // })
+    let message = new Object()
+    message.token = 'auth.token'
+    message.context = 'context'
+    message.version = '21:50'
+    connect(msgOut)
 
     function connect(msg) {
-        let socket = new WebSocket('ws://localhost:3000/')
+        let socket = new WebSocket('ws://localhost/')
         // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
         socket.addEventListener('open', () => {
             socket.send(JSON.stringify(msg))
@@ -74,7 +78,7 @@ function main(msgIn) {
     document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-    let lastUpdateValue = new Date(data.stats.timeupdate * 1000)
+    let lastUpdateValue = new Date(msgIn.data.stats.timeupdate * 1000)
     let lastUpdateText = '* - last Steam statistics update: '
     lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
         lastUpdateValue.getUTCMonth('mm') + '.' + 
@@ -86,7 +90,7 @@ function main(msgIn) {
     // document.getElementById('ssw-u-value-a').innerText = lastUpdate
     // document.getElementById('ssw-u-value-b').innerText = lastUpdate
     // COLOR
-    switch(data.config.color) {
+    switch(msgIn.data.config.color) {
         case "dark": {
             for (let c of document.getElementsByClassName('column')) {
                 c.className += ' column-dark'
@@ -107,15 +111,15 @@ function main(msgIn) {
     }
 
     // character
-    for (let c in data.character) {
+    for (let c in msgIn.data.character) {
         let char = document.createElement('div')
-        char.className = 'char border ' + data.character[c].type
+        char.className = 'char border ' + msgIn.data.character[c].type
         char.style.display = 'none'
-        char.style.backgroundImage = 'url(' + data.character[c].imgUrl + ')'
+        char.style.backgroundImage = 'url(' + msgIn.data.character[c].imgUrl + ')'
         char.onclick = () => {
-            data.config.char = parseInt(char.lastElementChild.value)
+            msgIn.data.config.char = parseInt(char.lastElementChild.value)
             char.lastElementChild.checked = true
-            activeChar(data.config.char)
+            activeChar(msgIn.data.config.char)
         }
 
         let charHover = document.createElement('div')
@@ -125,9 +129,9 @@ function main(msgIn) {
         let charInput = document.createElement('input')
         charInput.type = 'radio'
         charInput.name = 'character'
-        charInput.value = data.character[c].id
+        charInput.value = msgIn.data.character[c].id
         charInput.style.display = 'none'
-        charInput.checked = charInput.value == data.config.char ? true : false
+        charInput.checked = charInput.value == msgIn.data.config.char ? true : false
         char.appendChild(charInput)
 
         document.getElementById('wrapper-char').appendChild(char)
@@ -165,7 +169,7 @@ function main(msgIn) {
     }
 
     // achievements 
-    for (let a in sortByPos(data.stats.onteh)) {
+    for (let a in sortByPos(msgIn.data.stats.onteh)) {
         let rowAchiv = document.createElement('div')
         rowAchiv.className = 'achivments border'
         rowAchiv.onclick = () => changeAchiv(rowAchiv,a,cConfig)
@@ -173,17 +177,17 @@ function main(msgIn) {
 
         let achivImg = document.createElement('div')
         achivImg.className = 'achiv-img border'
-        achivImg.style.backgroundImage = 'url('+ data.stats.onteh[a].imgUrl +')'
+        achivImg.style.backgroundImage = 'url('+ msgIn.data.stats.onteh[a].imgUrl +')'
         rowAchiv.appendChild(achivImg)
 
         let achivName = document.createElement('div')
         achivName.className = 'achiv-name border'
-        achivName.innerHTML = data.stats.onteh[a].name
+        achivName.innerHTML = msgIn.data.stats.onteh[a].name
         rowAchiv.appendChild(achivName)
 
         let achivPos = document.createElement('div')
         achivPos.className = 'achiv-pos border'
-        achivPos.innerHTML = data.stats.onteh[a].position
+        achivPos.innerHTML = msgIn.data.stats.onteh[a].position
         rowAchiv.appendChild(achivPos)
 
         let rowAchivBox = document.createElement('input')
@@ -198,14 +202,14 @@ function main(msgIn) {
 
     // achiv to object
     let i = 0
-    for (let a of data.config.achiv) {
+    for (let a of msgIn.data.config.achiv) {
         achivTmp[i] = {}
-        for (let b of a) achivTmp[i][b] = data.stats.onteh[b]
+        for (let b of a) achivTmp[i][b] = msgIn.data.stats.onteh[b]
         i++
     }
 
-    createAchiv(data.config.achiv)
-    activeChar(data.config.char)
+    createAchiv(msgIn.data.config.achiv)
+    activeChar(msgIn.data.config.char)
     document.getElementById('steam').onmousedown = () => {
         activMenu('steam','onclick-setup')
         document.getElementById('steam-status').style.display = 'flex'
@@ -223,17 +227,17 @@ function main(msgIn) {
         document.getElementById('role-value').style.display = 'flex'
         
         for (let c of document.getElementById('role-value').children) {
-            if (c.id.includes(data.config.role)) {
+            if (c.id.includes(msgIn.data.config.role)) {
                 for (let char of document.getElementsByClassName('char')) {
-                    if (data.config.role.includes(char.classList[2])) {
+                    if (msgIn.data.config.role.includes(char.classList[2])) {
                         char.style.display = ''
-                        activeChar(data.config.char)
+                        activeChar(msgIn.data.config.char)
                     }
                     
                     // char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
                 }
                 document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
-                activMenu(data.config.role,'onclick-config')
+                activMenu(msgIn.data.config.role,'onclick-config')
             }
         }
         document.getElementById('steam-status').style.display = 'none'
@@ -249,10 +253,10 @@ function main(msgIn) {
         cConfig = document.getElementById('achiv-value').firstElementChild.id
         activMenu(cConfig,'onclick-config')
         for (let a of document.getElementsByClassName('achivments')) {
-            if (data.config.achiv[0].includes(a.lastElementChild.value)) {
+            if (msgIn.data.config.achiv[0].includes(a.lastElementChild.value)) {
                 a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                 a.lastElementChild.checked = true
-            } else if (data.config.achiv[1].includes(a.lastElementChild.value)) {
+            } else if (msgIn.data.config.achiv[1].includes(a.lastElementChild.value)) {
                 a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
                 a.lastElementChild.checked = false
             } else {
@@ -274,10 +278,10 @@ function main(msgIn) {
                     document.getElementById('wrapper-achivmain').style.order = '1'
 
                     for (let a of document.getElementsByClassName('achivments')) {
-                        if (data.config.achiv[0].includes(a.lastElementChild.value)) {
+                        if (msgIn.data.config.achiv[0].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                             a.lastElementChild.checked = true
-                        } else if (data.config.achiv[1].includes(a.lastElementChild.value)) {
+                        } else if (msgIn.data.config.achiv[1].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
                             a.lastElementChild.checked = false
                         } else {
@@ -291,10 +295,10 @@ function main(msgIn) {
                     document.getElementById('wrapper-achivmain').style.order = '3'
 
                     for (let a of document.getElementsByClassName('achivments')) {
-                        if (data.config.achiv[0].includes(a.lastElementChild.value)) {
+                        if (msgIn.data.config.achiv[0].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-red.jpg)"
                             a.lastElementChild.checked = false
-                        } else if (data.config.achiv[1].includes(a.lastElementChild.value)) {
+                        } else if (msgIn.data.config.achiv[1].includes(a.lastElementChild.value)) {
                             a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                             a.lastElementChild.checked = true
                         } else {
@@ -406,7 +410,7 @@ function main(msgIn) {
     // }
     
     document.getElementById('button').onclick = function() {
-        console.log(data.config,cSetup,cConfig)
+        console.log(msgIn.data.config,cSetup,cConfig)
     }
 
     // let char = document.getElementsByName('char')
@@ -466,7 +470,7 @@ function main(msgIn) {
     
                     let achivImg = document.createElement('div')
                     achivImg.className = 'topachiv-img'
-                    achivImg.style.backgroundImage = 'url(' + data.stats.onteh[b].imgUrl +')'
+                    achivImg.style.backgroundImage = 'url(' + msgIn.data.stats.onteh[b].imgUrl +')'
                     achiv.appendChild(achivImg)
     
                     let achivHover = document.createElement('div')
@@ -478,8 +482,8 @@ function main(msgIn) {
                     let topachiv = document.createElement('div')
 
                     let status = ''
-                    if (data.stats.onteh[b].status > 0) status = 'topup'
-                    else if (data.stats.onteh[b].status < 0) status = 'topdw'
+                    if (msgIn.data.stats.onteh[b].status > 0) status = 'topup'
+                    else if (msgIn.data.stats.onteh[b].status < 0) status = 'topdw'
                     else status = 'topnm'
 
                     topachiv.id = b
@@ -491,7 +495,7 @@ function main(msgIn) {
 
                     let topdbdImg = document.createElement('div')
                     topdbdImg.className = 'topdbd-img'
-                    topdbdImg.style.backgroundImage = 'url(../web/img/achievements/'+ data.stats.onteh[b].steamId + '.png)'
+                    topdbdImg.style.backgroundImage = 'url(../web/img/achievements/'+ msgIn.data.stats.onteh[b].steamId + '.png)'
                     tophover.appendChild(topdbdImg)
 
                     topdbd.appendChild(topachiv)
@@ -531,24 +535,24 @@ function main(msgIn) {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
         let main = document.createElement('div')
-        main.id = data.config.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.id = msgIn.data.config.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
 
         let msg = document.createElement('div')
-        let message = data.stats.onteh[nameId].desc
+        let message = msgIn.data.stats.onteh[nameId].desc
 
-        let spanPlayer = "<span id='sPlayer'>" + data.config.player + " </span>"
+        let spanPlayer = "<span id='sPlayer'>" + msgIn.data.config.player + " </span>"
 
         let classPos = ''
-        if (data.stats.onteh[nameId].status > 0) classPos = 'posUp'
-        else if ((data.stats.onteh[nameId].status < 0)) classPos = 'posDown'
+        if (msgIn.data.stats.onteh[nameId].status > 0) classPos = 'posUp'
+        else if ((msgIn.data.stats.onteh[nameId].status < 0)) classPos = 'posDown'
         else classPos = 'posNm'
 
         msg.innerHTML = spanPlayer + message
             .replace('{value}',"<span id='sValue'>" + 
-                data.stats.onteh[nameId].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span> " + 
-                "<span id='cValueText'>(текущее значение <span id='cValue'>" + data.stats.steam[data.stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
-            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + data.stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
+                msgIn.data.stats.onteh[nameId].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span> " + 
+                "<span id='cValueText'>(текущее значение <span id='cValue'>" + msgIn.data.stats.steam[msgIn.data.stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
+            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + msgIn.data.stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
 
         document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
 
@@ -557,8 +561,8 @@ function main(msgIn) {
     }
 
     function changeChar(c) {
-        data.config.role = cConfig
-        changeMainInDesc(data.config.role)
+        msgIn.data.config.role = cConfig
+        changeMainInDesc(msgIn.data.config.role)
         document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
         for (let char of document.getElementsByClassName('char')) {
             char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
@@ -582,16 +586,16 @@ function main(msgIn) {
         switch(s) {
             case "achivmain": {
                 if (elem.lastElementChild.checked) {
-                    if (data.config.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
-                        data.config.achiv[0].splice(data.config.achiv[0].indexOf(elem.lastElementChild.value),1)
+                    if (msgIn.data.config.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
+                        msgIn.data.config.achiv[0].splice(msgIn.data.config.achiv[0].indexOf(elem.lastElementChild.value),1)
                         delete achivTmp[0][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = false
                         elem.style.background = ''
                     }
-                } else if (Object.keys(data.config.achiv[0]).length < 2) {
-                    if (data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
-                        data.config.achiv[1].splice(data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
+                } else if (Object.keys(msgIn.data.config.achiv[0]).length < 2) {
+                    if (msgIn.data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
+                        msgIn.data.config.achiv[1].splice(msgIn.data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
                         delete achivTmp[1][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = true
@@ -600,31 +604,31 @@ function main(msgIn) {
                         elem.lastElementChild.checked = true
                         elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
                     }
-                    achivTmp[0][elem.lastElementChild.value] = data.stats.onteh[a]
-                    data.config.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
+                    achivTmp[0][elem.lastElementChild.value] = msgIn.data.stats.onteh[a]
+                    msgIn.data.config.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                 }
-                createAchiv(data.config.achiv)
+                createAchiv(msgIn.data.config.achiv)
                 break
             }
             case "achivtop": {
                 if (elem.lastElementChild.checked) {
-                    if (data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
-                        data.config.achiv[1].splice(data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
+                    if (msgIn.data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
+                        msgIn.data.config.achiv[1].splice(msgIn.data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
                         delete achivTmp[1][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = false
                         elem.style.background = ''
                     } 
-                } else if (Object.keys(data.config.achiv[1]).length < 5) {
-                    if (!data.config.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
-                        achivTmp[1][elem.lastElementChild.value] = data.stats.onteh[a]
-                        data.config.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
+                } else if (Object.keys(msgIn.data.config.achiv[1]).length < 5) {
+                    if (!msgIn.data.config.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
+                        achivTmp[1][elem.lastElementChild.value] = msgIn.data.stats.onteh[a]
+                        msgIn.data.config.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
     
                         elem.lastElementChild.checked = true
                         elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                     }
                 }
-                createAchiv(data.config.achiv)
+                createAchiv(msgIn.data.config.achiv)
                 break
             }
             default: break
