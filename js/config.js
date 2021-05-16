@@ -1,32 +1,32 @@
 document.addEventListener("load", start())
 
 function start() {
-    // const twitch = window.Twitch.ext
-    // let context
+    const twitch = window.Twitch.ext
+    let context
 
-    // twitch.onContext((ctx) => {
-    //     context = ctx
-    // })
+    twitch.onContext((ctx) => {
+        context = ctx
+    })
 
-    // twitch.onAuthorized((auth) => {
-    //     // token = auth.token
-    //     // userId = auth.userId
-    //     // channelId = auth.channelId
+    twitch.onAuthorized((auth) => {
+        // token = auth.token
+        // userId = auth.userId
+        // channelId = auth.channelId
 
-    //     let message = new Object()
+        let message = new Object()
 
-    //     message.token = auth.token
-    //     message.context = context
-    //     message.version = '15:34'
+        message.token = auth.token
+        message.context = context
+        message.version = '22:49'
 
-    //     connect(message)
+        connect(message)
 
-    // })
-    connect(msgOut)
+    })
+    // connect(msgOut)
 
     function connect(msg) {
         let socket = new WebSocket('ws://localhost:3000/')
-
+        // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
         socket.addEventListener('open', () => {
             socket.send(JSON.stringify(msg))
         })
@@ -37,16 +37,34 @@ function start() {
         })
     
         socket.addEventListener('message', (m) => {
-            console.log('ответ: ', m.data)
-            // main(JSON.parse(msg.data))
+            // console.log('ответ: ', m.data)
+            main(JSON.parse(m.data))
         })
 
-        main(data)
+        // main(data)
     }
 }
 
-function main(data) {
+function main(msgIn) {
     // init
+
+    let sswSteamL = document.getElementById('ssw-steam-l')
+    let sswSteamR = document.getElementById('ssw-steam-r')
+    
+    if (msgIn.data.hash !== null) {
+        let sswSteamLAuth = document.createElement('div')
+        sswSteamLAuth.id = 'ssw-steam-l-auth'
+
+        let sswSteamLAuthImg = document.createElement('div')
+        sswSteamLAuthImg.id = 'ssw-steam-l-auth-img'
+        sswSteamLAuthImg.onclick = () => {
+            window.open(msgIn.data.authSite + 'login?hash=' + msgIn.data.hash, '_blank')
+        }
+        sswSteamLAuth.appendChild(sswSteamLAuthImg)
+
+        sswSteamL.appendChild(sswSteamLAuth)
+    }
+
     let cSetup = ''
     let cConfig = ''
     let achivTmp = {}
@@ -65,8 +83,8 @@ function main(data) {
         lastUpdateValue.getUTCMinutes() + ':' +
         lastUpdateValue.getUTCSeconds() + ' UTC'
 
-    document.getElementById('ssw-u-value-a').innerText = lastUpdate
-    document.getElementById('ssw-u-value-b').innerText = lastUpdate
+    // document.getElementById('ssw-u-value-a').innerText = lastUpdate
+    // document.getElementById('ssw-u-value-b').innerText = lastUpdate
     // COLOR
     switch(data.config.color) {
         case "dark": {
