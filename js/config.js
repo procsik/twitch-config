@@ -26,7 +26,7 @@ function start() {
     message.token = 'auth.token'
     message.context = 'context'
     message.version = '21:50'
-    connect(msgOut)
+    connect(message)
 
     function connect(msg) {
         let socket = new WebSocket('ws://localhost/')
@@ -41,7 +41,7 @@ function start() {
         })
     
         socket.addEventListener('message', (m) => {
-            // console.log('ответ: ', m.data)
+            // console.log(m.data)
             main(JSON.parse(m.data))
         })
 
@@ -67,6 +67,8 @@ function main(msgIn) {
         sswSteamLAuth.appendChild(sswSteamLAuthImg)
 
         sswSteamL.appendChild(sswSteamLAuth)
+    } else {
+
     }
 
     let cSetup = ''
@@ -135,37 +137,6 @@ function main(msgIn) {
         char.appendChild(charInput)
 
         document.getElementById('wrapper-char').appendChild(char)
-        // switch(data.character[c].type) {
-        //     case "killer": {
-        //         let char = document.createElement('div')
-        //         char.classList = 'char border'
-        //         char.style.backgroundImage = 'url(../web/img/K01.png)'
-
-        //         let charInput = document.createElement('input')
-        //         charInput.type = 'radio'
-        //         charInput.name = 'character'
-        //         charInput.value = data.character[c].id
-        //         char.appendChild(charInput)
-
-        //         document.getElementById('wrapper-mainkiller').appendChild(char)
-        //         break
-        //     }
-        //     case "camper": {
-        //         let char = document.createElement('div')
-        //         char.classList = 'char border'
-        //         char.style.backgroundImage = 'url(../web/img/K01.png)'
-
-        //         let charInput = document.createElement('input')
-        //         charInput.type = 'radio'
-        //         charInput.name = 'character'
-        //         charInput.value = data.character[c].id
-        //         char.appendChild(charInput)
-
-        //         document.getElementById('wrapper-maincamper').appendChild(char)
-        //         break
-        //     }
-        //     default: break
-        // }
     }
 
     // achievements 
@@ -327,107 +298,10 @@ function main(msgIn) {
             }
         }
     }
-
-    // character
-    // for (let c of document.getElementsByClassName('wrapper-role')) 
-    //     c.style.display = c.id.includes(settings.role) ? '' : 'none'
-
-    // Object.keys(data.character).forEach(key => {
-    //     let character = document.createElement('div')
-    //     character.className = 'char border ' + data.character[key].type
-    //     character.style = 'display: none'
-    //     character.innerHTML = data.character[key].type + ' ' + data.character[key].id
-    //     character.onclick = () => {
-    //         settings.char = character.lastElementChild.value
-    //         character.lastElementChild.checked = true
-    //     }
-
-    //     let characterInput = document.createElement('input')
-    //     characterInput.type = 'radio'
-    //     characterInput.name = 'character'
-    //     characterInput.value = data.character[key].id
-    //     character.appendChild(characterInput)
-
-    //     document.getElementById('column-c-c').appendChild(character)
-    // })
-
-    // document.getElementsByName('color')[0].checked = true
-    // settings.color = document.getElementsByName('color')[0].value
-
-    // document.getElementsByName('role')[1].checked = true
-    // settings.role = document.getElementsByName('role')[1].value
-
-    // document.getElementsByName('motiv')[0].checked = true
-    // settings.motiv = document.getElementsByName('motiv')[0].value
-
-    // for (let char of document.getElementsByName('char')) {
-    //     char.hidden = true
-    // }
-
-    // main
-
-    // let color = document.getElementsByClassName('color')
-    // for (let c of color) {
-    //     c.onmousedown = function() {
-    //         cSetup = 'color'
-    //         c.lastElementChild.checked = true
-    //         settings.color = c.lastElementChild.value
-    //     }
-    // }
-
-    // document.getElementById('role').onmousedown = () => unhide(document.getElementById('role').id)
-    // document.getElementById('main-auto').onmousedown = () => unhide(document.getElementById('main-auto').id)
-    // document.getElementById('main-killer').onmousedown = () => unhide(document.getElementById('main-killer').id)
-    // document.getElementById('main-camper').onmousedown = () => unhide(document.getElementById('main-camper').id)
-
-    // let role = document.getElementsByClassName('role')
-    // for (let r of role) {
-    //     r.onmousedown = () => {
-    //         cSetup = 'role'
-    //         r.lastElementChild.checked = true
-    //         settings.role = r.lastElementChild.value
-    //     }
-    // }
-
-    // document.getElementById('char').onmousedown = (a) => unhide(a.target.id)
-
-    // let achivSetup = document.getElementsByClassName('achiv')
-    // for (let a of achivSetup) a.onmousedown = () => {
-    //     unhide(a.id)
-    // }
-
-    // document.getElementById('character').onmousedown = () => {
-    //     showChar(settings.role)
-    // }
-    
-    // let motiv = document.getElementsByClassName('motiv')
-    // for (let m of motiv) {
-    //     m.onmousedown = function() {
-    //         cSetup = 'motiv'
-    //         m.lastElementChild.checked = true
-    //         settings.motiv = m.lastElementChild.value
-    //     }
-    // }
     
     document.getElementById('button').onclick = function() {
         console.log(msgIn.data.config,cSetup,cConfig)
     }
-
-    // let char = document.getElementsByName('char')
-    // for (let c of char) {
-    //     c.onmousedown = function() {
-    //         c.lastElementChild.checked = true
-    //         settings.char = c.lastElementChild.value
-    //     }
-    // }
-
-    /* let achiv = document.getElementsByClassName('achivments')
-    for (let a of achiv) {
-        a.onmousedown = () => {
-            if (a.lastElementChild.checked) a.lastElementChild.checked = false
-            else a.lastElementChild.checked = true
-        }
-    } */
 
     function activMenu(cfg,cls) {
         for (let elem of document.getElementsByClassName(cls)) {
@@ -639,12 +513,6 @@ function main(msgIn) {
 function sortByPos(obj) {
     let newObj = new Object()
     Object.keys(obj).sort(function(a,b){
-        /* if (obj[a].weight < obj[b].weight) return -1
-        if (obj[a].weight > obj[b].weight) return 1
-        if (obj[a].position < obj[b].position) return -1
-        if (obj[a].position > obj[b].position) return 1
-        return 0 */
-        //if (obj[a].position < obj[b].position) return obj[a].position - obj[b].position
         return obj[a].position - obj[b].position
     }).forEach(function(v){
         /* console.log(obj[v].points.toFixed()) */
