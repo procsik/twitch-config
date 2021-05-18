@@ -10,7 +10,8 @@ let msgOut =
     "version":"15:34"
 }
 
-let data =
+let data = {
+"data":
 {
     "character": {
         "char1": {
@@ -384,4 +385,5 @@ let data =
             }
         }
     }
+}
 }

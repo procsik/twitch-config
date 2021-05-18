@@ -1,6 +1,18 @@
 document.addEventListener("load", start())
 
 function start() {
+    // let testradio = document.querySelectorAll('input[name="testradio"]')
+    let testradio = document.getElementsByName('testradio')
+    testradio[1].checked = true
+    for (let elem of testradio) {
+        elem.addEventListener('blur',(event) => {
+            console.log(event)
+        })
+        elem.addEventListener('change',(event) => {
+            console.log(event)
+        })
+
+    }
     // const twitch = window.Twitch.ext
     // let context
 
@@ -26,7 +38,7 @@ function start() {
     message.token = 'auth.token'
     message.context = 'context'
     message.version = '21:50'
-    connect(message)
+    // connect(message)
 
     function connect(msg) {
         let socket = new WebSocket('ws://localhost/')
@@ -42,14 +54,16 @@ function start() {
     
         socket.addEventListener('message', (m) => {
             // console.log(m.data)
-            main(JSON.parse(m.data))
+            // main(JSON.parse(m.data))
         })
 
         // main(data)
     }
+    main(data)
 }
 
 function main(msgIn) {
+    // console.log(msgIn)
     // init
 
     let sswSteamL = document.getElementById('ssw-steam-l')
@@ -132,7 +146,7 @@ function main(msgIn) {
         charInput.type = 'radio'
         charInput.name = 'character'
         charInput.value = msgIn.data.character[c].id
-        charInput.style.display = 'none'
+        // charInput.style.display = 'none'
         charInput.checked = charInput.value == msgIn.data.config.char ? true : false
         char.appendChild(charInput)
 
