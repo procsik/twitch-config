@@ -1,90 +1,92 @@
 document.addEventListener("load", start())
 
 function start() {
-    //console.log(Object.assign(Obj,newObj))
     // const twitch = window.Twitch.ext
     // let context
+
+    let sTwitch = new Object({
+        token: 'auth.token',
+        context: 'context',
+        data: {}
+    })
 
     // twitch.onContext((ctx) => {
     //     context = ctx
     // })
 
     // twitch.onAuthorized((auth) => {
+    
     //     // token = auth.token
     //     // userId = auth.userId
     //     // channelId = auth.channelId
 
-    //     let message = new Object()
+    //     let secureTwitch = new Object()
+    //     secureTwitch.token = auth.token
+    //     secureTwitch.context = context
+    //     secureTwitch.data = {}
 
-    //     message.token = auth.token
-    //     message.context = context
-    //     message.version = '22:49'
-
-    //     connect(message)
+    //     connect(secureTwitch)
 
     // })
-    let msgOut = new Object({
-        token: 'auth.token',
-        context: 'context',
-        type: 'onload',
-        data: {}
-    })
 
-    connect(msgOut,true)
+    connect(sTwitch)
 
-    function connect(msg,type = false) {
+    function connect(msg) {
         let msgIn = new Object({
             mode: null,
+            type: null,
             data: {
                 hash: null,
                 authSite: null,
+                character: {},
                 config: {},
                 stats: {}
             }
         })
 
         let socket = new WebSocket('ws://localhost/')
-        console.log(socket.readyState,'a')
         // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
 
-        if (!type) {
-            socket.addEventListener('open', () => {
-                socket.send(JSON.stringify(msg))
-                console.log(socket.readyState,'b')
-                console.log('1')
-            })
-        } else {
-            // socket.send(JSON.stringify(msg))
-            console.log('2')
-        }
-
-        console.log(socket.readyState,'c')
-
+        socket.addEventListener('open', () => socket.send(JSON.stringify(msg)))
+    
         socket.addEventListener('close', () => {
             socket = null
-            // setTimeout(start, 5000)
+            setTimeout(connect, 5000)
         })
     
-        socket.addEventListener('message', (m) => {
-            // console.log(m.data)
-            // main(JSON.parse(m.data))
-        })
+        // socket.addEventListener('message', (m) => {
+        //     // let newData = JSON.parse(m.data)
 
-        
+        //     console.log(m.data)
+            
+        //     // msgIn.mode = newData.mode ? newData.mode : null
+        //     // msgIn.data.hash = newData.data.hash ? newData.data.hash : null
+        //     // msgIn.data.authSite = newData.data.authSite ? newData.data.authSite : null
+        //     // msgIn.data.character = newData.data.character ? newData.data.character : {}
+        //     // msgIn.data.config = newData.data.config ? newData.data.config : {}
+        //     // msgIn.data.stats = newData.data.stats ? newData.data.stats : {}
 
-        main(data,socket)
+        //     // msgIn.data.type = newData.data.type ? newData.data.type : null
+
+        // })
+
+        main(msgIn, socket)
     }
-    // main(data)
 }
 
-function main(msgIn,socket) {
-    // console.log(msgIn)
+function main(msgIn, socket, update = false) {
     // init
-
     let sswSteamL = document.getElementById('ssw-steam-l')
     let sswSteamR = document.getElementById('ssw-steam-r')
+
+    let cSetup = ''
+    let cConfig = ''
+    let achivTmp = {}
+    // let bp = 0
+    // let hs = 0
     
     if (msgIn.data.hash !== null) {
+
         let sswSteamLAuth = document.createElement('div')
         sswSteamLAuth.id = 'ssw-steam-l-auth'
 
@@ -97,19 +99,13 @@ function main(msgIn,socket) {
 
         sswSteamL.appendChild(sswSteamLAuth)
     } else {
-
+        
     }
 
-    let cSetup = ''
-    let cConfig = ''
-    let achivTmp = {}
+    // document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    // document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-    let bp = 12342525243
-    let hs = 5235
-    document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-
-    let lastUpdateValue = new Date(msgIn.data.stats.timeupdate * 1000)
+    let lastUpdateValue = new Date((msgIn.data.stats.timeupdate ? msgIn.data.stats.timeupdate : 0) * 1000)
     let lastUpdateText = '* - last Steam statistics update: '
     lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
         lastUpdateValue.getUTCMonth('mm') + '.' + 
@@ -117,6 +113,7 @@ function main(msgIn,socket) {
         lastUpdateValue.getUTCHours() + ':' +
         lastUpdateValue.getUTCMinutes() + ':' +
         lastUpdateValue.getUTCSeconds() + ' UTC'
+
 
     // document.getElementById('ssw-u-value-a').innerText = lastUpdate
     // document.getElementById('ssw-u-value-b').innerText = lastUpdate
