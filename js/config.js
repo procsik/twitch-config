@@ -1,18 +1,7 @@
 document.addEventListener("load", start())
 
 function start() {
-    // let testradio = document.querySelectorAll('input[name="testradio"]')
-    let testradio = document.getElementsByName('testradio')
-    testradio[1].checked = true
-    for (let elem of testradio) {
-        elem.addEventListener('blur',(event) => {
-            console.log(event)
-        })
-        elem.addEventListener('change',(event) => {
-            console.log(event)
-        })
-
-    }
+    //console.log(Object.assign(Obj,newObj))
     // const twitch = window.Twitch.ext
     // let context
 
@@ -34,18 +23,42 @@ function start() {
     //     connect(message)
 
     // })
-    let message = new Object()
-    message.token = 'auth.token'
-    message.context = 'context'
-    message.version = '21:50'
-    // connect(message)
+    let msgOut = new Object({
+        token: 'auth.token',
+        context: 'context',
+        type: 'onload',
+        data: {}
+    })
 
-    function connect(msg) {
-        let socket = new WebSocket('ws://localhost/')
-        // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
-        socket.addEventListener('open', () => {
-            socket.send(JSON.stringify(msg))
+    connect(msgOut,true)
+
+    function connect(msg,type = false) {
+        let msgIn = new Object({
+            mode: null,
+            data: {
+                hash: null,
+                authSite: null,
+                config: {},
+                stats: {}
+            }
         })
+
+        let socket = new WebSocket('ws://localhost/')
+        console.log(socket.readyState,'a')
+        // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
+
+        if (!type) {
+            socket.addEventListener('open', () => {
+                socket.send(JSON.stringify(msg))
+                console.log(socket.readyState,'b')
+                console.log('1')
+            })
+        } else {
+            // socket.send(JSON.stringify(msg))
+            console.log('2')
+        }
+
+        console.log(socket.readyState,'c')
 
         socket.addEventListener('close', () => {
             socket = null
@@ -57,12 +70,14 @@ function start() {
             // main(JSON.parse(m.data))
         })
 
-        // main(data)
+        
+
+        main(data,socket)
     }
-    main(data)
+    // main(data)
 }
 
-function main(msgIn) {
+function main(msgIn,socket) {
     // console.log(msgIn)
     // init
 
@@ -146,7 +161,7 @@ function main(msgIn) {
         charInput.type = 'radio'
         charInput.name = 'character'
         charInput.value = msgIn.data.character[c].id
-        // charInput.style.display = 'none'
+        charInput.style.display = 'none'
         charInput.checked = charInput.value == msgIn.data.config.char ? true : false
         char.appendChild(charInput)
 
@@ -314,7 +329,8 @@ function main(msgIn) {
     }
     
     document.getElementById('button').onclick = function() {
-        console.log(msgIn.data.config,cSetup,cConfig)
+        socket.send('1')
+        // console.log(msgIn.data.config,cSetup,cConfig)
     }
 
     function activMenu(cfg,cls) {
