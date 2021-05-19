@@ -125,45 +125,59 @@ function main(msgIn, socket) {
     }
 
     function roleSetup(character, configMain = {}, offline = true) {
-        // if (offline) {
-            
-        // } else {
-
-        // }
 
         while (document.getElementById('wrapper-char').firstElementChild) {
             document.getElementById('wrapper-char').removeChild(document.getElementById('wrapper-char').firstElementChild)
         }
 
-        for (let c in character) {
-            let char = document.createElement('div')
-            char.className = 'char border ' + character[c].type
-            char.style.display = 'none'
-            char.style.backgroundImage = 'url(' + character[c].imgUrl + ')'
-            // char.onclick = () => {
-            //     msgIn.data.config.char = parseInt(char.lastElementChild.value)
-            //     char.lastElementChild.checked = true
-            //     activeChar(msgIn.data.config.char)
-            // }
+        if (offline) {
+            document.getElementById('ip-1').style.backgroundImage = ""
 
-            let charHover = document.createElement('div')
-            charHover.className = 'char-hover border'
-            char.appendChild(charHover)
-
-            let charInput = document.createElement('input')
-            charInput.type = 'radio'
-            charInput.name = 'character'
-            charInput.value = character[c].id
-            charInput.style.display = 'none'
-            charInput.checked = charInput.value == configMain.charid ? true : false
-            char.appendChild(charInput)
-
-            document.getElementById('wrapper-char').appendChild(char)
+        } else {
+            for (let c in character) {
+                let char = document.createElement('div')
+                char.className = 'char border ' + character[c].type
+                char.style.display = 'none'
+                char.style.backgroundImage = 'url(' + character[c].imgUrl + ')'
+                char.onclick = () => {
+                    char.lastElementChild.checked = true
+                    activeChar(parseInt(char.lastElementChild.value))
+                }
+    
+                let charHover = document.createElement('div')
+                charHover.className = 'char-hover border'
+                char.appendChild(charHover)
+    
+                let charInput = document.createElement('input')
+                charInput.type = 'radio'
+                charInput.name = 'character'
+                charInput.value = character[c].id
+                charInput.style.display = 'none'
+                charInput.checked = charInput.value == configMain.charid ? true : false
+                char.appendChild(charInput)
+    
+                document.getElementById('wrapper-char').appendChild(char)
+            }
         }
 
         document.getElementById('role').onmousedown = () => {
             activMenu('role','onclick-setup')
             document.getElementById('role-value').style.display = 'flex'
+
+            for (let c of document.getElementById('role-value').children) {
+                if (c.id.includes(configMain.role)) {
+                    for (let char of document.getElementsByClassName('char')) {
+                        if (configMain.role.includes(char.classList[2])) {
+                            char.style.display = ''
+                            activeChar(configMain.charid)
+                        }
+                        
+                        //char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
+                    }
+                    document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
+                    activMenu(configMain.role,'onclick-config')
+                }
+            }
 
             document.getElementById('steam-status').style.display = 'none'
             document.getElementById('achiv-value').style.display = 'none'
@@ -173,7 +187,6 @@ function main(msgIn, socket) {
 
     socket.addEventListener('message',(m) => {
         let msg = JSON.parse(m.data)
-        // console.log(m.data)
         // status
 
         // steam
@@ -183,6 +196,8 @@ function main(msgIn, socket) {
 
         // char
         roleSetup(msg.data.character, msg.data.config.main, false)
+        activeChar(msg.data.config.main.charid)
+        changeMainInDesc(msg.data.config.main.role)
 
         // achiv
 
@@ -204,7 +219,7 @@ function main(msgIn, socket) {
 
     // char
     roleSetup(msgIn.data.character, msgIn.data.config.main)
-    activeChar(msgIn.data.config.main.charid)
+    //activeChar(msgIn.data.config.main.charid)
 
     // // document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     // // document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -240,33 +255,6 @@ function main(msgIn, socket) {
     //         }
     //     }
     //     default: break
-    // }
-
-    // // character
-    // for (let c in msgIn.data.character) {
-    //     let char = document.createElement('div')
-    //     char.className = 'char border ' + msgIn.data.character[c].type
-    //     char.style.display = 'none'
-    //     char.style.backgroundImage = 'url(' + msgIn.data.character[c].imgUrl + ')'
-    //     char.onclick = () => {
-    //         msgIn.data.config.char = parseInt(char.lastElementChild.value)
-    //         char.lastElementChild.checked = true
-    //         activeChar(msgIn.data.config.char)
-    //     }
-
-    //     let charHover = document.createElement('div')
-    //     charHover.className = 'char-hover border'
-    //     char.appendChild(charHover)
-
-    //     let charInput = document.createElement('input')
-    //     charInput.type = 'radio'
-    //     charInput.name = 'character'
-    //     charInput.value = msgIn.data.character[c].id
-    //     charInput.style.display = 'none'
-    //     charInput.checked = charInput.value == msgIn.data.config.char ? true : false
-    //     char.appendChild(charInput)
-
-    //     document.getElementById('wrapper-char').appendChild(char)
     // }
 
     // // achievements 
@@ -310,32 +298,6 @@ function main(msgIn, socket) {
     // }
 
     // createAchiv(msgIn.data.config.achiv)
-    // activeChar(msgIn.data.config.char)
-
-
-    // document.getElementById('role').onmousedown = () => {
-    //     //cSetup = 'role'
-    //     activMenu('role','onclick-setup')
-    //     cConfig = ''
-    //     document.getElementById('role-value').style.display = 'flex'
-        
-    //     for (let c of document.getElementById('role-value').children) {
-    //         if (c.id.includes(msgIn.data.config.role)) {
-    //             for (let char of document.getElementsByClassName('char')) {
-    //                 if (msgIn.data.config.role.includes(char.classList[2])) {
-    //                     char.style.display = ''
-    //                     activeChar(msgIn.data.config.char)
-    //                 }
-                    
-    //                 // char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
-    //             }
-    //             document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
-    //             activMenu(msgIn.data.config.role,'onclick-config')
-    //         }
-    //     }
-    //     document.getElementById('steam-status').style.display = 'none'
-    //     document.getElementById('achiv-value').style.display = 'none'
-    // }
 
     // document.getElementById('achiv').onmousedown = () => {
     //     document.getElementById('achiv-value').style.display = 'flex'
@@ -361,6 +323,30 @@ function main(msgIn, socket) {
     //     document.getElementById('steam-status').style.display = 'none'
     //     document.getElementById('role-value').style.display = 'none'
     // }
+
+    for (let c of document.getElementsByClassName('onclick-config')) {
+        c.onmousedown = () => {
+            activMenu(c.id,'onclick-config')
+            switch(c.id) {
+                case "achivmain": {
+
+                    break
+                }
+                case "achivtop": {
+
+                    break
+                }
+                case "mainauto": {
+
+                    break
+                }
+                default: {
+                    changeChar(c)
+                    break
+                }
+            }
+        }
+    }
 
     // for (let c of document.getElementsByClassName('onclick-config')) {
     //     c.onmousedown = () => {
@@ -435,7 +421,6 @@ function main(msgIn, socket) {
 
     function activeChar(id) {
         for (let c of document.getElementsByClassName('char')) {
-            // c.firstElementChild.style.backgroundImage = c.lastElementChild.value == id ? "url(../web/img/char-hover.png)" : ""
             if (c.lastElementChild.value == id) {
                 c.firstElementChild.style.backgroundImage = "url(../web/img/char-hover.png)"
                 document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ id +".png)"
@@ -557,27 +542,27 @@ function main(msgIn, socket) {
     //     desc.appendChild(msg)
     // }
 
-    // function changeChar(c) {
-    //     msgIn.data.config.role = cConfig
-    //     changeMainInDesc(msgIn.data.config.role)
-    //     document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
-    //     for (let char of document.getElementsByClassName('char')) {
-    //         char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
-    //     }
-    // }
+    function changeChar(c) {
+        // msgIn.data.config.role = cConfig
+        changeMainInDesc(c.id)
+        document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
+        for (let char of document.getElementsByClassName('char')) {
+            char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
+        }
+    }
 
-    // function changeMainInDesc(m) {
-    //     let desc = document.getElementById('desc')
-    //     let main = document.getElementById('main-k') || document.getElementById('main-c')
+    function changeMainInDesc(m) {
+        let desc = document.getElementById('desc')
+        let main = document.getElementById('main-k') || document.getElementById('main-c')
         
-    //     if (main) desc.removeChild(main)
+        if (main) desc.removeChild(main)
 
-    //     let newMain = document.createElement('div')
-    //     newMain.className = 'main border'
-    //     newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+        let newMain = document.createElement('div')
+        newMain.className = 'main border'
+        newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
 
-    //     desc.insertBefore(newMain, desc.firstElementChild)
-    // }
+        desc.insertBefore(newMain, desc.firstElementChild)
+    }
 
     // function changeAchiv(elem,a,s) {
     //     switch(s) {
