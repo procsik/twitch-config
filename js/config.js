@@ -218,6 +218,115 @@ function main(msgIn, socket) {
         }
     }
 
+    function createAchiv(aTmp, stats) {
+        let container = document.getElementById('info-topachiv')
+        let topdbd = document.getElementById('topdbd')
+        let desc = document.getElementById('desc')
+
+        while (container.firstElementChild) container.removeChild(container.firstElementChild)
+        while (topdbd.firstElementChild) topdbd.removeChild(topdbd.firstElementChild)
+
+        if (aTmp.length == 0 && Object.keys(stats.steam).length == 0 && Object.keys(stats.onteh).length == 0) {
+            for (let i = 0; i < 2; i++) {
+                let achiv = document.createElement('div')
+                achiv.className = 'topachiv'
+
+                let achivImg = document.createElement('div')
+                achivImg.className = 'topachiv-img topnm'
+                // achivImg.style.backgroundImage = 'url(' + stats.onteh[b].imgUrl +')'
+                achiv.appendChild(achivImg)
+
+                let achivHover = document.createElement('div')
+                achivHover.className = 'topachiv-hover'
+                achiv.appendChild(achivHover)
+
+                container.appendChild(achiv)
+            }
+            for (let i = 0; i < 5; i++) {
+                let topachiv = document.createElement('div')
+          
+                topachiv.className = 'topdbd topnm'
+    
+                let tophover = document.createElement('div')
+                tophover.className = 'hover'
+                topachiv.appendChild(tophover)
+    
+                topdbd.appendChild(topachiv)
+            }
+        } else {
+            let i = 0
+            for (let a of aTmp) {
+                for (let b of a) {
+                    if (i == 0) {
+                        let achiv = document.createElement('div')
+                        achiv.className = 'topachiv'
+                        achiv.id = b
+    
+                        let achivImg = document.createElement('div')
+                        achivImg.className = 'topachiv-img'
+                        achivImg.style.backgroundImage = 'url(' + stats.onteh[b].imgUrl +')'
+                        achiv.appendChild(achivImg)
+    
+                        let achivHover = document.createElement('div')
+                        achivHover.className = 'topachiv-hover'
+                        achiv.appendChild(achivHover)
+    
+                        container.appendChild(achiv)
+                    } else {
+                        let topachiv = document.createElement('div')
+    
+                        let status = ''
+                        if (stats.onteh[b].status > 0) status = 'topup'
+                        else if (stats.onteh[b].status < 0) status = 'topdw'
+                        else status = 'topnm'
+                      
+    
+                        topachiv.id = b
+                        topachiv.className = 'topdbd ' + status
+    
+                        let tophover = document.createElement('div')
+                        tophover.className = 'hover'
+                        topachiv.appendChild(tophover)
+    
+                        let topdbdImg = document.createElement('div')
+                        topdbdImg.className = 'topdbd-img'
+                        topdbdImg.style.backgroundImage = 'url(../web/img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        tophover.appendChild(topdbdImg)
+    
+                        topdbd.appendChild(topachiv)
+                    }
+                }
+                i++
+            }
+        }
+
+        if (container.firstElementChild !== null) {
+            container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+            // createDesc(desc,container.firstElementChild.id)
+        }
+
+        for (let a of container.children) {
+            a.onmousedown = () => {
+                for (let c of container.children) c.lastElementChild.style.background = ''
+                for (let c of topdbd.children) c.firstElementChild.style.background = ''
+                a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
+
+                // createDesc(desc,a.id)
+            }
+        }
+
+        for (let a of topdbd.children) {
+            a.onmousedown = () => {
+                for (let c of container.children) c.lastElementChild.style.background = ''
+                for (let c of topdbd.children) c.firstElementChild.style.background = ''
+                a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
+
+                // createDesc(desc,a.id)
+            }
+        }
+
+    }
+
     function achivSetup(stats, config, offline = true) {
         while (document.getElementById('wrapper-achivmain').firstElementChild) {
             document.getElementById('wrapper-achivmain').removeChild(document.getElementById('wrapper-achivmain').firstElementChild)
@@ -227,7 +336,7 @@ function main(msgIn, socket) {
             document.getElementById('achivmain').onmousedown = () => activMenu('achivmain','onclick-config')
             document.getElementById('achivtop').onmousedown = () => activMenu('achivtop','onclick-config')
 
-
+            createAchiv(config.achiv, stats)
         } else {
             activMenu('achivmain','onclick-config')
         
@@ -261,6 +370,8 @@ function main(msgIn, socket) {
                 
                 document.getElementById('wrapper-achivmain').appendChild(rowAchiv)
             }
+
+            createAchiv(config.achiv, stats)
 
             chooseAchivMain(config)
             document.getElementById('achivmain').onmousedown = () => chooseAchivMain(config)
