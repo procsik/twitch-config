@@ -1,3 +1,31 @@
+var achivTmp = {}
+var configTmp = {}
+
+var msgIn = {
+    mode: null,
+    type: null,
+    data: {
+        hash: null,
+        authSite: null,
+        info: {
+            steam: {
+                name: null,
+                img: null
+            },
+            twitch: {}
+        },
+        character: {},
+        config: {
+            main: {},
+            achiv: []
+        },
+        stats: {
+            onteh: {},
+            steam: {}
+        }
+    }
+}
+
 document.addEventListener("load", start())
 
 function start() {
@@ -32,48 +60,26 @@ function start() {
     connect(sTwitch)
 
     function connect(msg) {
-        let msgIn = new Object({
-            mode: null,
-            type: null,
-            data: {
-                hash: null,
-                authSite: null,
-                info: {
-                    steam: {
-                        name: null,
-                        img: null
-                    },
-                    twitch: {}
-                },
-                character: {},
-                config: {
-                    main: {},
-                    achiv: []
-                },
-                stats: {
-                    onteh: {},
-                    steam: {}
-                }
-            }
-        })
-
+        
         let socket = new WebSocket('ws://localhost/')
         // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
 
-        socket.addEventListener('open', () => socket.send(JSON.stringify(msg)))
+        socket.addEventListener('open', () => {
+            socket.send(JSON.stringify(msg))
+            document.getElementById('status-conn').style.backgroundColor = 'green'
+        })
     
         socket.addEventListener('close', () => {
+            document.getElementById('status-conn').style.backgroundColor = ''
             socket = null
-            msgIn = null
+            // msgIn = null
             setTimeout(connect, 5000)
         })
-
         main(msgIn, socket)
     }
 }
 
-function main(msgIn, socket) {
-
+function main(msgMain, socket) {
     function steamSetup(msg, offline = true) {
         if (offline) {
             document.getElementById('ssw-steam-l-links').style.display = 'none'
@@ -218,7 +224,36 @@ function main(msgIn, socket) {
         }
     }
 
-    function createAchiv(aTmp, stats) {
+    function createDesc(desc,nameId,stats,config) {
+        while (desc.firstChild) desc.removeChild(desc.firstChild)
+
+        let main = document.createElement('div')
+        main.id = config.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.className = 'main border'
+
+        let msg = document.createElement('div')
+        let message = stats.onteh[nameId].desc
+
+        let spanPlayer = "<span id='sPlayer'>" + config.player + " </span>"
+
+        let classPos = ''
+        if (stats.onteh[nameId].status > 0) classPos = 'posUp'
+        else if ((stats.onteh[nameId].status < 0)) classPos = 'posDown'
+        else classPos = 'posNm'
+
+        msg.innerHTML = spanPlayer + message
+            .replace('{value}',"<span id='sValue'>" + 
+                stats.onteh[nameId].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span> " + 
+                "<span id='cValueText'>(текущее значение <span id='cValue'>" + stats.steam[stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
+            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
+
+        // document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
+
+        desc.appendChild(main)
+        desc.appendChild(msg)
+    }
+
+    function createAchiv(aTmp, stats, config) {
         let container = document.getElementById('info-topachiv')
         let topdbd = document.getElementById('topdbd')
         let desc = document.getElementById('desc')
@@ -298,11 +333,11 @@ function main(msgIn, socket) {
                 }
                 i++
             }
-        }
 
-        if (container.firstElementChild !== null) {
-            container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
-            // createDesc(desc,container.firstElementChild.id)
+            if (container.firstElementChild !== null) {
+                container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+                createDesc(desc,container.firstElementChild.id,stats,config)
+            }
         }
 
         for (let a of container.children) {
@@ -311,7 +346,7 @@ function main(msgIn, socket) {
                 for (let c of topdbd.children) c.firstElementChild.style.background = ''
                 a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
 
-                // createDesc(desc,a.id)
+                createDesc(desc,a.id,stats,config)
             }
         }
 
@@ -321,10 +356,63 @@ function main(msgIn, socket) {
                 for (let c of topdbd.children) c.firstElementChild.style.background = ''
                 a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
 
-                // createDesc(desc,a.id)
+                createDesc(desc,a.id,stats,config)
             }
         }
 
+    }
+
+    function changeAchiv(elem,a,s,c,stats) {
+        switch(s) {
+            case "1": {
+                if (elem.lastElementChild.checked) {
+                    if (c.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
+                        c.achiv[0].splice(c.achiv[0].indexOf(elem.lastElementChild.value),1)
+                        delete achivTmp[0][elem.lastElementChild.value]
+
+                        elem.lastElementChild.checked = false
+                        elem.style.background = ''
+                    }
+                } else if (Object.keys(c.achiv[0]).length < 2) {
+                    if (c.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
+                        c.achiv[1].splice(c.achiv[1].indexOf(elem.lastElementChild.value),1)
+                        delete achivTmp[1][elem.lastElementChild.value]
+
+                        elem.lastElementChild.checked = true
+                        elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
+                    } else {
+                        elem.lastElementChild.checked = true
+                        elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
+                    }
+                    achivTmp[0][elem.lastElementChild.value] = stats.onteh[a]
+                    c.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
+                }
+                createAchiv(c.achiv, stats, c)
+                break
+            }
+            case "3": {
+                if (elem.lastElementChild.checked) {
+                    if (c.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
+                        c.achiv[1].splice(c.achiv[1].indexOf(elem.lastElementChild.value),1)
+                        delete achivTmp[1][elem.lastElementChild.value]
+
+                        elem.lastElementChild.checked = false
+                        elem.style.background = ''
+                    } 
+                } else if (Object.keys(c.achiv[1]).length < 5) {
+                    if (!c.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
+                        achivTmp[1][elem.lastElementChild.value] = stats.onteh[a]
+                        c.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
+    
+                        elem.lastElementChild.checked = true
+                        elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                    }
+                }
+                createAchiv(c.achiv, stats, c)
+                break
+            }
+            default: break
+        }
     }
 
     function achivSetup(stats, config, offline = true) {
@@ -336,14 +424,23 @@ function main(msgIn, socket) {
             document.getElementById('achivmain').onmousedown = () => activMenu('achivmain','onclick-config')
             document.getElementById('achivtop').onmousedown = () => activMenu('achivtop','onclick-config')
 
-            createAchiv(config.achiv, stats)
+            createAchiv(config.achiv, stats, config)
         } else {
+
+            // achiv to object
+            let i = 0
+            for (let a of (config.achiv ? config.achiv : '')) {
+                achivTmp[i] = {}
+                for (let b of a) achivTmp[i][b] = stats.onteh[b]
+                i++
+            }
+
             activMenu('achivmain','onclick-config')
         
             for (let a in sortByPos(stats.onteh)) {
                 let rowAchiv = document.createElement('div')
                 rowAchiv.className = 'achivments border'
-                //rowAchiv.onclick = () => changeAchiv(rowAchiv,a,cConfig)
+                rowAchiv.onclick = () => changeAchiv(rowAchiv, a, getComputedStyle(rowAchiv.parentElement).order, config, stats)
                 // rowAchiv.style = 'display: none'
     
                 let achivImg = document.createElement('div')
@@ -371,7 +468,7 @@ function main(msgIn, socket) {
                 document.getElementById('wrapper-achivmain').appendChild(rowAchiv)
             }
 
-            createAchiv(config.achiv, stats)
+            createAchiv(config.achiv, stats, config)
 
             chooseAchivMain(config)
             document.getElementById('achivmain').onmousedown = () => chooseAchivMain(config)
@@ -429,18 +526,18 @@ function main(msgIn, socket) {
 
     // let cSetup = ''
     // let cConfig = ''
-    // let achivTmp = {}
+    
     // // let bp = 0
     // // let hs = 0
     
     // steam
-    steamSetup(msgIn)
+    steamSetup(msgMain)
 
     // char
-    roleSetup(msgIn.data.character, msgIn.data.config.main)
+    roleSetup(msgMain.data.character, msgMain.data.config.main)
 
     // achiv
-    achivSetup(msgIn.data.stats, msgIn.data.config)
+    achivSetup(msgMain.data.stats, msgMain.data.config)
 
     // // document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     // // document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -478,21 +575,12 @@ function main(msgIn, socket) {
     //     default: break
     // }
 
-
-    // // achiv to object
-    // let i = 0
-    // for (let a of (msgIn.data.config.achiv ? msgIn.data.config.achiv : '')) {
-    //     achivTmp[i] = {}
-    //     for (let b of a) achivTmp[i][b] = msgIn.data.stats.onteh[b]
-    //     i++
-    // }
-
     // createAchiv(msgIn.data.config.achiv)
     
-    // document.getElementById('button').onclick = function() {
-    //     socket.send('1')
-    //     // console.log(msgIn.data.config,cSetup,cConfig)
-    // }
+    document.getElementById('button').onclick = function() {
+        // socket.send('1')
+        // console.log()
+    }
 
     function activMenu(cfg,cls) {
         for (let elem of document.getElementsByClassName(cls)) {
@@ -514,119 +602,6 @@ function main(msgIn, socket) {
             }
         }
     }
-
-    // function createAchiv(aTmp) {
-    //     let container = document.getElementById('info-topachiv')
-    //     let topdbd = document.getElementById('topdbd')
-    //     let desc = document.getElementById('desc')
-
-    //     while (container.firstElementChild) {
-    //         container.removeChild(container.firstElementChild)
-    //     }
-
-    //     while (topdbd.firstElementChild) {
-    //         topdbd.removeChild(topdbd.firstElementChild)
-    //     }
-
-    //     let i = 0
-    //     for (let a of aTmp) {
-    //         for (let b of a) {
-    //             if (i == 0) {
-    //                 let achiv = document.createElement('div')
-    //                 achiv.className = 'topachiv'
-    //                 achiv.id = b
-    
-    //                 let achivImg = document.createElement('div')
-    //                 achivImg.className = 'topachiv-img'
-    //                 achivImg.style.backgroundImage = 'url(' + msgIn.data.stats.onteh[b].imgUrl +')'
-    //                 achiv.appendChild(achivImg)
-    
-    //                 let achivHover = document.createElement('div')
-    //                 achivHover.className = 'topachiv-hover'
-    //                 achiv.appendChild(achivHover)
-    
-    //                 container.appendChild(achiv)
-    //             } else {
-    //                 let topachiv = document.createElement('div')
-
-    //                 let status = ''
-    //                 if (msgIn.data.stats.onteh[b].status > 0) status = 'topup'
-    //                 else if (msgIn.data.stats.onteh[b].status < 0) status = 'topdw'
-    //                 else status = 'topnm'
-
-    //                 topachiv.id = b
-    //                 topachiv.className = 'topdbd ' + status
-
-    //                 let tophover = document.createElement('div')
-    //                 tophover.className = 'hover'
-    //                 topachiv.appendChild(tophover)
-
-    //                 let topdbdImg = document.createElement('div')
-    //                 topdbdImg.className = 'topdbd-img'
-    //                 topdbdImg.style.backgroundImage = 'url(../web/img/achievements/'+ msgIn.data.stats.onteh[b].steamId + '.png)'
-    //                 tophover.appendChild(topdbdImg)
-
-    //                 topdbd.appendChild(topachiv)
-    //             }
-    //         }
-    //         i++
-    //     }
-
-    //     if (container.firstElementChild !== null) {
-    //         container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
-    //         createDesc(desc,container.firstElementChild.id)
-    //     }
-
-    //     for (let a of container.children) {
-    //         a.onmousedown = () => {
-    //             for (let c of container.children) c.lastElementChild.style.background = ''
-    //             for (let c of topdbd.children) c.firstElementChild.style.background = ''
-    //             a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
-
-    //             createDesc(desc,a.id)
-    //         }
-    //     }
-
-    //     for (let a of topdbd.children) {
-    //         a.onmousedown = () => {
-    //             for (let c of container.children) c.lastElementChild.style.background = ''
-    //             for (let c of topdbd.children) c.firstElementChild.style.background = ''
-    //             a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
-
-    //             createDesc(desc,a.id)
-    //         }
-    //     }
-
-    // }
-
-    // function createDesc(desc,nameId) {
-    //     while (desc.firstChild) desc.removeChild(desc.firstChild)
-
-    //     let main = document.createElement('div')
-    //     main.id = msgIn.data.config.role == 'mainkiller' ? 'main-k' : 'main-c'
-    //     main.className = 'main border'
-
-    //     let msg = document.createElement('div')
-    //     let message = msgIn.data.stats.onteh[nameId].desc
-
-    //     let spanPlayer = "<span id='sPlayer'>" + msgIn.data.config.player + " </span>"
-
-    //     let classPos = ''
-    //     if (msgIn.data.stats.onteh[nameId].status > 0) classPos = 'posUp'
-    //     else if ((msgIn.data.stats.onteh[nameId].status < 0)) classPos = 'posDown'
-    //     else classPos = 'posNm'
-
-    //     msg.innerHTML = spanPlayer + message
-    //         .replace('{value}',"<span id='sValue'>" + 
-    //             msgIn.data.stats.onteh[nameId].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span> " + 
-    //             "<span id='cValueText'>(текущее значение <span id='cValue'>" + msgIn.data.stats.steam[msgIn.data.stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
-    //         .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + msgIn.data.stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
-
-    //     document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
-
-    //     desc.appendChild(main)
-    //     desc.appendChild(msg)
-    // }
 
     function changeChar(c) {
         // msgIn.data.config.role = cConfig
@@ -654,59 +629,6 @@ function main(msgIn, socket) {
 
         desc.insertBefore(newMain, desc.firstElementChild)
     }
-
-    // function changeAchiv(elem,a,s) {
-    //     switch(s) {
-    //         case "achivmain": {
-    //             if (elem.lastElementChild.checked) {
-    //                 if (msgIn.data.config.achiv[0].includes(elem.lastElementChild.value) && achivTmp[0][elem.lastElementChild.value]) {
-    //                     msgIn.data.config.achiv[0].splice(msgIn.data.config.achiv[0].indexOf(elem.lastElementChild.value),1)
-    //                     delete achivTmp[0][elem.lastElementChild.value]
-
-    //                     elem.lastElementChild.checked = false
-    //                     elem.style.background = ''
-    //                 }
-    //             } else if (Object.keys(msgIn.data.config.achiv[0]).length < 2) {
-    //                 if (msgIn.data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
-    //                     msgIn.data.config.achiv[1].splice(msgIn.data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
-    //                     delete achivTmp[1][elem.lastElementChild.value]
-
-    //                     elem.lastElementChild.checked = true
-    //                     elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
-    //                 } else {
-    //                     elem.lastElementChild.checked = true
-    //                     elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
-    //                 }
-    //                 achivTmp[0][elem.lastElementChild.value] = msgIn.data.stats.onteh[a]
-    //                 msgIn.data.config.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
-    //             }
-    //             createAchiv(msgIn.data.config.achiv)
-    //             break
-    //         }
-    //         case "achivtop": {
-    //             if (elem.lastElementChild.checked) {
-    //                 if (msgIn.data.config.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
-    //                     msgIn.data.config.achiv[1].splice(msgIn.data.config.achiv[1].indexOf(elem.lastElementChild.value),1)
-    //                     delete achivTmp[1][elem.lastElementChild.value]
-
-    //                     elem.lastElementChild.checked = false
-    //                     elem.style.background = ''
-    //                 } 
-    //             } else if (Object.keys(msgIn.data.config.achiv[1]).length < 5) {
-    //                 if (!msgIn.data.config.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
-    //                     achivTmp[1][elem.lastElementChild.value] = msgIn.data.stats.onteh[a]
-    //                     msgIn.data.config.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
-    
-    //                     elem.lastElementChild.checked = true
-    //                     elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
-    //                 }
-    //             }
-    //             createAchiv(msgIn.data.config.achiv)
-    //             break
-    //         }
-    //         default: break
-    //     }
-    // }
 }
 
 function sortByPos(obj) {
