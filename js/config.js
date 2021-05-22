@@ -66,11 +66,17 @@ function start() {
 
         socket.addEventListener('open', () => {
             socket.send(JSON.stringify(msg))
-            document.getElementById('status-conn').style.backgroundColor = 'green'
+
+            document.getElementById('status-text').innerText = 'online'
+            document.getElementById('status-text').style.color = '#199b1e'
+            document.getElementById('status-conn').style.backgroundImage = 'url(../web/img/status-conn-on.png)'
         })
     
         socket.addEventListener('close', () => {
-            document.getElementById('status-conn').style.backgroundColor = ''
+
+            document.getElementById('status-text').innerText = 'offline'
+            document.getElementById('status-text').style.color = '#d41c1c'
+            document.getElementById('status-conn').style.backgroundImage = ''
             socket = null
             // msgIn = null
             setTimeout(connect, 5000)
@@ -82,6 +88,8 @@ function start() {
 function main(msgMain, socket) {
     function steamSetup(msg, offline = true) {
         if (offline) {
+            document.getElementById('status-steam').style.display = 'flex'
+
             document.getElementById('ssw-steam-l-links').style.display = 'none'
             document.getElementById('ssw-steam-l-auth').style.display = 'flex'
 
@@ -89,6 +97,8 @@ function main(msgMain, socket) {
 
         } else {
             if (msg.data.authSite !== null && msg.data.hash !== null) {
+                document.getElementById('status-steam').style.display = 'flex'
+
                 document.getElementById('ssw-steam-l-links').style.display = 'none'
                 document.getElementById('ssw-steam-l-auth').style.display = 'flex'
 
@@ -97,6 +107,8 @@ function main(msgMain, socket) {
                 }
 
             } else {
+                document.getElementById('status-steam').style.display = 'none'
+
                 document.getElementById('ssw-steam-l-links').style.display = 'flex'
                 document.getElementById('ssw-steam-l-auth').style.display = 'none'
 
@@ -267,8 +279,8 @@ function main(msgMain, socket) {
                 achiv.className = 'topachiv'
 
                 let achivImg = document.createElement('div')
-                achivImg.className = 'topachiv-img topnm'
-                // achivImg.style.backgroundImage = 'url(' + stats.onteh[b].imgUrl +')'
+                achivImg.className = 'topachiv-img'
+                achivImg.style.backgroundImage = 'url(../web/img/topachiv-nm2.png)'
                 achiv.appendChild(achivImg)
 
                 let achivHover = document.createElement('div')
@@ -338,28 +350,27 @@ function main(msgMain, socket) {
                 container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
                 createDesc(desc,container.firstElementChild.id,stats,config)
             }
-        }
 
-        for (let a of container.children) {
-            a.onmousedown = () => {
-                for (let c of container.children) c.lastElementChild.style.background = ''
-                for (let c of topdbd.children) c.firstElementChild.style.background = ''
-                a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
-
-                createDesc(desc,a.id,stats,config)
+            for (let a of container.children) {
+                a.onmousedown = () => {
+                    for (let c of container.children) c.lastElementChild.style.background = ''
+                    for (let c of topdbd.children) c.firstElementChild.style.background = ''
+                    a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
+    
+                    createDesc(desc,a.id,stats,config)
+                }
+            }
+    
+            for (let a of topdbd.children) {
+                a.onmousedown = () => {
+                    for (let c of container.children) c.lastElementChild.style.background = ''
+                    for (let c of topdbd.children) c.firstElementChild.style.background = ''
+                    a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
+    
+                    createDesc(desc,a.id,stats,config)
+                }
             }
         }
-
-        for (let a of topdbd.children) {
-            a.onmousedown = () => {
-                for (let c of container.children) c.lastElementChild.style.background = ''
-                for (let c of topdbd.children) c.firstElementChild.style.background = ''
-                a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
-
-                createDesc(desc,a.id,stats,config)
-            }
-        }
-
     }
 
     function changeAchiv(elem,a,s,c,stats) {
@@ -591,7 +602,8 @@ function main(msgMain, socket) {
 
     function activeChar(id, offline = false) {
         if (offline) {
-            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default.png)"
+            // document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default.png)"
+            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default2.png)"
         } else {
             for (let c of document.getElementsByClassName('char')) {
                 if (c.lastElementChild.value == id) {
