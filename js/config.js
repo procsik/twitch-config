@@ -79,7 +79,7 @@ function start() {
             document.getElementById('status-conn').style.backgroundImage = ''
             socket = null
             // msgIn = null
-            setTimeout(connect, 5000)
+            // setTimeout(connect, 5000)
         })
         main(msgIn, socket)
     }
@@ -236,7 +236,7 @@ function main(msgMain, socket) {
         }
     }
 
-    function createDesc(desc,nameId,stats,config) {
+    function createDesc(desc, nameId, stats, config, name = '') {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
         let main = document.createElement('div')
@@ -246,7 +246,7 @@ function main(msgMain, socket) {
         let msg = document.createElement('div')
         let message = stats.onteh[nameId].desc
 
-        let spanPlayer = "<span id='sPlayer'>" + config.player + " </span>"
+        let spanPlayer = "<span id='sPlayer'>" + name + " </span>"
 
         let classPos = ''
         if (stats.onteh[nameId].status > 0) classPos = 'posUp'
@@ -265,15 +265,21 @@ function main(msgMain, socket) {
         desc.appendChild(msg)
     }
 
-    function createAchiv(aTmp, stats, config) {
+    function createAchiv(aTmp, stats, config, name = '') {
         let container = document.getElementById('info-topachiv')
         let topdbd = document.getElementById('topdbd')
         let desc = document.getElementById('desc')
+
 
         while (container.firstElementChild) container.removeChild(container.firstElementChild)
         while (topdbd.firstElementChild) topdbd.removeChild(topdbd.firstElementChild)
 
         if (aTmp.length == 0 && Object.keys(stats.steam).length == 0 && Object.keys(stats.onteh).length == 0) {
+
+            document.getElementById('bp-value').innerText = 'bloodpoints...'
+            document.getElementById('hs-value').innerText = 'playtime...'
+
+
             for (let i = 0; i < 2; i++) {
                 let achiv = document.createElement('div')
                 achiv.className = 'topachiv'
@@ -348,7 +354,7 @@ function main(msgMain, socket) {
 
             if (container.firstElementChild !== null) {
                 container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
-                createDesc(desc,container.firstElementChild.id,stats,config)
+                createDesc(desc,container.firstElementChild.id,stats,config,name)
             }
 
             for (let a of container.children) {
@@ -357,7 +363,7 @@ function main(msgMain, socket) {
                     for (let c of topdbd.children) c.firstElementChild.style.background = ''
                     a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
     
-                    createDesc(desc,a.id,stats,config)
+                    createDesc(desc,a.id,stats,config,name)
                 }
             }
     
@@ -367,13 +373,13 @@ function main(msgMain, socket) {
                     for (let c of topdbd.children) c.firstElementChild.style.background = ''
                     a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
     
-                    createDesc(desc,a.id,stats,config)
+                    createDesc(desc,a.id,stats,config,name)
                 }
             }
         }
     }
 
-    function changeAchiv(elem,a,s,c,stats) {
+    function changeAchiv(elem,a,s,c,stats,name = '') {
         switch(s) {
             case "1": {
                 if (elem.lastElementChild.checked) {
@@ -398,7 +404,7 @@ function main(msgMain, socket) {
                     achivTmp[0][elem.lastElementChild.value] = stats.onteh[a]
                     c.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                 }
-                createAchiv(c.achiv, stats, c)
+                createAchiv(c.achiv, stats, c, name)
                 break
             }
             case "3": {
@@ -419,14 +425,14 @@ function main(msgMain, socket) {
                         elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                     }
                 }
-                createAchiv(c.achiv, stats, c)
+                createAchiv(c.achiv, stats, c, name)
                 break
             }
             default: break
         }
     }
 
-    function achivSetup(stats, config, offline = true) {
+    function achivSetup(stats, config, offline = true, name = '') {
         while (document.getElementById('wrapper-achivmain').firstElementChild) {
             document.getElementById('wrapper-achivmain').removeChild(document.getElementById('wrapper-achivmain').firstElementChild)
         }
@@ -435,7 +441,7 @@ function main(msgMain, socket) {
             document.getElementById('achivmain').onmousedown = () => activMenu('achivmain','onclick-config')
             document.getElementById('achivtop').onmousedown = () => activMenu('achivtop','onclick-config')
 
-            createAchiv(config.achiv, stats, config)
+            createAchiv(config.achiv, stats, config, name)
         } else {
 
             // achiv to object
@@ -451,7 +457,7 @@ function main(msgMain, socket) {
             for (let a in sortByPos(stats.onteh)) {
                 let rowAchiv = document.createElement('div')
                 rowAchiv.className = 'achivments border'
-                rowAchiv.onclick = () => changeAchiv(rowAchiv, a, getComputedStyle(rowAchiv.parentElement).order, config, stats)
+                rowAchiv.onclick = () => changeAchiv(rowAchiv, a, getComputedStyle(rowAchiv.parentElement).order, config, stats, name)
                 // rowAchiv.style = 'display: none'
     
                 let achivImg = document.createElement('div')
@@ -479,7 +485,7 @@ function main(msgMain, socket) {
                 document.getElementById('wrapper-achivmain').appendChild(rowAchiv)
             }
 
-            createAchiv(config.achiv, stats, config)
+            createAchiv(config.achiv, stats, config, name)
 
             chooseAchivMain(config)
             document.getElementById('achivmain').onmousedown = () => chooseAchivMain(config)
@@ -526,7 +532,7 @@ function main(msgMain, socket) {
         roleSetup(msg.data.character, msg.data.config.main, false)
 
         // achiv
-        achivSetup(msg.data.stats, msg.data.config, false)
+        achivSetup(msg.data.stats, msg.data.config, false, msg.data.info.steam.name)
 
         // motiv
     })
@@ -634,10 +640,20 @@ function main(msgMain, socket) {
         let newMain = document.createElement('div')
         newMain.className = 'main border'
 
-        // if (offline) newMain.id = 'main-dbd'
-        // else newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+        if (offline) {
+            newMain.id = 'main-dbd'
+            while (desc.firstElementChild) desc.removeChild(desc.firstElementChild)
 
-        newMain.id = offline ? 'main-dbd' : m.includes('killer') ? 'main-k' : 'main-c'
+            let msg = document.createElement('div')
+            msg.className = 'offline-msg'
+            msg.innerHTML = 'The streamer is not currently broadcasting this game or the application is not available and is waiting for a connection to the server...'
+            desc.appendChild(msg)
+
+        }
+        else newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+
+        // newMain.id = offline ? 'main-dbd' : m.includes('killer') ? 'main-k' : 'main-c'
+
 
         desc.insertBefore(newMain, desc.firstElementChild)
     }
