@@ -609,7 +609,7 @@ function main(msgMain, socket) {
     function activeChar(id, offline = false) {
         if (offline) {
             // document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default.png)"
-            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default2.png)"
+            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default.png)"
         } else {
             for (let c of document.getElementsByClassName('char')) {
                 if (c.lastElementChild.value == id) {
