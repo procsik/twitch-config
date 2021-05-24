@@ -1037,11 +1037,11 @@
 }
 #rank-k {
     left: 140px;
-    background-image: url(../img/kr1.png);
+    /* background-image: url(../img/kr1.png); */
 }
 #rank-c {
     right: 0;
-    background-image: url(../img/cr1.png);
+    /* background-image: url(../img/cr1.png); */
 }
 #last-update {
     position: absolute;

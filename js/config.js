@@ -519,8 +519,20 @@ function main(msgMain, socket) {
         }
     }
 
+    function rankSetup(stats = {}, offline = true) {
+        if (offline) {
+            document.getElementById('rank-k').style.backgroundImage = ''
+            document.getElementById('rank-c').style.backgroundImage = ''
+        } else {
+            console.log(stats)
+            document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K" + getRank(stats['DBD_KillerSkulls']) + ".png)"
+            document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C" + getRank(stats['DBD_CamperSkulls']) + ".png)"
+        }
+    }
+
     socket.addEventListener('message',(m) => {
         let msg = JSON.parse(m.data)
+
         // status
 
         // steam
@@ -535,6 +547,9 @@ function main(msgMain, socket) {
         achivSetup(msg.data.stats, msg.data.config, false, msg.data.info.steam.name)
 
         // motiv
+
+        // ranks
+        rankSetup(msg.data.stats.steam, false)
     })
 
     // init
@@ -555,6 +570,9 @@ function main(msgMain, socket) {
 
     // achiv
     achivSetup(msgMain.data.stats, msgMain.data.config)
+
+    // ranks
+    rankSetup(msgMain.data.stats.steam)
 
     // // document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     // // document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -671,4 +689,27 @@ function sortByPos(obj) {
         })
         return newObj
     }
+}
+
+function getRank(rank) {
+    if (rank < 3) return '20'
+    else if (rank < 6) return '19'
+    else if (rank < 10) return '18'
+    else if (rank < 14) return '17'
+    else if (rank < 18) return '16'
+    else if (rank < 22) return '15'
+    else if (rank < 26) return '14'
+    else if (rank < 30) return '13'
+    else if (rank < 35) return '12'
+    else if (rank < 40) return '11'
+    else if (rank < 45) return '10'
+    else if (rank < 50) return '09'
+    else if (rank < 55) return '08'
+    else if (rank < 60) return '07'
+    else if (rank < 65) return '06'
+    else if (rank < 70) return '05'
+    else if (rank < 75) return '04'
+    else if (rank < 80) return '03'
+    else if (rank < 85) return '02'
+    else return '01'
 }
