@@ -1,5 +1,6 @@
 var achivTmp = {}
 var configTmp = {}
+let lastUpdateText = '* - last Steam statistics update: '
 
 var msgIn = {
     mode: null,
@@ -77,9 +78,11 @@ function start() {
             document.getElementById('status-text').innerText = 'offline'
             document.getElementById('status-text').style.color = '#d41c1c'
             document.getElementById('status-conn').style.backgroundImage = ''
+            document.getElementById('button').onclick = ''
+
             socket = null
             // msgIn = null
-            // setTimeout(connect, 5000)
+            setTimeout(connect, 5000)
         })
         main(msgIn, socket)
     }
@@ -239,6 +242,14 @@ function main(msgMain, socket) {
     function createDesc(desc, nameId, stats, config, name = '') {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
+        let lastUpdateValue = new Date((stats.timeupdate ? stats.timeupdate : 0) * 1000)
+        lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
+            lastUpdateValue.getUTCMonth('mm') + '.' + 
+            lastUpdateValue.getUTCFullYear() + ' ' +
+            lastUpdateValue.getUTCHours() + ':' +
+            lastUpdateValue.getUTCMinutes() + ':' +
+            lastUpdateValue.getUTCSeconds() + ' UTC'       
+
         let main = document.createElement('div')
         main.id = config.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
@@ -259,7 +270,7 @@ function main(msgMain, socket) {
                 "<span id='cValueText'>(текущее значение <span id='cValue'>" + stats.steam[stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
             .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
 
-        // document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
+        document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
 
         desc.appendChild(main)
         desc.appendChild(msg)
@@ -307,6 +318,9 @@ function main(msgMain, socket) {
                 topdbd.appendChild(topachiv)
             }
         } else {
+            document.getElementById('bp-value').innerText = stats.steam['DBD_BloodwebPoints'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+            document.getElementById('hs-value').innerText = stats['playtime'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' h'
+
             let i = 0
             for (let a of aTmp) {
                 for (let b of a) {
@@ -520,13 +534,20 @@ function main(msgMain, socket) {
     }
 
     function rankSetup(stats = {}, offline = true) {
+
         if (offline) {
             document.getElementById('rank-k').style.backgroundImage = ''
             document.getElementById('rank-c').style.backgroundImage = ''
         } else {
-            console.log(stats)
+
             document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K" + getRank(stats['DBD_KillerSkulls']) + ".png)"
             document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C" + getRank(stats['DBD_CamperSkulls']) + ".png)"
+        }
+    }
+
+    function saveSettings(socket, settings, offline = true) {
+        if (!offline) {
+            // console.log('test')
         }
     }
 
@@ -550,11 +571,12 @@ function main(msgMain, socket) {
 
         // ranks
         rankSetup(msg.data.stats.steam, false)
+
+        //save
+        document.getElementById('button').onclick = () => saveSettings(socket, '', false)
     })
 
     // init
-    // let sswSteamL = document.getElementById('ssw-steam-l')
-    // let sswSteamR = document.getElementById('ssw-steam-r')
 
     // let cSetup = ''
     // let cConfig = ''
@@ -574,21 +596,6 @@ function main(msgMain, socket) {
     // ranks
     rankSetup(msgMain.data.stats.steam)
 
-    // // document.getElementById('bp-value').innerText = bp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    // // document.getElementById('hs-value').innerText = hs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-
-    // let lastUpdateValue = new Date((msgIn.data.stats.timeupdate ? msgIn.data.stats.timeupdate : 0) * 1000)
-    // let lastUpdateText = '* - last Steam statistics update: '
-    // lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
-    //     lastUpdateValue.getUTCMonth('mm') + '.' + 
-    //     lastUpdateValue.getUTCFullYear() + ' ' +
-    //     lastUpdateValue.getUTCHours() + ':' +
-    //     lastUpdateValue.getUTCMinutes() + ':' +
-    //     lastUpdateValue.getUTCSeconds() + ' UTC'
-
-
-    // // document.getElementById('ssw-u-value-a').innerText = lastUpdate
-    // // document.getElementById('ssw-u-value-b').innerText = lastUpdate
     // // COLOR
     // switch(msgIn.data.config.color) {
     //     case "dark": {
@@ -609,13 +616,6 @@ function main(msgMain, socket) {
     //     }
     //     default: break
     // }
-
-    // createAchiv(msgIn.data.config.achiv)
-    
-    document.getElementById('button').onclick = function() {
-        // socket.send('1')
-        // console.log()
-    }
 
     function activMenu(cfg,cls) {
         for (let elem of document.getElementsByClassName(cls)) {
@@ -661,6 +661,8 @@ function main(msgMain, socket) {
         if (offline) {
             newMain.id = 'main-dbd'
             while (desc.firstElementChild) desc.removeChild(desc.firstElementChild)
+
+            document.getElementById('last-update').innerText = ''
 
             let msg = document.createElement('div')
             msg.className = 'offline-msg'
