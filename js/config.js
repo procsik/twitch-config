@@ -100,6 +100,7 @@ function main(msgMain, socket) {
 
         } else {
             if (msg.data.authSite !== null && msg.data.hash !== null) {
+
                 document.getElementById('status-steam').style.display = 'flex'
 
                 document.getElementById('ssw-steam-l-links').style.display = 'none'
@@ -110,12 +111,13 @@ function main(msgMain, socket) {
                 }
 
             } else {
+                console.log(msg.data.info.steam.name)
                 document.getElementById('status-steam').style.display = 'none'
 
                 document.getElementById('ssw-steam-l-links').style.display = 'flex'
                 document.getElementById('ssw-steam-l-auth').style.display = 'none'
 
-                document.getElementById('ssw-steam-l-links-a').innerHTML = "<a href='" + msg.data.authSite + "login?hash=" + msg.data.hash + "'>" + (msg.data.info.steam.name ? msg.data.info.steam.name : '') + "</a>"
+                document.getElementById('ssw-steam-l-links-a').innerHTML = "<a href='#'>" + (msg.data.info.steam.name ? msg.data.info.steam.name : '') + "</a>"
                 document.getElementById('ssw-steam-l-links-b').innerHTML = "<a href='#'>профиль приложения</a>"
 
                 document.getElementById('ssw-steam-r-img').style.backgroundImage = "url(" + (msg.data.info.steam.img ? msg.data.info.steam.img : '../web/img/steam_default.jpg') + ")"
