@@ -25,9 +25,12 @@ function start() {
     // let context
 
     let sTwitch = new Object({
-        token: 'auth.token',
-        context: 'context',
-        data: {}
+        // token: 'auth.token',
+        // context: 'context',
+        // mode: 'viewer',
+        // data: {}
+        mode: "viewer",
+        channelId: 39417622
     })
 
     // twitch.onContext((ctx) => {
@@ -99,7 +102,7 @@ function main(msgMain, socket) {
         if (offline) {
             document.getElementById('ip-1').style.backgroundImage = ""
         } else {
-            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ main.id +".png)"
+            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ main.charid +".png)"
         }
 
         if (Object.keys(main).length > 0) changeMainInDesc(main.role)
@@ -283,13 +286,13 @@ function main(msgMain, socket) {
     }
 
     function rankSetup(stats = {}, offline = true) {
-        // if (offline) {
-        //     document.getElementById('rank-k').style.backgroundImage = ''
-        //     document.getElementById('rank-c').style.backgroundImage = ''
-        // } else {
+        if (offline) {
+            document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K20.png)"
+            document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C20.png)"
+        } else {
             document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K" + getRank(stats['DBD_KillerSkulls']) + ".png)"
             document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C" + getRank(stats['DBD_CamperSkulls']) + ".png)"
-        // }
+        }
     }
 
     socket.addEventListener('message',(m) => {
