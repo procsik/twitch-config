@@ -69,6 +69,31 @@ function start() {
 }
 
 function main(msgMain, socket) {
+    function changeMainInDesc(m, offline = false) {
+        let desc = document.getElementById('desc')
+        let main = document.getElementById('main-k') || document.getElementById('main-c') || document.getElementById('main-dbd')
+
+        if (main) desc.removeChild(main)
+    
+        let newMain = document.createElement('div')
+        newMain.className = 'main border'
+
+        if (offline) {
+            newMain.id = 'main-dbd'
+            while (desc.firstElementChild) desc.removeChild(desc.firstElementChild)
+
+            document.getElementById('last-update').innerText = ''
+
+            let msg = document.createElement('div')
+            msg.className = 'offline-msg'
+            msg.innerHTML = 'The streamer is not currently broadcasting this game or the application is not available and is waiting for a connection to the server...'
+            desc.appendChild(msg)
+
+        }
+        else newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+
+        desc.insertBefore(newMain, desc.firstElementChild)
+    }
 
     function charSetup(main, offline = true) {
         if (offline) {
@@ -76,6 +101,46 @@ function main(msgMain, socket) {
         } else {
             document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ main.id +".png)"
         }
+
+        if (Object.keys(main).length > 0) changeMainInDesc(main.role)
+        else changeMainInDesc(main.role, true)
+    }
+
+    function createDesc(desc, nameId, stats, config, name = '') {
+        while (desc.firstChild) desc.removeChild(desc.firstChild)
+
+        let lastUpdateValue = new Date((stats.timeupdate ? stats.timeupdate : 0) * 1000)
+        lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
+            lastUpdateValue.getUTCMonth('mm') + '.' + 
+            lastUpdateValue.getUTCFullYear() + ' ' +
+            lastUpdateValue.getUTCHours() + ':' +
+            lastUpdateValue.getUTCMinutes() + ':' +
+            lastUpdateValue.getUTCSeconds() + ' UTC'       
+
+        let main = document.createElement('div')
+        main.id = config.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.className = 'main border'
+
+        let msg = document.createElement('div')
+        let message = stats.onteh[nameId].desc
+
+        let spanPlayer = "<span id='sPlayer'>" + name + " </span>"
+
+        let classPos = ''
+        if (stats.onteh[nameId].status > 0) classPos = 'posUp'
+        else if ((stats.onteh[nameId].status < 0)) classPos = 'posDown'
+        else classPos = 'posNm'
+
+        msg.innerHTML = spanPlayer + message
+            .replace('{value}',"<span id='sValue'>" + 
+                stats.onteh[nameId].value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span> " + 
+                "<span id='cValueText'>(текущее значение <span id='cValue'>" + stats.steam[stats.onteh[nameId].steamId].toFixed().toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span>*)</span>")
+            .replace('{place}',"<span id='sPos' class='" + classPos + "'>" + stats.onteh[nameId].position.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " </span>")
+
+        document.getElementById('last-update').innerText = lastUpdateText + lastUpdate
+
+        desc.appendChild(main)
+        desc.appendChild(msg)
     }
 
     function createAchiv(config, stats, name = '') {
@@ -166,7 +231,7 @@ function main(msgMain, socket) {
 
             if (container.firstElementChild !== null) {
                 container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
-                // createDesc(desc,container.firstElementChild.id,stats,config,name)
+                createDesc(desc,container.firstElementChild.id,stats,config,name)
             }
 
             for (let a of container.children) {
@@ -175,7 +240,7 @@ function main(msgMain, socket) {
                     for (let c of topdbd.children) c.firstElementChild.style.background = ''
                     a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
     
-                    // createDesc(desc,a.id,stats,config,name)
+                    createDesc(desc,a.id,stats,config,name)
                 }
             }
     
@@ -185,10 +250,46 @@ function main(msgMain, socket) {
                     for (let c of topdbd.children) c.firstElementChild.style.background = ''
                     a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
     
-                    // createDesc(desc,a.id,stats,config,name)
+                    createDesc(desc,a.id,stats,config,name)
                 }
             }
         }
+    }
+
+    function getRank(rank) {
+        if (rank === undefined) return '20'
+        else {
+            if (rank < 3) return '20'
+            else if (rank < 6) return '19'
+            else if (rank < 10) return '18'
+            else if (rank < 14) return '17'
+            else if (rank < 18) return '16'
+            else if (rank < 22) return '15'
+            else if (rank < 26) return '14'
+            else if (rank < 30) return '13'
+            else if (rank < 35) return '12'
+            else if (rank < 40) return '11'
+            else if (rank < 45) return '10'
+            else if (rank < 50) return '09'
+            else if (rank < 55) return '08'
+            else if (rank < 60) return '07'
+            else if (rank < 65) return '06'
+            else if (rank < 70) return '05'
+            else if (rank < 75) return '04'
+            else if (rank < 80) return '03'
+            else if (rank < 85) return '02'
+            else return '01'
+        }
+    }
+
+    function rankSetup(stats = {}, offline = true) {
+        // if (offline) {
+        //     document.getElementById('rank-k').style.backgroundImage = ''
+        //     document.getElementById('rank-c').style.backgroundImage = ''
+        // } else {
+            document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K" + getRank(stats['DBD_KillerSkulls']) + ".png)"
+            document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C" + getRank(stats['DBD_CamperSkulls']) + ".png)"
+        // }
     }
 
     socket.addEventListener('message',(m) => {
@@ -201,7 +302,7 @@ function main(msgMain, socket) {
         createAchiv(msg.data.config, msg.data.stats, msg.data.info.steam.name)
 
         // ranks
-        // rankSetup(msg.data.stats.steam, false)
+        rankSetup(msg.data.stats.steam, false)
     })
 
     // char
@@ -209,4 +310,7 @@ function main(msgMain, socket) {
 
     // achiv
     createAchiv(msgMain.data.config, msgMain.data.stats, msgMain.data.info.steam.name)
+
+    // ranks
+    rankSetup(msgMain.data.stats.steam, false)
 }
