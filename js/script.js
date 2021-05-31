@@ -29,8 +29,11 @@ function start() {
         // context: 'context',
         // mode: 'viewer',
         // data: {}
-        mode: "viewer",
-        channelId: 39417622
+        token: {
+            mode: "viewer",
+            type: "onload",
+            channelId: 160635646
+        }
     })
 
     // twitch.onContext((ctx) => {
