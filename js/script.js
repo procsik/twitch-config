@@ -1,4 +1,6 @@
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 let lastUpdateText = '* - last Steam statistics update: '
+
 let msgIn = {
     mode: null,
     type: null,
@@ -30,10 +32,15 @@ function start() {
         // mode: 'viewer',
         // data: {}
         token: {
-            mode: "viewer",
-            type: "onload",
-            channelId: 160635646
-        }
+            role: 'broadcaster',
+            opaque_user_id: 'U160635646',
+            channel_id: 160635646,
+            user_id: 160635646
+        },
+        context: {
+            mode: 'viewer'
+        },
+        type: 'onload'
     })
 
     // twitch.onContext((ctx) => {
@@ -115,9 +122,10 @@ function main(msgMain, socket) {
     function createDesc(desc, nameId, stats, config, name = '') {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
+        console.log(stats.timeupdate)
         let lastUpdateValue = new Date((stats.timeupdate ? stats.timeupdate : 0) * 1000)
-        lastUpdate = lastUpdateValue.getUTCDate() + '.' + 
-            lastUpdateValue.getUTCMonth('mm') + '.' + 
+        lastUpdate = lastUpdateValue.getUTCDate() + ' ' + 
+            months[lastUpdateValue.getUTCMonth()] + ' ' + 
             lastUpdateValue.getUTCFullYear() + ' ' +
             lastUpdateValue.getUTCHours() + ':' +
             lastUpdateValue.getUTCMinutes() + ':' +

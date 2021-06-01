@@ -34,16 +34,20 @@ function start() {
     // let context
 
     let sTwitch = new Object({
-        type: "onload",
+        // token: 'auth.token',
+        // context: 'context',
+        // mode: 'viewer',
+        // data: {}
         token: {
-            userId: "",
-            opaqueId: "",
-            channelId: "",
-            role: "broadcaster",
+            role: 'broadcaster',
+            opaque_user_id: 'U160635646',
+            channel_id: 160635646,
+            user_id: 160635646
         },
         context: {
-            mode: "config"
-        }
+            mode: 'config'
+        },
+        type: 'onload'
     })
 
     // twitch.onContext((ctx) => {
@@ -89,7 +93,7 @@ function start() {
 
             socket = null
             // msgIn = null
-            setTimeout(start, 5000)
+            // setTimeout(start, 5000)
         })
         main(msgIn, socket)
     }
@@ -215,17 +219,18 @@ function main(msgMain, socket) {
         activMenu('achivmain','onclick-config')
 
         document.getElementById('wrapper-achivmain').style.order = '1'
-
-        for (let a of document.getElementsByClassName('achivments')) {
-            if (config.achiv[0].includes(a.lastElementChild.value)) {
-                a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
-                a.lastElementChild.checked = true
-            } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
-                a.lastElementChild.checked = false
-            } else {
-                a.style.backgroundImage = ""
-                a.lastElementChild.checked = false
+        if (Object.keys(config.achiv).length != 0) {
+            for (let a of document.getElementsByClassName('achivments')) {
+                if (config.achiv[0].includes(a.lastElementChild.value)) {
+                    a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                    a.lastElementChild.checked = true
+                } else if (config.achiv[1].includes(a.lastElementChild.value)) {
+                    a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
+                    a.lastElementChild.checked = false
+                } else {
+                    a.style.backgroundImage = ""
+                    a.lastElementChild.checked = false
+                }
             }
         }
     }
@@ -233,17 +238,18 @@ function main(msgMain, socket) {
     function chooseAchivTop(config) {
         activMenu('achivtop','onclick-config')
         document.getElementById('wrapper-achivmain').style.order = '3'
-
-        for (let a of document.getElementsByClassName('achivments')) {
-            if (config.achiv[0].includes(a.lastElementChild.value)) {
-                a.style.backgroundImage = "url(../web/img/achiv-row-red.jpg)"
-                a.lastElementChild.checked = false
-            } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
-                a.lastElementChild.checked = true
-            } else {
-                a.style.backgroundImage = ""
-                a.lastElementChild.checked = false
+        if (Object.keys(config.achiv).length != 0) {
+            for (let a of document.getElementsByClassName('achivments')) {
+                if (config.achiv[0].includes(a.lastElementChild.value)) {
+                    a.style.backgroundImage = "url(../web/img/achiv-row-red.jpg)"
+                    a.lastElementChild.checked = false
+                } else if (config.achiv[1].includes(a.lastElementChild.value)) {
+                    a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                    a.lastElementChild.checked = true
+                } else {
+                    a.style.backgroundImage = ""
+                    a.lastElementChild.checked = false
+                }
             }
         }
     }
@@ -524,16 +530,18 @@ function main(msgMain, socket) {
             // cConfig = document.getElementById('achiv-value').firstElementChild.id
             activMenu(document.getElementById('achiv-value').firstElementChild.id,'onclick-config')
 
-            for (let a of document.getElementsByClassName('achivments')) {
-                if (config.achiv[0].includes(a.lastElementChild.value)) {
-                    a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
-                    a.lastElementChild.checked = true
-                } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                    a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
-                    a.lastElementChild.checked = false
-                } else {
-                    a.style.backgroundImage = ""
-                    a.lastElementChild.checked = false
+            if (Object.keys(config.achiv).length != 0) {
+                for (let a of document.getElementsByClassName('achivments')) {
+                    if (config.achiv[0].includes(a.lastElementChild.value)) {
+                        a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                        a.lastElementChild.checked = true
+                    } else if (config.achiv[1].includes(a.lastElementChild.value)) {
+                        a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
+                        a.lastElementChild.checked = false
+                    } else {
+                        a.style.backgroundImage = ""
+                        a.lastElementChild.checked = false
+                    }
                 }
             }
 
