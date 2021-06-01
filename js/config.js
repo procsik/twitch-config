@@ -1,5 +1,11 @@
 var achivTmp = {}
-var configTmp = {}
+var configTmp = new Object({
+    main: {
+        role: '',
+        charid: 0
+    },
+    achiv: [[],[]]
+})
 let lastUpdateText = '* - last Steam statistics update: '
 
 var msgIn = {
@@ -30,8 +36,8 @@ var msgIn = {
 document.addEventListener("load", start())
 
 function start() {
-    // const twitch = window.Twitch.ext
-    // let context
+    const twitch = window.Twitch.ext
+    let context
 
     let sTwitch = new Object({
         // token: 'auth.token',
@@ -122,7 +128,6 @@ function main(msgMain, socket) {
                 }
 
             } else {
-                console.log(msg.data.info.steam.name)
                 document.getElementById('status-steam').style.display = 'none'
 
                 document.getElementById('ssw-steam-l-links').style.display = 'flex'
@@ -255,6 +260,9 @@ function main(msgMain, socket) {
     }
 
     function createDesc(desc, nameId, stats, config, name = '') {
+
+        for (let i in config.achiv) configTmp.achiv[i] = config.achiv[i]
+
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
         let lastUpdateValue = new Date((stats.timeupdate ? stats.timeupdate : 0) * 1000)
@@ -562,10 +570,23 @@ function main(msgMain, socket) {
         }
     }
 
-    function saveSettings(socket, settings, offline = true) {
+    function saveSettings(socket, offline = true) {
         if (!offline) {
-            // console.log('test')
-        }
+            let outMsg = new Object({
+                token: {
+                    role: 'broadcaster',
+                    opaque_user_id: 'U160635646',
+                    channel_id: 160635646,
+                    user_id: 160635646
+                },
+                context: {
+                    mode: 'config'
+                },
+                type: 'save'
+            })
+            outMsg.config = configTmp
+            socket.send(JSON.stringify(outMsg))
+        } 
     }
 
     socket.addEventListener('message',(m) => {
@@ -590,7 +611,7 @@ function main(msgMain, socket) {
         rankSetup(msg.data.stats.steam, false)
 
         //save
-        document.getElementById('button').onclick = () => saveSettings(socket, '', false)
+        document.getElementById('button').onclick = () => saveSettings(socket, false)
     })
 
     // init
@@ -650,6 +671,7 @@ function main(msgMain, socket) {
                 if (c.lastElementChild.value == id) {
                     c.firstElementChild.style.backgroundImage = "url(../web/img/char-hover.png)"
                     document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ id +".png)"
+                    configTmp.main.charid = id
                 }
                 else c.firstElementChild.style.backgroundImage = ""
             }
@@ -657,8 +679,8 @@ function main(msgMain, socket) {
     }
 
     function changeChar(c) {
-        // msgIn.data.config.role = cConfig
         activMenu(c.id,'onclick-config')
+        configTmp.main.role = c.id
         changeMainInDesc(c.id)
         document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
         for (let char of document.getElementsByClassName('char')) {
