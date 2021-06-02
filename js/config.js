@@ -150,7 +150,8 @@ function main(msgMain, socket) {
         }
     }
 
-    function roleSetup(character, configMain = {}, offline = true) {        
+    function roleSetup(character, configMain = {}, offline = true) {      
+        console.log(configMain)  
         while (document.getElementById('wrapper-char').firstElementChild) {
             document.getElementById('wrapper-char').removeChild(document.getElementById('wrapper-char').firstElementChild)
         }
@@ -274,7 +275,7 @@ function main(msgMain, socket) {
             lastUpdateValue.getUTCSeconds() + ' UTC'       
 
         let main = document.createElement('div')
-        main.id = config.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.id = config.main.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
 
         let msg = document.createElement('div')
@@ -585,7 +586,7 @@ function main(msgMain, socket) {
                 type: 'save'
             })
             outMsg.config = configTmp
-            socket.send(JSON.stringify(outMsg))
+            // socket.send(JSON.stringify(outMsg))
         } 
     }
 
@@ -656,6 +657,7 @@ function main(msgMain, socket) {
     // }
 
     function activMenu(cfg,cls) {
+        console.log(cfg)
         for (let elem of document.getElementsByClassName(cls)) {
             if (elem.id == cfg) elem.style.backgroundImage = "url(../web/img/border-top-hover.png)"
             else elem.style.background = ''
