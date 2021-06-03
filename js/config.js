@@ -154,13 +154,15 @@ function main(msgMain, socket) {
     }
 
     function roleSetup(character, configMain = {}, offline = true) {       
+        configTmp.main = configMain
+
         while (document.getElementById('wrapper-char').firstElementChild) {
             document.getElementById('wrapper-char').removeChild(document.getElementById('wrapper-char').firstElementChild)
         }
 
         if (offline) {
-            activeChar(configMain.charid, true)
-            changeMainInDesc(configMain.role, true)
+            activeChar(configTmp.main.charid, true)
+            changeMainInDesc(true)
         } else {
             for (let c in character) {
                 let char = document.createElement('div')
@@ -190,9 +192,8 @@ function main(msgMain, socket) {
             document.getElementById('mainkiller').onmousedown = () => changeChar(document.getElementById('mainkiller'))
             document.getElementById('maincamper').onmousedown = () => changeChar(document.getElementById('maincamper'))
 
-            console.log('configMain',configMain)
-            activeChar(configMain.charid)
-            changeMainInDesc(configMain.role)
+            activeChar(configTmp.main.charid)
+            changeMainInDesc()
         }
 
         document.getElementById('role').onmousedown = () => {
@@ -210,6 +211,7 @@ function main(msgMain, socket) {
                         //char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
                     }
                     document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
+
                     activMenu(configMain.role,'onclick-config')
                 }
             }
@@ -282,6 +284,7 @@ function main(msgMain, socket) {
             lastUpdateValue.getUTCSeconds() + ' UTC'       
 
         let main = document.createElement('div')
+        // console.log(config.main.role)
         main.id = config.main.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
 
@@ -315,7 +318,7 @@ function main(msgMain, socket) {
 
         while (container.firstElementChild) container.removeChild(container.firstElementChild)
         while (topdbd.firstElementChild) topdbd.removeChild(topdbd.firstElementChild)
-        console.log(aTmp.length, aTmp)
+
         if (aTmp.length == 0 && Object.keys(stats.steam).length == 0 && Object.keys(stats.onteh).length == 0) {
 
             document.getElementById('bp-value').innerText = 'bloodpoints...'
@@ -449,7 +452,7 @@ function main(msgMain, socket) {
                     achivTmp[0][elem.lastElementChild.value] = stats.onteh[a]
                     c.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                 }
-                createAchiv(c.achiv, stats, c, name)
+                createAchiv(c.achiv, stats, configTmp, name)
                 break
             }
             case "3": {
@@ -470,7 +473,7 @@ function main(msgMain, socket) {
                         elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
                     }
                 }
-                createAchiv(c.achiv, stats, c, name)
+                createAchiv(c.achiv, stats, configTmp, name)
                 break
             }
             default: break
@@ -478,6 +481,8 @@ function main(msgMain, socket) {
     }
 
     function achivSetup(stats, config, offline = true, name = '') {
+        configTmp.achiv = config.achiv
+
         while (document.getElementById('wrapper-achivmain').firstElementChild) {
             document.getElementById('wrapper-achivmain').removeChild(document.getElementById('wrapper-achivmain').firstElementChild)
         }
@@ -486,7 +491,6 @@ function main(msgMain, socket) {
             document.getElementById('achivmain').onmousedown = () => activMenu('achivmain','onclick-config')
             document.getElementById('achivtop').onmousedown = () => activMenu('achivtop','onclick-config')
 
-            console.log('config.achiv',config.achiv)
             createAchiv(config.achiv, stats, config, name)
         } else {
 
@@ -594,6 +598,7 @@ function main(msgMain, socket) {
                 type: 'save'
             })
             outMsg.config = configTmp
+            // console.log(outMsg.config)
             socket.send(JSON.stringify(outMsg))
         } 
     }
@@ -609,7 +614,6 @@ function main(msgMain, socket) {
         // color
 
         // char
-        console.log('roleSetup',msg.data.config)
         roleSetup(msg.data.character, msg.data.config.main, false)
 
         // achiv
@@ -666,7 +670,6 @@ function main(msgMain, socket) {
     // }
 
     function activMenu(cfg,cls) {
-        console.log(cfg)
         for (let elem of document.getElementsByClassName(cls)) {
             if (elem.id == cfg) elem.style.backgroundImage = "url(../web/img/border-top-hover.png)"
             else elem.style.background = ''
@@ -679,6 +682,7 @@ function main(msgMain, socket) {
         } else {
             for (let c of document.getElementsByClassName('char')) {
                 if (c.lastElementChild.value == id) {
+                    
                     c.firstElementChild.style.backgroundImage = "url(../web/img/char-hover.png)"
                     document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ id +".png)"
                     configTmp.main.charid = id
@@ -689,16 +693,17 @@ function main(msgMain, socket) {
     }
 
     function changeChar(c) {
-        activMenu(c.id,'onclick-config')
         configTmp.main.role = c.id
-        changeMainInDesc(c.id)
+
+        activMenu(configTmp.main.role,'onclick-config')
+        changeMainInDesc()
         document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
         for (let char of document.getElementsByClassName('char')) {
             char.style.display = c.id.includes(char.classList[2]) ? 'flex' : 'none'
         }
     }
 
-    function changeMainInDesc(m, offline = false) {
+    function changeMainInDesc(offline = false) {
         let desc = document.getElementById('desc')
         let main = document.getElementById('main-k') || document.getElementById('main-c') || document.getElementById('main-dbd')
 
@@ -720,8 +725,8 @@ function main(msgMain, socket) {
 
         }
         else {
-            console.log('m',m)
-            newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+            // configTmp.main.role = m
+            newMain.id = configTmp.main.role.includes('killer') ? 'main-k' : 'main-c'
         }
 
         // newMain.id = offline ? 'main-dbd' : m.includes('killer') ? 'main-k' : 'main-c'

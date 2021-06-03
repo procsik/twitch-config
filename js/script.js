@@ -122,7 +122,6 @@ function main(msgMain, socket) {
     function createDesc(desc, nameId, stats, config, name = '') {
         while (desc.firstChild) desc.removeChild(desc.firstChild)
 
-        console.log(stats.timeupdate)
         let lastUpdateValue = new Date((stats.timeupdate ? stats.timeupdate : 0) * 1000)
         lastUpdate = lastUpdateValue.getUTCDate() + ' ' + 
             months[lastUpdateValue.getUTCMonth()] + ' ' + 
@@ -132,7 +131,7 @@ function main(msgMain, socket) {
             lastUpdateValue.getUTCSeconds() + ' UTC'       
 
         let main = document.createElement('div')
-        main.id = config.role == 'mainkiller' ? 'main-k' : 'main-c'
+        main.id = config.main.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
 
         let msg = document.createElement('div')
