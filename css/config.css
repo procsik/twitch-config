@@ -760,8 +760,7 @@
     margin-top: 5px;
     width: 110px;
     height: 125px;
-    /* background-image: url('../img/K01.png'); */
-    /* background-image: url(https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/9/9f/K01_charSelect_portrait.png/revision/latest?cb=20200721164223&format=original); */
+    background-image: url('../img/characters/default.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;

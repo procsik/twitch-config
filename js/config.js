@@ -4,7 +4,7 @@ var configTmp = new Object({
         role: '',
         charid: 0
     },
-    achiv: [[],[]]
+    achiv: []
 })
 let lastUpdateText = '* - last Steam statistics update: '
 
@@ -23,7 +23,10 @@ var msgIn = {
         },
         character: {},
         config: {
-            main: {},
+            main: {
+                role: '',
+                charid: 0
+            },
             achiv: []
         },
         stats: {
@@ -150,15 +153,14 @@ function main(msgMain, socket) {
         }
     }
 
-    function roleSetup(character, configMain = {}, offline = true) {      
-        console.log(configMain)  
+    function roleSetup(character, configMain = {}, offline = true) {       
         while (document.getElementById('wrapper-char').firstElementChild) {
             document.getElementById('wrapper-char').removeChild(document.getElementById('wrapper-char').firstElementChild)
         }
 
         if (offline) {
-            document.getElementById('ip-1').style.backgroundImage = ""
-
+            activeChar(configMain.charid, true)
+            changeMainInDesc(configMain.role, true)
         } else {
             for (let c in character) {
                 let char = document.createElement('div')
@@ -187,6 +189,10 @@ function main(msgMain, socket) {
 
             document.getElementById('mainkiller').onmousedown = () => changeChar(document.getElementById('mainkiller'))
             document.getElementById('maincamper').onmousedown = () => changeChar(document.getElementById('maincamper'))
+
+            console.log('configMain',configMain)
+            activeChar(configMain.charid)
+            changeMainInDesc(configMain.role)
         }
 
         document.getElementById('role').onmousedown = () => {
@@ -211,9 +217,8 @@ function main(msgMain, socket) {
             document.getElementById('steam-status').style.display = 'none'
             document.getElementById('achiv-value').style.display = 'none'
         }
-    
-        activeChar(configMain.main.charid)
-        changeMainInDesc(configMain.main.role)
+        
+        // changeMainInDesc(configMain.role)
         // if (Object.keys(configMain.main).length > 0) {
         //     activeChar(configMain.main.charid)
         //     changeMainInDesc(configMain.main.role)
@@ -310,7 +315,7 @@ function main(msgMain, socket) {
 
         while (container.firstElementChild) container.removeChild(container.firstElementChild)
         while (topdbd.firstElementChild) topdbd.removeChild(topdbd.firstElementChild)
-
+        console.log(aTmp.length, aTmp)
         if (aTmp.length == 0 && Object.keys(stats.steam).length == 0 && Object.keys(stats.onteh).length == 0) {
 
             document.getElementById('bp-value').innerText = 'bloodpoints...'
@@ -481,6 +486,7 @@ function main(msgMain, socket) {
             document.getElementById('achivmain').onmousedown = () => activMenu('achivmain','onclick-config')
             document.getElementById('achivtop').onmousedown = () => activMenu('achivtop','onclick-config')
 
+            console.log('config.achiv',config.achiv)
             createAchiv(config.achiv, stats, config, name)
         } else {
 
@@ -603,6 +609,7 @@ function main(msgMain, socket) {
         // color
 
         // char
+        console.log('roleSetup',msg.data.config)
         roleSetup(msg.data.character, msg.data.config.main, false)
 
         // achiv
@@ -629,7 +636,7 @@ function main(msgMain, socket) {
     steamSetup(msgMain)
 
     // char
-    roleSetup(msgMain.data.character, msgMain.data.config)
+    roleSetup(msgMain.data.character, msgMain.data.config.main)
 
     // achiv
     achivSetup(msgMain.data.stats, msgMain.data.config)
@@ -668,8 +675,7 @@ function main(msgMain, socket) {
 
     function activeChar(id, offline = false) {
         if (offline) {
-            // document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default.png)"
-            document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/default.png)"
+            document.getElementById('ip-1').style.backgroundImage = ""
         } else {
             for (let c of document.getElementsByClassName('char')) {
                 if (c.lastElementChild.value == id) {
@@ -693,7 +699,6 @@ function main(msgMain, socket) {
     }
 
     function changeMainInDesc(m, offline = false) {
-        console.log('changeMainInDesc',m)
         let desc = document.getElementById('desc')
         let main = document.getElementById('main-k') || document.getElementById('main-c') || document.getElementById('main-dbd')
 
@@ -714,7 +719,10 @@ function main(msgMain, socket) {
             desc.appendChild(msg)
 
         }
-        else newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+        else {
+            console.log('m',m)
+            newMain.id = m.includes('killer') ? 'main-k' : 'main-c'
+        }
 
         // newMain.id = offline ? 'main-dbd' : m.includes('killer') ? 'main-k' : 'main-c'
 
