@@ -211,14 +211,16 @@ function main(msgMain, socket) {
             document.getElementById('steam-status').style.display = 'none'
             document.getElementById('achiv-value').style.display = 'none'
         }
-
-        if (Object.keys(configMain).length > 0) {
-            activeChar(configMain.charid)
-            changeMainInDesc(configMain.role)
-        } else {
-            activeChar(configMain.charid, true)
-            changeMainInDesc(configMain.role, true)
-        }
+    
+        activeChar(configMain.main.charid)
+        changeMainInDesc(configMain.main.role)
+        // if (Object.keys(configMain.main).length > 0) {
+        //     activeChar(configMain.main.charid)
+        //     changeMainInDesc(configMain.main.role)
+        // } else {
+        //     activeChar(configMain.main.charid, true)
+        //     changeMainInDesc(configMain.main.role, true)
+        // }
     }
 
     function chooseAchivMain(config) {
@@ -586,7 +588,7 @@ function main(msgMain, socket) {
                 type: 'save'
             })
             outMsg.config = configTmp
-            // socket.send(JSON.stringify(outMsg))
+            socket.send(JSON.stringify(outMsg))
         } 
     }
 
@@ -627,7 +629,7 @@ function main(msgMain, socket) {
     steamSetup(msgMain)
 
     // char
-    roleSetup(msgMain.data.character, msgMain.data.config.main)
+    roleSetup(msgMain.data.character, msgMain.data.config)
 
     // achiv
     achivSetup(msgMain.data.stats, msgMain.data.config)
@@ -691,6 +693,7 @@ function main(msgMain, socket) {
     }
 
     function changeMainInDesc(m, offline = false) {
+        console.log('changeMainInDesc',m)
         let desc = document.getElementById('desc')
         let main = document.getElementById('main-k') || document.getElementById('main-c') || document.getElementById('main-dbd')
 
