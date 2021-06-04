@@ -726,7 +726,9 @@ function main(msgMain, socket) {
         }
         else {
             // configTmp.main.role = m
-            newMain.id = configTmp.main.role.includes('killer') ? 'main-k' : 'main-c'
+            newMain.id = configTmp.main.role.includes('killer') 
+                ? 'main-k' : configTmp.main.role == 0 || configTmp.main.role == 'mainauto' 
+                    ? 'main-dbd' : 'main-c'
         }
 
         // newMain.id = offline ? 'main-dbd' : m.includes('killer') ? 'main-k' : 'main-c'
