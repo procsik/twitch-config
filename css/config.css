@@ -1,4 +1,6 @@
 @import "reset.css";
+@import "chars.css";
+@import "ranks.css";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 #app {
@@ -107,6 +109,7 @@
 .onclick-setup:active,.onclick-config:active {
     background-image: url(../img/border-top-hover.png);
 }
+.onclick-active {background-image: url(../img/border-top-hover.png);}
 .setup-c {
     /*     flex: auto; */
     height: 90px;
@@ -218,11 +221,13 @@
 
 }
 #status-conn {
-    background-image: url(../img/status-conn-off.png);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    
+    background-image: url(../img/status-conn-off.png);
+}
+.status-conn-on {
+    background-image: url(../img/status-conn-on.png) !important;
 }
 #status-text {
     /* color: #199b1e;  */
@@ -331,6 +336,9 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    /* background-image: url(../img/steam_default.jpg); */
+}
+.ssw-steam-r-img {
     background-image: url(../img/steam_default.jpg);
 }
 #ssw-update {
@@ -603,6 +611,7 @@
     background-size: contain;
     background-position: center;
 }
+.char-hover-active {background-image: url(../img/char-hover.png);}
 .char-hover:hover {
     background-image: url(../img/char-hover.png);
 }
@@ -635,9 +644,33 @@
     background-size: cover;
     background-position: right;
 }
+.achivments-row-green {background-image: url(../img/achiv-row-green.jpg) !important;}
+.achivments-row-blue {background-image: url(../img/achiv-row-blue.jpg) !important;}
+.achivments-row-red {background-image: url(../img/achiv-row-red.jpg) !important;}
+
 .achivments:hover {
     cursor: pointer;
     box-shadow: inset 0 0 50px 1px rgba(255, 255, 255, .3);
+}
+
+/* .achiv-status {
+    -webkit-flex-grow: 0; 
+    flex-grow: 0;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+} */
+
+.achiv-pos-up {
+    color: #199b1e; 
+}
+.achiv-pos-nm {
+    color: #e8c252; 
+}
+.achiv-pos-dw {
+    color: #d41c1c; 
 }
 
 .achiv-img {
@@ -655,8 +688,8 @@
 .achiv-name {
     -webkit-flex-grow: 1; 
     flex-grow: 1;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
     font-size: 13pt;
 }
 
@@ -760,7 +793,7 @@
     margin-top: 5px;
     width: 110px;
     height: 125px;
-    background-image: url('../img/characters/default.png');
+    /* background-image: url('../img/characters/default.png'); */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -770,6 +803,7 @@
     /* -webkit-flex-grow: 1; 
     flex-grow: 1; */
 }
+.char0 {background-image: url('../img/characters/default.png') !important;}
 #info-topachiv {
     flex: auto;
     z-index: 1;

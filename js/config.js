@@ -7,7 +7,7 @@ var configTmp = new Object({
     achiv: []
 })
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-let lastUpdateText = '* - last Steam statistics update: '
+let lastUpdateText = '* Last update: '
 
 var msgIn = {
     mode: null,
@@ -91,19 +91,21 @@ function start() {
 
             document.getElementById('status-text').innerText = 'online'
             document.getElementById('status-text').style.color = '#199b1e'
-            document.getElementById('status-conn').style.backgroundImage = 'url(../web/img/status-conn-on.png)'
+            document.getElementById('status-conn').classList.toggle('status-conn-on')
+            
         })
     
         socket.addEventListener('close', () => {
 
             document.getElementById('status-text').innerText = 'offline'
             document.getElementById('status-text').style.color = '#d41c1c'
-            document.getElementById('status-conn').style.backgroundImage = ''
+            document.getElementById('status-conn').classList.toggle('status-conn-on',false)
+
             document.getElementById('button').onclick = ''
 
             socket = null
             // msgIn = null
-            // setTimeout(start, 5000)
+            setTimeout(start, 5000)
         })
         main(msgIn, socket)
     }
@@ -117,7 +119,8 @@ function main(msgMain, socket) {
             document.getElementById('ssw-steam-l-links').style.display = 'none'
             document.getElementById('ssw-steam-l-auth').style.display = 'flex'
 
-            document.getElementById('ssw-steam-r-img').style.backgroundImage = "url(../web/img/steam_default.jpg)"
+            document.getElementById('ssw-steam-r-img').style.backgroundImage = ''
+            document.getElementById('ssw-steam-r-img').classList.toggle('ssw-steam-r-img',true)
 
         } else {
             if (msg.data.authSite !== null && msg.data.hash !== null) {
@@ -140,7 +143,8 @@ function main(msgMain, socket) {
                 document.getElementById('ssw-steam-l-links-a').innerHTML = "<a href='#'>" + (msg.data.info.steam.name ? msg.data.info.steam.name : '') + "</a>"
                 document.getElementById('ssw-steam-l-links-b').innerHTML = "<a href='#'>профиль приложения</a>"
 
-                document.getElementById('ssw-steam-r-img').style.backgroundImage = "url(" + (msg.data.info.steam.img ? msg.data.info.steam.img : '../web/img/steam_default.jpg') + ")"
+                document.getElementById('ssw-steam-r-img').classList.toggle('ssw-steam-r-img',false)
+                document.getElementById('ssw-steam-r-img').style.backgroundImage = "url(" + msg.data.info.steam.img + ")"
 
             }
         }
@@ -169,7 +173,7 @@ function main(msgMain, socket) {
                 let char = document.createElement('div')
                 char.className = 'char border ' + character[c].type
                 char.style.display = 'none'
-                char.style.backgroundImage = 'url(../web/img/characters/char-' + character[c].id + '.png)'
+                char.classList.add('char' + character[c].id)
                 char.onclick = () => {
                     char.lastElementChild.checked = true
                     activeChar(parseInt(char.lastElementChild.value))
@@ -220,15 +224,6 @@ function main(msgMain, socket) {
             document.getElementById('steam-status').style.display = 'none'
             document.getElementById('achiv-value').style.display = 'none'
         }
-        
-        // changeMainInDesc(configMain.role)
-        // if (Object.keys(configMain.main).length > 0) {
-        //     activeChar(configMain.main.charid)
-        //     changeMainInDesc(configMain.main.role)
-        // } else {
-        //     activeChar(configMain.main.charid, true)
-        //     changeMainInDesc(configMain.main.role, true)
-        // }
     }
 
     function chooseAchivMain(config) {
@@ -238,12 +233,13 @@ function main(msgMain, socket) {
         if (Object.keys(config.achiv).length != 0) {
             for (let a of document.getElementsByClassName('achivments')) {
                 if (config.achiv[0].includes(a.lastElementChild.value)) {
-                    a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                    a.classList.add('achivments-row-green')
                     a.lastElementChild.checked = true
                 } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                    a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
+                    a.classList.add('achivments-row-blue')
                     a.lastElementChild.checked = false
                 } else {
+                    a.classList.add('achivments-row-blue')
                     a.style.backgroundImage = ""
                     a.lastElementChild.checked = false
                 }
@@ -257,10 +253,10 @@ function main(msgMain, socket) {
         if (Object.keys(config.achiv).length != 0) {
             for (let a of document.getElementsByClassName('achivments')) {
                 if (config.achiv[0].includes(a.lastElementChild.value)) {
-                    a.style.backgroundImage = "url(../web/img/achiv-row-red.jpg)"
+                    a.classList.add('achivments-row-red')
                     a.lastElementChild.checked = false
                 } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                    a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                    a.classList.add('achivments-row-green')
                     a.lastElementChild.checked = true
                 } else {
                     a.style.backgroundImage = ""
@@ -335,19 +331,6 @@ function main(msgMain, socket) {
                 achiv.appendChild(topachivHover)
 
                 container.appendChild(achiv)
-                // let achiv = document.createElement('div')
-                // achiv.className = 'topachiv'
-
-                // let achivImg = document.createElement('div')
-                // achivImg.className = 'topachiv-img'
-                // achivImg.style.backgroundImage = 'url(../web/img/topachiv-nm2.png)'
-                // achiv.appendChild(achivImg)
-
-                // let achivHover = document.createElement('div')
-                // achivHover.className = 'topachiv-hover'
-                // achiv.appendChild(achivHover)
-
-                // container.appendChild(achiv)
             }
             for (let i = 0; i < 5; i++) {
                 let topachiv = document.createElement('div')
@@ -389,20 +372,6 @@ function main(msgMain, socket) {
                         topachivHover.appendChild(topachivImg)
 
                         container.appendChild(achiv)
-                        // let achiv = document.createElement('div')
-                        // achiv.className = 'topachiv'
-                        // achiv.id = b
-    
-                        // let achivImg = document.createElement('div')
-                        // achivImg.className = 'topachiv-img'
-                        // achivImg.style.backgroundImage = 'url(' + stats.onteh[b].imgUrl +')'
-                        // achiv.appendChild(achivImg)
-    
-                        // let achivHover = document.createElement('div')
-                        // achivHover.className = 'topachiv-hover'
-                        // achiv.appendChild(achivHover)
-    
-                        // container.appendChild(achiv)
                     } else {
                         let topachiv = document.createElement('div')
     
@@ -466,7 +435,9 @@ function main(msgMain, socket) {
                         delete achivTmp[0][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = false
-                        elem.style.background = ''
+                        elem.classList.remove('achivments-row-red')
+                        elem.classList.remove('achivments-row-blue')
+                        elem.classList.remove('achivments-row-green')
                     }
                 } else if (Object.keys(c.achiv[0]).length < 2) {
                     if (c.achiv[1].includes(elem.lastElementChild.value) && achivTmp[1][elem.lastElementChild.value]) {
@@ -474,13 +445,17 @@ function main(msgMain, socket) {
                         delete achivTmp[1][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = true
-                        elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
+                        elem.classList.remove('achivments-row-red')
+                        elem.classList.remove('achivments-row-blue')
+                        elem.classList.add('achivments-row-green')
                     } else {
                         elem.lastElementChild.checked = true
-                        elem.style.backgroundImage  = "url(../web/img/achiv-row-green.jpg)"
+                        elem.classList.remove('achivments-row-red')
+                        elem.classList.remove('achivments-row-blue')
+                        elem.classList.add('achivments-row-green')
                     }
                     achivTmp[0][elem.lastElementChild.value] = stats.onteh[a]
-                    c.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
+                    c.achiv[0] = Object.keys(sortByPos2(achivTmp[0]))
                 }
                 createAchiv(c.achiv, stats, configTmp, name)
                 break
@@ -492,15 +467,20 @@ function main(msgMain, socket) {
                         delete achivTmp[1][elem.lastElementChild.value]
 
                         elem.lastElementChild.checked = false
-                        elem.style.background = ''
+                        elem.classList.remove('achivments-row-red')
+                        elem.classList.remove('achivments-row-blue')
+                        elem.classList.remove('achivments-row-green')
+
                     } 
                 } else if (Object.keys(c.achiv[1]).length < 5) {
                     if (!c.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
                         achivTmp[1][elem.lastElementChild.value] = stats.onteh[a]
-                        c.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
+                        c.achiv[1] = Object.keys(sortByPos2(achivTmp[1]))
     
                         elem.lastElementChild.checked = true
-                        elem.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                        elem.classList.remove('achivments-row-red')
+                        elem.classList.remove('achivments-row-blue')
+                        elem.classList.add('achivments-row-green')
                     }
                 }
                 createAchiv(c.achiv, stats, configTmp, name)
@@ -539,7 +519,7 @@ function main(msgMain, socket) {
                 rowAchiv.className = 'achivments border'
                 rowAchiv.onclick = () => changeAchiv(rowAchiv, a, getComputedStyle(rowAchiv.parentElement).order, config, stats, name)
                 // rowAchiv.style = 'display: none'
-    
+
                 let achivImg = document.createElement('div')
                 achivImg.className = 'achiv-img border'
                 achivImg.style.backgroundImage = 'url('+ stats.onteh[a].imgUrl +')'
@@ -549,9 +529,14 @@ function main(msgMain, socket) {
                 achivName.className = 'achiv-name border'
                 achivName.innerHTML = stats.onteh[a].name
                 rowAchiv.appendChild(achivName)
+
+                // let achivStatus = document.createElement('div')
+                // achivStatus.className = 'achiv-status border'
+                // rowAchiv.appendChild(achivStatus)
     
                 let achivPos = document.createElement('div')
-                achivPos.className = 'achiv-pos border'
+                let ahcivPosStatus = (stats.onteh[a].status == -1 ) ? 'achiv-pos-dw' : (stats.onteh[a].status == 1 ) ? 'achiv-pos-up' : 'achiv-pos-nm'
+                achivPos.className = 'achiv-pos border ' + ahcivPosStatus
                 achivPos.innerHTML = stats.onteh[a].position
                 rowAchiv.appendChild(achivPos)
     
@@ -584,13 +569,19 @@ function main(msgMain, socket) {
             if (Object.keys(config.achiv).length != 0) {
                 for (let a of document.getElementsByClassName('achivments')) {
                     if (config.achiv[0].includes(a.lastElementChild.value)) {
-                        a.style.backgroundImage = "url(../web/img/achiv-row-green.jpg)"
+                        a.classList.remove('achivments-row-red')
+                        a.classList.remove('achivments-row-blue')
+                        a.classList.add('achivments-row-green')
                         a.lastElementChild.checked = true
                     } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                        a.style.backgroundImage = "url(../web/img/achiv-row-blue.jpg)"
+                        a.classList.remove('achivments-row-red')
+                        a.classList.remove('achivments-row-green')
+                        a.classList.add('achivments-row-blue')
                         a.lastElementChild.checked = false
                     } else {
-                        a.style.backgroundImage = ""
+                        a.classList.remove('achivments-row-red')
+                        a.classList.remove('achivments-row-blue')
+                        a.classList.remove('achivments-row-green')
                         a.lastElementChild.checked = false
                     }
                 }
@@ -604,12 +595,15 @@ function main(msgMain, socket) {
     function rankSetup(stats = {}, offline = true) {
 
         if (offline) {
-            document.getElementById('rank-k').style.backgroundImage = ''
-            document.getElementById('rank-c').style.backgroundImage = ''
+            for (let r of document.getElementById('rank-k').classList) document.getElementById('rank-k').classList.remove(r)
+            for (let r of document.getElementById('rank-c').classList) document.getElementById('rank-c').classList.remove(r)
+            document.getElementById('rank-k').classList.add('rank','rank-k-20')
+            document.getElementById('rank-c').classList.add('rank','rank-c-20')
         } else {
-
-            document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K" + getRank(stats['DBD_KillerSkulls']) + ".png)"
-            document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C" + getRank(stats['DBD_CamperSkulls']) + ".png)"
+            document.getElementById('rank-k').classList.remove('rank-k-20')
+            document.getElementById('rank-c').classList.remove('rank-c-20')
+            document.getElementById('rank-k').classList.add('rank-k-'+getRank(stats['DBD_KillerSkulls']))
+            document.getElementById('rank-c').classList.add('rank-c-'+getRank(stats['DBD_CamperSkulls']))
         }
     }
 
@@ -700,23 +694,28 @@ function main(msgMain, socket) {
 
     function activMenu(cfg,cls) {
         for (let elem of document.getElementsByClassName(cls)) {
-            if (elem.id == cfg) elem.style.backgroundImage = "url(../web/img/border-top-hover.png)"
-            else elem.style.background = ''
+            if (elem.id == cfg) elem.classList.toggle('onclick-active',true)
+            else elem.classList.toggle('onclick-active',false)
         }
     }
 
     function activeChar(id, offline = false) {
         if (offline) {
-            document.getElementById('ip-1').style.backgroundImage = ""
+            for (let d of document.getElementById('ip-1').classList) document.getElementById('ip-1').classList.remove(d)
+            document.getElementById('ip-1').classList.add('border')
+            document.getElementById('ip-1').classList.add('ip-1')
+            document.getElementById('ip-1').classList.add('char0')
         } else {
             for (let c of document.getElementsByClassName('char')) {
                 if (c.lastElementChild.value == id) {
-                    
-                    c.firstElementChild.style.backgroundImage = "url(../web/img/char-hover.png)"
-                    document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ id +".png)"
+                    c.firstElementChild.classList.toggle('char-hover-active',true)
+                    for (let d of document.getElementById('ip-1').classList) document.getElementById('ip-1').classList.remove(d)
+                    document.getElementById('ip-1').classList.add('border')
+                    document.getElementById('ip-1').classList.add('ip-1')
+                    document.getElementById('ip-1').classList.add('char'+id)
                     configTmp.main.charid = id
                 }
-                else c.firstElementChild.style.backgroundImage = ""
+                else c.firstElementChild.classList.toggle('char-hover-active',false)
             }
         }
     }
@@ -768,6 +767,24 @@ function main(msgMain, socket) {
 }
 
 function sortByPos(obj) {
+    if (!obj) return new Object()
+    else {
+        let newObj = new Object()
+        Object.keys(obj).sort(function(a,b){
+            if (obj[a].status > obj[b].status) return -1
+            if (obj[a].status < obj[b].status) return 1
+            if (obj[a].position < obj[b].position) return -1
+            if (obj[a].position > obj[b].position) return 1
+            // return obj[a].position - obj[b].position
+        }).forEach(function(v){
+            /* console.log(obj[v].points.toFixed()) */
+            newObj[v] = obj[v]
+        })
+        return newObj
+    }
+}
+
+function sortByPos2(obj) {
     if (!obj) return new Object()
     else {
         let newObj = new Object()

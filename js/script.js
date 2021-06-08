@@ -1,5 +1,5 @@
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-let lastUpdateText = '* - last Steam statistics update: '
+let lastUpdateText = '* Last update: '
 
 let msgIn = {
     mode: null,
@@ -170,18 +170,26 @@ function main(msgMain, socket) {
 
             for (let i = 0; i < 2; i++) {
                 let achiv = document.createElement('div')
-                achiv.className = 'topachiv'
+                achiv.className = 'topachiv topachiv-empty'
 
-                let achivImg = document.createElement('div')
-                achivImg.className = 'topachiv-img'
-                achivImg.style.backgroundImage = 'url(../web/img/topachiv-nm2.png)'
-                achiv.appendChild(achivImg)
-
-                let achivHover = document.createElement('div')
-                achivHover.className = 'topachiv-hover'
-                achiv.appendChild(achivHover)
+                let topachivHover = document.createElement('div')
+                topachivHover.className = 'topachiv-hover'
+                achiv.appendChild(topachivHover)
 
                 container.appendChild(achiv)
+                // let achiv = document.createElement('div')
+                // achiv.className = 'topachiv'
+
+                // let achivImg = document.createElement('div')
+                // achivImg.className = 'topachiv-img'
+                // achivImg.style.backgroundImage = 'url(../web/img/topachiv-nm2.png)'
+                // achiv.appendChild(achivImg)
+
+                // let achivHover = document.createElement('div')
+                // achivHover.className = 'topachiv-hover'
+                // achiv.appendChild(achivHover)
+
+                // container.appendChild(achiv)
             }
             for (let i = 0; i < 5; i++) {
                 let topachiv = document.createElement('div')
@@ -203,19 +211,40 @@ function main(msgMain, socket) {
                 for (let b of a) {
                     if (i == 0) {
                         let achiv = document.createElement('div')
-                        achiv.className = 'topachiv'
+
+                        let status = ''
+                        if (stats.onteh[b].status > 0) status = 'topachiv-up'
+                        else if (stats.onteh[b].status < 0) status = 'topachiv-dw'
+                        else status = 'topachiv-nm'
+
                         achiv.id = b
-    
-                        let achivImg = document.createElement('div')
-                        achivImg.className = 'topachiv-img'
-                        achivImg.style.backgroundImage = 'url(' + stats.onteh[b].imgUrl +')'
-                        achiv.appendChild(achivImg)
-    
-                        let achivHover = document.createElement('div')
-                        achivHover.className = 'topachiv-hover'
-                        achiv.appendChild(achivHover)
-    
+                        // achiv.className = 'topachiv ' + status 
+                        achiv.className = 'topachiv topachiv-empty'
+
+                        let topachivHover = document.createElement('div')
+                        topachivHover.className = 'topachiv-hover'
+                        achiv.appendChild(topachivHover)
+
+                        let topachivImg = document.createElement('div')
+                        topachivImg.className = 'topachivdbd-img'
+                        topachivImg.style.backgroundImage = 'url(../web/img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topachivHover.appendChild(topachivImg)
+
                         container.appendChild(achiv)
+                        // let achiv = document.createElement('div')
+                        // achiv.className = 'topachiv'
+                        // achiv.id = b
+    
+                        // let achivImg = document.createElement('div')
+                        // achivImg.className = 'topachiv-img'
+                        // achivImg.style.backgroundImage = 'url(' + stats.onteh[b].imgUrl +')'
+                        // achiv.appendChild(achivImg)
+    
+                        // let achivHover = document.createElement('div')
+                        // achivHover.className = 'topachiv-hover'
+                        // achiv.appendChild(achivHover)
+    
+                        // container.appendChild(achiv)
                     } else {
                         let topachiv = document.createElement('div')
     

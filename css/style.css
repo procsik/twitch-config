@@ -205,6 +205,79 @@
 
 /* scripts */
 .topachiv {
+    overflow: hidden;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-align-items: center;
+    align-items: center;
+
+    width: 55px;
+    height: 55px;
+
+    box-shadow: -2px 2px 0px 0px rgba(0, 0, 0, .2);
+    border-radius: 3px;
+
+    margin: 0 20px 0 10px;
+}
+
+.topachiv-img {
+    width: 70px;
+    height: 70px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.topachiv-hover {
+    position: absolute;
+    width: 59px;
+    height: 59px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+.topachiv-nm {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    background-image: url(../img/topachiv-nm3.png);
+}
+.topachiv-dw {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    background-image: url(../img/topachiv-dw3.png);
+}
+.topachiv-up {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    background-image: url(../img/topachiv-up2.png);
+}
+.topachiv-empty {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    background-image: url(../img/topachiv-empty2.png);
+}
+.topachiv-hover {
+    flex: auto;
+}
+.topachivdbd-img {
+    flex: auto;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    background-size: 70%;
+    background-position: center;
+}
+/* .topachiv {
     width: 55px;
     height: 55px;
     overflow: hidden;
@@ -236,7 +309,7 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-}
+} */
 .topachiv-hover:hover {
     cursor: pointer;
     background-image: url(../img/topstats-hover-4x4.png);
