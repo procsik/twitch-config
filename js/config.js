@@ -233,14 +233,19 @@ function main(msgMain, socket) {
         if (Object.keys(config.achiv).length != 0) {
             for (let a of document.getElementsByClassName('achivments')) {
                 if (config.achiv[0].includes(a.lastElementChild.value)) {
-                    a.classList.add('achivments-row-green')
+                    a.classList.toggle('achivments-row-red', false)
+                    a.classList.toggle('achivments-row-blue', false)
+                    a.classList.toggle('achivments-row-green', true)
                     a.lastElementChild.checked = true
                 } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                    a.classList.add('achivments-row-blue')
+                    a.classList.toggle('achivments-row-red', false)
+                    a.classList.toggle('achivments-row-green', false)
+                    a.classList.toggle('achivments-row-blue', true)
                     a.lastElementChild.checked = false
                 } else {
-                    a.classList.add('achivments-row-blue')
-                    a.style.backgroundImage = ""
+                    a.classList.toggle('achivments-row-red', false)
+                    a.classList.toggle('achivments-row-blue', false)
+                    a.classList.toggle('achivments-row-green', false)
                     a.lastElementChild.checked = false
                 }
             }
@@ -253,13 +258,19 @@ function main(msgMain, socket) {
         if (Object.keys(config.achiv).length != 0) {
             for (let a of document.getElementsByClassName('achivments')) {
                 if (config.achiv[0].includes(a.lastElementChild.value)) {
-                    a.classList.add('achivments-row-red')
+                    a.classList.toggle('achivments-row-blue', false)
+                    a.classList.toggle('achivments-row-green', false)
+                    a.classList.toggle('achivments-row-red', true)
                     a.lastElementChild.checked = false
                 } else if (config.achiv[1].includes(a.lastElementChild.value)) {
-                    a.classList.add('achivments-row-green')
+                    a.classList.toggle('achivments-row-blue', false)
+                    a.classList.toggle('achivments-row-red', false)
+                    a.classList.toggle('achivments-row-green', true)
                     a.lastElementChild.checked = true
                 } else {
-                    a.style.backgroundImage = ""
+                    a.classList.toggle('achivments-row-blue', false)
+                    a.classList.toggle('achivments-row-red', false)
+                    a.classList.toggle('achivments-row-green', false)
                     a.lastElementChild.checked = false
                 }
             }
@@ -368,7 +379,7 @@ function main(msgMain, socket) {
 
                         let topachivImg = document.createElement('div')
                         topachivImg.className = 'topachivdbd-img'
-                        topachivImg.style.backgroundImage = 'url(../web/img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topachivImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         topachivHover.appendChild(topachivImg)
 
                         container.appendChild(achiv)
@@ -390,7 +401,7 @@ function main(msgMain, socket) {
     
                         let topdbdImg = document.createElement('div')
                         topdbdImg.className = 'topdbd-img'
-                        topdbdImg.style.backgroundImage = 'url(../web/img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topdbdImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         tophover.appendChild(topdbdImg)
     
                         topdbd.appendChild(topachiv)
