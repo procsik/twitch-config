@@ -400,15 +400,20 @@ function main(msgMain, socket) {
             }
 
             if (container.firstElementChild !== null) {
-                container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+                //topachiv-hover
+                container.firstElementChild.lastElementChild.classList.toggle('topachiv-hover-img',true)
+                // container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
                 createDesc(desc,container.firstElementChild.id,stats,config,name)
             }
 
             for (let a of container.children) {
                 a.onmousedown = () => {
-                    for (let c of container.children) c.lastElementChild.style.background = ''
-                    for (let c of topdbd.children) c.firstElementChild.style.background = ''
-                    a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
+                    for (let c of container.children) c.lastElementChild.classList.toggle('topachiv-hover-img',false)
+                    // c.lastElementChild.style.background = ''
+                    for (let c of topdbd.children) c.firstElementChild.classList.toggle('hover-img',false)
+                    // c.firstElementChild.style.background = ''
+                    a.lastElementChild.classList.toggle('topachiv-hover-img',true)
+                    // a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
     
                     createDesc(desc,a.id,stats,config,name)
                 }
@@ -416,9 +421,12 @@ function main(msgMain, socket) {
     
             for (let a of topdbd.children) {
                 a.onmousedown = () => {
-                    for (let c of container.children) c.lastElementChild.style.background = ''
-                    for (let c of topdbd.children) c.firstElementChild.style.background = ''
-                    a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
+                    for (let c of container.children) c.lastElementChild.classList.toggle('topachiv-hover-img',false)
+                    // c.lastElementChild.style.background = ''
+                    for (let c of topdbd.children) c.lastElementChild.classList.toggle('hover-img',false)
+                    // c.firstElementChild.style.background = ''
+                    a.firstElementChild.classList.toggle('hover-img',true)
+                    // a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
     
                     createDesc(desc,a.id,stats,config,name)
                 }
