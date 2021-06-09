@@ -43,43 +43,38 @@ function start() {
     const twitch = window.Twitch.ext
     let context
 
-    let sTwitch = new Object({
-        // token: 'auth.token',
-        // context: 'context',
-        // mode: 'viewer',
-        // data: {}
-        token: {
-            role: 'broadcaster',
-            opaque_user_id: 'U160635646',
-            channel_id: 160635646,
-            user_id: 160635646
-        },
-        context: {
-            mode: 'config'
-        },
-        type: 'onload'
+    // let sTwitch = new Object({
+    //     token: {
+    //         role: 'broadcaster',
+    //         opaque_user_id: 'U160635646',
+    //         channel_id: 160635646,
+    //         user_id: 160635646
+    //     },
+    //     context: {
+    //         mode: 'config'
+    //     },
+    //     type: 'onload'
+    // })
+
+    twitch.onContext((ctx) => {
+        context = ctx
     })
 
-    // twitch.onContext((ctx) => {
-    //     context = ctx
-    // })
-
-    // twitch.onAuthorized((auth) => {
+    twitch.onAuthorized((auth) => {
     
-    //     // token = auth.token
-    //     // userId = auth.userId
-    //     // channelId = auth.channelId
+        // token = auth.token
+        // userId = auth.userId
+        // channelId = auth.channelId
 
-    //     let secureTwitch = new Object()
-    //     secureTwitch.token = auth.token
-    //     secureTwitch.context = context
-    //     secureTwitch.data = {}
+        let secureTwitch = new Object()
+        secureTwitch.token = auth.token
+        secureTwitch.context = context
+        secureTwitch.type = 'onload'
 
-    //     connect(secureTwitch)
+        connect(secureTwitch)
+    })
 
-    // })
-
-    connect(sTwitch)
+    // connect(sTwitch)
 
     function connect(msg) {
         
@@ -168,6 +163,8 @@ function main(msgMain, socket) {
         if (offline) {
             activeChar(configTmp.main.charid, true)
             changeMainInDesc(true)
+            document.getElementById('mainkiller').onmousedown = () => {}
+            document.getElementById('maincamper').onmousedown = () => {}
         } else {
             for (let c in character) {
                 let char = document.createElement('div')
@@ -193,7 +190,6 @@ function main(msgMain, socket) {
     
                 document.getElementById('wrapper-char').appendChild(char)
             }
-
             document.getElementById('mainkiller').onmousedown = () => changeChar(document.getElementById('mainkiller'))
             document.getElementById('maincamper').onmousedown = () => changeChar(document.getElementById('maincamper'))
 
@@ -379,7 +375,7 @@ function main(msgMain, socket) {
 
                         let topachivImg = document.createElement('div')
                         topachivImg.className = 'topachivdbd-img'
-                        topachivImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topachivImg.style.backgroundImage = 'url(./img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         topachivHover.appendChild(topachivImg)
 
                         container.appendChild(achiv)
@@ -401,7 +397,7 @@ function main(msgMain, socket) {
     
                         let topdbdImg = document.createElement('div')
                         topdbdImg.className = 'topdbd-img'
-                        topdbdImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topdbdImg.style.backgroundImage = 'url(./img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         tophover.appendChild(topdbdImg)
     
                         topdbd.appendChild(topachiv)
@@ -411,20 +407,16 @@ function main(msgMain, socket) {
             }
 
             if (container.firstElementChild !== null) {
-                //topachiv-hover
                 container.firstElementChild.lastElementChild.classList.toggle('topachiv-hover-img',true)
-                // container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
+
                 createDesc(desc,container.firstElementChild.id,stats,config,name)
             }
 
             for (let a of container.children) {
                 a.onmousedown = () => {
                     for (let c of container.children) c.lastElementChild.classList.toggle('topachiv-hover-img',false)
-                    // c.lastElementChild.style.background = ''
                     for (let c of topdbd.children) c.firstElementChild.classList.toggle('hover-img',false)
-                    // c.firstElementChild.style.background = ''
                     a.lastElementChild.classList.toggle('topachiv-hover-img',true)
-                    // a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
     
                     createDesc(desc,a.id,stats,config,name)
                 }
@@ -433,12 +425,9 @@ function main(msgMain, socket) {
             for (let a of topdbd.children) {
                 a.onmousedown = () => {
                     for (let c of container.children) c.lastElementChild.classList.toggle('topachiv-hover-img',false)
-                    // c.lastElementChild.style.background = ''
                     for (let c of topdbd.children) c.lastElementChild.classList.toggle('hover-img',false)
-                    // c.firstElementChild.style.background = ''
                     a.firstElementChild.classList.toggle('hover-img',true)
-                    // a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
-    
+        
                     createDesc(desc,a.id,stats,config,name)
                 }
             }
@@ -517,9 +506,8 @@ function main(msgMain, socket) {
         }
 
         if (offline) {
-            document.getElementById('achivmain').onmousedown = () => activMenu('achivmain','onclick-config')
-            document.getElementById('achivtop').onmousedown = () => activMenu('achivtop','onclick-config')
-
+            document.getElementById('achivmain').onmousedown = () => {}
+            document.getElementById('achivtop').onmousedown = () => {}
             createAchiv(config.achiv, stats, config, name)
         } else {
 
@@ -580,9 +568,8 @@ function main(msgMain, socket) {
             document.getElementById('achiv-value').style.display = 'flex'
             document.getElementById('wrapper-achivmain').style.display = 'flex'
             document.getElementById('wrapper-achivmain').style.order = '1'
-            // cSetup = 'achiv'
+
             activMenu('achiv','onclick-setup')
-            // cConfig = document.getElementById('achiv-value').firstElementChild.id
             activMenu(document.getElementById('achiv-value').firstElementChild.id,'onclick-config')
 
             if (Object.keys(config.achiv).length != 0) {
@@ -669,14 +656,6 @@ function main(msgMain, socket) {
         //save
         document.getElementById('button').onclick = () => saveSettings(socket, false)
     })
-
-    // init
-
-    // let cSetup = ''
-    // let cConfig = ''
-    
-    // // let bp = 0
-    // // let hs = 0
     
     // steam
     steamSetup(msgMain)
