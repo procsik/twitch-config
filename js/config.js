@@ -1,3 +1,6 @@
+const twitch = window.Twitch.ext
+let context
+
 var achivTmp = {}
 var configTmp = new Object({
     main: {
@@ -40,8 +43,6 @@ var msgIn = {
 document.addEventListener("load", start())
 
 function start() {
-    const twitch = window.Twitch.ext
-    let context
 
     // let sTwitch = new Object({
     //     token: {
@@ -615,21 +616,32 @@ function main(msgMain, socket) {
 
     function saveSettings(socket, offline = true) {
         if (!offline) {
-            let outMsg = new Object({
-                token: {
-                    role: 'broadcaster',
-                    opaque_user_id: 'U160635646',
-                    channel_id: 160635646,
-                    user_id: 160635646
-                },
-                context: {
-                    mode: 'config'
-                },
-                type: 'save'
+            twitch.onContext(ctx => {
+                context = ctx
             })
-            outMsg.config = configTmp
-            // console.log(outMsg.config)
-            socket.send(JSON.stringify(outMsg))
+
+            let secureTwitch = new Object()
+        
+            twitch.onAuthorized(auth => {
+                secureTwitch.token = auth.token
+                secureTwitch.context = context
+                secureTwitch.type = 'save'
+            })
+
+            // let outMsg = new Object({
+            //     token: {
+            //         role: 'broadcaster',
+            //         opaque_user_id: 'U160635646',
+            //         channel_id: 160635646,
+            //         user_id: 160635646
+            //     },
+            //     context: {
+            //         mode: 'config'
+            //     },
+            //     type: 'save'
+            // })
+            secureTwitch.config = configTmp
+            socket.send(JSON.stringify(secureTwitch))
         } 
     }
 
