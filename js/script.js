@@ -39,7 +39,6 @@ function start() {
     })
 
     function connect(msg) {
-        console.log(msg)
         // let socket = new WebSocket('ws://localhost/')
         let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
 
@@ -49,7 +48,7 @@ function start() {
     
         socket.addEventListener('close', () => {
             socket = null
-            setTimeout(start, 5000)
+            setTimeout(start, 10000)
         })
         main(msgIn, socket)
     }
