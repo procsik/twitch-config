@@ -69,7 +69,7 @@ function start() {
     
         socket.addEventListener('close', () => {
             socket = null
-            setTimeout(connect, 5000)
+            setTimeout(start, 5000)
         })
         main(msgIn, socket)
     }
