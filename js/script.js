@@ -217,7 +217,7 @@ function main(msgMain, socket) {
 
                         let topachivImg = document.createElement('div')
                         topachivImg.className = 'topachivdbd-img'
-                        topachivImg.style.backgroundImage = 'url(./img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topachivImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         topachivHover.appendChild(topachivImg)
 
                         container.appendChild(achiv)
@@ -238,7 +238,7 @@ function main(msgMain, socket) {
     
                         let topdbdImg = document.createElement('div')
                         topdbdImg.className = 'topdbd-img'
-                        topdbdImg.style.backgroundImage = 'url(./img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topdbdImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         tophover.appendChild(topdbdImg)
     
                         topdbd.appendChild(topachiv)
