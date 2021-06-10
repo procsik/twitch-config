@@ -1,4 +1,6 @@
 @import "reset.css";
+@import "chars.css";
+@import "ranks.css";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 #app {
@@ -240,6 +242,7 @@
     background-size: contain;
     background-position: center;
 }
+.topachiv-hover-img {background-image: url(../img/topstats-hover-4x4.png);}
 .topachiv-nm {
     background-repeat: no-repeat;
     background-size: contain;
@@ -357,6 +360,7 @@
 .hover {
     flex: auto;
 }
+.hover-img {background-image: url(../img/topstats-hover.png);background-size: contain;}
 .hover:hover {
     cursor: pointer;
     background-repeat: no-repeat;
