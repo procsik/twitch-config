@@ -14,7 +14,7 @@
 
     color: wheat;
 
-    background-image: url('../img/background-400.jpg');
+    background-image: url(./img/background-400.jpg);
     background-position: top;
     background-repeat: no-repeat;
     background-size: auto;
@@ -83,11 +83,11 @@
     margin-right: 5px;
 }
 #bp-img {
-    background-image: url(../img/bp.png);
+    background-image: url(./img/bp.png);
     opacity: 0.7;
 }
 #hs-img {
-    background-image: url(../img/hs.png);
+    background-image: url(./img/hs.png);
     opacity: 0.5;
 }
 #info-topachiv {
@@ -107,7 +107,7 @@
     margin-top: 5px;
     width: 110px;
     height: 125px;
-    background-image: url(../img/characters/default.png);
+    background-image: url(./img/characters/default.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -119,7 +119,7 @@
     line-height: 34px;
     background-repeat: no-repeat;
     background-size: auto;
-    background-image: url(../img/border-top.png);
+    background-image: url(./img/border-top.png);
     vertical-align: middle;
     padding-left: 35px;
     margin-left: 2px;
@@ -133,7 +133,7 @@
     height: 20px;
     top: 7px;
     left: 10px;
-    background-image: url(../img/global-stats.png);
+    background-image: url(./img/global-stats.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -166,7 +166,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-image: url(../img/stats-desc.png);
+    background-image: url(./img/stats-desc.png);
 }
 #desc {
     flex: auto;
@@ -242,30 +242,30 @@
     background-size: contain;
     background-position: center;
 }
-.topachiv-hover-img {background-image: url(../img/topstats-hover-4x4.png);}
+.topachiv-hover-img {background-image: url(./img/topstats-hover-4x4.png);}
 .topachiv-nm {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topachiv-nm3.png);
+    background-image: url(./img/topachiv-nm3.png);
 }
 .topachiv-dw {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topachiv-dw3.png);
+    background-image: url(./img/topachiv-dw3.png);
 }
 .topachiv-up {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topachiv-up2.png);
+    background-image: url(./img/topachiv-up2.png);
 }
 .topachiv-empty {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topachiv-empty2.png);
+    background-image: url(./img/topachiv-empty2.png);
 }
 .topachiv-hover {
     flex: auto;
@@ -315,7 +315,7 @@
 } */
 .topachiv-hover:hover {
     cursor: pointer;
-    background-image: url(../img/topstats-hover-4x4.png);
+    background-image: url(./img/topstats-hover-4x4.png);
 }
 .topachiv-hover:active {
     box-shadow: inset 0 0 30px 0 rgba(255, 255, 255, .5);
@@ -342,31 +342,31 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topstats-nm.png);
+    background-image: url(./img/topstats-nm.png);
 }
 .topup {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topstats-up.png);
+    background-image: url(./img/topstats-up.png);
 }
 
 .topdw {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: right;
-    background-image: url(../img/topstats-dw.png);
+    background-image: url(./img/topstats-dw.png);
 }
 .hover {
     flex: auto;
 }
-.hover-img {background-image: url(../img/topstats-hover.png);background-size: contain;}
+.hover-img {background-image: url(./img/topstats-hover.png);background-size: contain;}
 .hover:hover {
     cursor: pointer;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    background-image: url(../img/topstats-hover.png);
+    background-image: url(./img/topstats-hover.png);
 }
 .hover:active {
     box-shadow: inset 0 0 30px 0 rgba(255, 255, 255, .5);
@@ -385,13 +385,13 @@
     background-position: center;
 }
 #main-k {
-    background-image: url(../img/main-k3.png);
+    background-image: url(./img/main-k3.png);
 }
 #main-c {
-    background-image: url(../img/main-c3.png);
+    background-image: url(./img/main-c3.png);
 }
 #main-dbd {
-    background-image: url(../img/main-a.png);
+    background-image: url(./img/main-a.png);
 }
 .offline-msg {
     font-size: 14pt;
