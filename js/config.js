@@ -79,8 +79,8 @@ function start() {
 
     function connect(msg) {
         
-        let socket = new WebSocket('ws://localhost/')
-        // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
+        // let socket = new WebSocket('ws://localhost/')
+        let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
 
         socket.addEventListener('open', () => {
             socket.send(JSON.stringify(msg))
