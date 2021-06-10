@@ -58,7 +58,7 @@ function start() {
     // connect(sTwitch)
 
     function connect(msg) {
-             
+        console.log(msg)
         let socket = new WebSocket('ws://localhost/')
         // let socket = new WebSocket('wss://twitch-app.cyber-vologda.ru/')
 
