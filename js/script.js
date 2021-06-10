@@ -26,24 +26,6 @@ let msgIn = {
 document.addEventListener("load", start())
 
 function start() {
-
-    // let sTwitch = new Object({
-        // token: 'auth.token',
-        // context: 'context',
-        // mode: 'viewer',
-        // data: {}
-        // token: {
-        //     role: 'broadcaster',
-        //     opaque_user_id: 'U160635646',
-        //     channel_id: 160635646,
-        //     user_id: 160635646
-        // },
-        // context: {
-        //     mode: 'viewer'
-        // },
-        // type: 'onload'
-    // })
-
     twitch.onContext(ctx => {
         context = ctx
     })
@@ -55,8 +37,6 @@ function start() {
         secureTwitch.type = 'onload'
         connect(secureTwitch)
     })
-
-    // connect(sTwitch)
 
     function connect(msg) {
         console.log(msg)
@@ -104,14 +84,12 @@ function main(msgMain, socket) {
 
     function charSetup(main, offline = true) {
         if (offline) {
-            // document.getElementById('ip-1').style.backgroundImage = ""
             for (let d of document.getElementById('ip-1').classList) document.getElementById('ip-1').classList.remove(d)
             document.getElementById('ip-1').classList.add('border')
             document.getElementById('ip-1').classList.add('ip-1')
             document.getElementById('ip-1').classList.add('char0')
 
         } else {
-            // document.getElementById('ip-1').style.backgroundImage = "url(../web/img/characters/char-"+ main.charid +".png)"
             for (let d of document.getElementById('ip-1').classList) document.getElementById('ip-1').classList.remove(d)
             document.getElementById('ip-1').classList.add('border')
             document.getElementById('ip-1').classList.add('ip-1')
@@ -208,7 +186,6 @@ function main(msgMain, socket) {
                         else status = 'topachiv-nm'
 
                         achiv.id = b
-                        // achiv.className = 'topachiv ' + status 
                         achiv.className = 'topachiv topachiv-empty'
 
                         let topachivHover = document.createElement('div')
@@ -217,7 +194,7 @@ function main(msgMain, socket) {
 
                         let topachivImg = document.createElement('div')
                         topachivImg.className = 'topachivdbd-img'
-                        topachivImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topachivImg.style.backgroundImage = 'url(./img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         topachivHover.appendChild(topachivImg)
 
                         container.appendChild(achiv)
@@ -238,7 +215,7 @@ function main(msgMain, socket) {
     
                         let topdbdImg = document.createElement('div')
                         topdbdImg.className = 'topdbd-img'
-                        topdbdImg.style.backgroundImage = 'url(../img/achievements/'+ stats.onteh[b].steamId + '.png)'
+                        topdbdImg.style.backgroundImage = 'url(./img/achievements/'+ stats.onteh[b].steamId + '.png)'
                         tophover.appendChild(topdbdImg)
     
                         topdbd.appendChild(topachiv)
@@ -248,16 +225,12 @@ function main(msgMain, socket) {
             }
 
             if (container.firstElementChild !== null) {
-                // container.firstElementChild.lastElementChild.style.backgroundImage = 'url(../web/img/topstats-hover-4x4.png)'
                 container.firstElementChild.lastElementChild.classList.toggle('topachiv-hover-img',true)
                 createDesc(desc,container.firstElementChild.id,stats,config,name)
             }
 
             for (let a of container.children) {
                 a.onmousedown = () => {
-                    // for (let c of container.children) c.lastElementChild.style.background = ''
-                    // for (let c of topdbd.children) c.firstElementChild.style.background = ''
-                    // a.lastElementChild.style = 'background-image: url(../web/img/topstats-hover-4x4.png); background-size: contain;'
                     for (let c of container.children) c.lastElementChild.classList.toggle('topachiv-hover-img',false)
                     for (let c of topdbd.children) c.firstElementChild.classList.toggle('hover-img',false)
                     a.lastElementChild.classList.toggle('topachiv-hover-img',true)
@@ -268,9 +241,6 @@ function main(msgMain, socket) {
     
             for (let a of topdbd.children) {
                 a.onmousedown = () => {
-                    // for (let c of container.children) c.lastElementChild.style.background = ''
-                    // for (let c of topdbd.children) c.firstElementChild.style.background = ''
-                    // a.firstElementChild.style = 'background-image: url(../web/img/topstats-hover.png); background-size: contain;'
                     for (let c of container.children) c.lastElementChild.classList.toggle('topachiv-hover-img',false)
                     for (let c of topdbd.children) c.lastElementChild.classList.toggle('hover-img',false)
                     a.firstElementChild.classList.toggle('hover-img',true)
