@@ -1,3 +1,6 @@
+const twitch = window.Twitch.ext
+let context
+
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 let lastUpdateText = '* Last update: '
 
@@ -23,8 +26,6 @@ let msgIn = {
 document.addEventListener("load", start())
 
 function start() {
-    const twitch = window.Twitch.ext
-    let context
 
     // let sTwitch = new Object({
         // token: 'auth.token',
