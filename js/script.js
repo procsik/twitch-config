@@ -279,11 +279,15 @@ function main(msgMain, socket) {
 
     function rankSetup(stats = {}, offline = true) {
         if (offline) {
-            document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K20.png)"
-            document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C20.png)"
+            for (let r of document.getElementById('rank-k').classList) document.getElementById('rank-k').classList.remove(r)
+            for (let r of document.getElementById('rank-c').classList) document.getElementById('rank-c').classList.remove(r)
+            document.getElementById('rank-k').classList.add('rank','rank-k-20')
+            document.getElementById('rank-c').classList.add('rank','rank-c-20')
         } else {
-            document.getElementById('rank-k').style.backgroundImage = "url(../web/img/ranks/K" + getRank(stats['DBD_KillerSkulls']) + ".png)"
-            document.getElementById('rank-c').style.backgroundImage = "url(../web/img/ranks/C" + getRank(stats['DBD_CamperSkulls']) + ".png)"
+            document.getElementById('rank-k').classList.remove('rank-k-20')
+            document.getElementById('rank-c').classList.remove('rank-c-20')
+            document.getElementById('rank-k').classList.add('rank-k-'+getRank(stats['DBD_KillerSkulls']))
+            document.getElementById('rank-c').classList.add('rank-c-'+getRank(stats['DBD_CamperSkulls']))
         }
     }
 
