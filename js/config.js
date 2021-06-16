@@ -464,7 +464,7 @@ function main(msgMain, socket) {
                         elem.classList.add('achivments-row-green')
                     }
                     achivTmp[0][elem.lastElementChild.value] = stats.onteh[a]
-                    c.achiv[0] = Object.keys(sortByPos2(achivTmp[0]))
+                    c.achiv[0] = Object.keys(sortByPos(achivTmp[0]))
                 }
                 createAchiv(c.achiv, stats, configTmp, name)
                 break
@@ -484,7 +484,7 @@ function main(msgMain, socket) {
                 } else if (Object.keys(c.achiv[1]).length < 5) {
                     if (!c.achiv[0].includes(elem.lastElementChild.value) && !achivTmp[0][elem.lastElementChild.value]) {
                         achivTmp[1][elem.lastElementChild.value] = stats.onteh[a]
-                        c.achiv[1] = Object.keys(sortByPos2(achivTmp[1]))
+                        c.achiv[1] = Object.keys(sortByPos(achivTmp[1]))
     
                         elem.lastElementChild.checked = true
                         elem.classList.remove('achivments-row-red')
