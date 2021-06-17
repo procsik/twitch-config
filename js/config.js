@@ -7,7 +7,8 @@ var configTmp = new Object({
         role: '',
         charid: 0
     },
-    achiv: []
+    achiv: [],
+    demotivation: true
 })
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 let lastUpdateText = '* Last update: '
@@ -31,7 +32,8 @@ var msgIn = {
                 role: '',
                 charid: 0
             },
-            achiv: []
+            achiv: [],
+            demotivation: true
         },
         stats: {
             onteh: {},
@@ -62,12 +64,8 @@ function start() {
     })
 
     twitch.onAuthorized((auth) => {
-    
-        // token = auth.token
-        // userId = auth.userId
-        // channelId = auth.channelId
-
         let secureTwitch = new Object()
+
         secureTwitch.token = auth.token
         secureTwitch.context = context
         secureTwitch.type = 'onload'
@@ -149,6 +147,7 @@ function main(msgMain, socket) {
             activMenu('steam','onclick-setup')
             document.getElementById('steam-status').style.display = 'flex'
     
+            document.getElementById('motiv-value').style.display = 'none'
             document.getElementById('role-value').style.display = 'none'
             document.getElementById('achiv-value').style.display = 'none'
         }
@@ -218,6 +217,7 @@ function main(msgMain, socket) {
                 }
             }
 
+            document.getElementById('motiv-value').style.display = 'none'
             document.getElementById('steam-status').style.display = 'none'
             document.getElementById('achiv-value').style.display = 'none'
         }
@@ -299,8 +299,9 @@ function main(msgMain, socket) {
         let spanPlayer = "<span id='sPlayer'>" + name + " </span>"
 
         let classPos = ''
+        
         if (stats.onteh[nameId].status > 0) classPos = 'posUp'
-        else if ((stats.onteh[nameId].status < 0)) classPos = 'posDown'
+        else if (stats.onteh[nameId].status < 0 && config.demotivation) classPos = 'posDown'
         else classPos = 'posNm'
 
         msg.innerHTML = spanPlayer + message
@@ -385,7 +386,7 @@ function main(msgMain, socket) {
     
                         let status = ''
                         if (stats.onteh[b].status > 0) status = 'topup'
-                        else if (stats.onteh[b].status < 0) status = 'topdw'
+                        else if (stats.onteh[b].status < 0 && config.demotivation) status = 'topdw'
                         else status = 'topnm'
                       
     
@@ -501,6 +502,7 @@ function main(msgMain, socket) {
 
     function achivSetup(stats, config, offline = true, name = '') {
         configTmp.achiv = config.achiv
+        configTmp.demotivation = config.demotivation
 
         while (document.getElementById('wrapper-achivmain').firstElementChild) {
             document.getElementById('wrapper-achivmain').removeChild(document.getElementById('wrapper-achivmain').firstElementChild)
@@ -557,7 +559,6 @@ function main(msgMain, socket) {
                 
                 document.getElementById('wrapper-achivmain').appendChild(rowAchiv)
             }
-
             createAchiv(config.achiv, stats, config, name)
 
             chooseAchivMain(config)
@@ -594,8 +595,40 @@ function main(msgMain, socket) {
                 }
             }
 
+            document.getElementById('motiv-value').style.display = 'none'
             document.getElementById('steam-status').style.display = 'none'
             document.getElementById('role-value').style.display = 'none'
+        }
+    }
+
+    function motivSetup(config, stats, offline = true, name) {
+        if (offline) {
+
+        } else {
+            document.getElementById('motiv').onmousedown = () => {
+                activMenu('motiv','onclick-setup')
+                document.getElementById('motiv-value').style.display = 'flex'
+
+                if (config.demotivation) document.getElementById('moon-background').classList.toggle('moon-background-red',true)
+                else document.getElementById('moon-background').classList.toggle('moon-background-yel',true)
+
+                document.getElementById('redmoon').onmousedown = () => {
+                    configTmp.demotivation = true
+                    document.getElementById('moon-background').classList.toggle('moon-background-yel',false)
+                    document.getElementById('moon-background').classList.toggle('moon-background-red',true)
+                    createAchiv(configTmp.achiv, stats, configTmp, name)
+                }
+                document.getElementById('yelmoon').onmousedown = () => {
+                    configTmp.demotivation = false
+                    document.getElementById('moon-background').classList.toggle('moon-background-red',false)
+                    document.getElementById('moon-background').classList.toggle('moon-background-yel',true)
+                    createAchiv(configTmp.achiv, stats, configTmp, name)
+                }
+
+                document.getElementById('steam-status').style.display = 'none'
+                document.getElementById('role-value').style.display = 'none'
+                document.getElementById('achiv-value').style.display = 'none'
+            }
         }
     }
 
@@ -640,8 +673,10 @@ function main(msgMain, socket) {
             //     },
             //     type: 'save'
             // })
+            // outMsg.config = configTmp
             secureTwitch.config = configTmp
             socket.send(JSON.stringify(secureTwitch))
+            // socket.send(JSON.stringify(outMsg))
         } 
     }
 
@@ -661,6 +696,7 @@ function main(msgMain, socket) {
         achivSetup(msg.data.stats, msg.data.config, false, msg.data.info.steam.name)
 
         // motiv
+        motivSetup(msg.data.config, msg.data.stats, false, msg.data.info.steam.name)
 
         // ranks
         rankSetup(msg.data.stats.steam, false)
@@ -677,6 +713,9 @@ function main(msgMain, socket) {
 
     // achiv
     achivSetup(msgMain.data.stats, msgMain.data.config)
+
+    // motiv
+    motivSetup(msgMain.data.config)
 
     // ranks
     rankSetup(msgMain.data.stats.steam)

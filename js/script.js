@@ -121,7 +121,7 @@ function main(msgMain, socket) {
 
         let classPos = ''
         if (stats.onteh[nameId].status > 0) classPos = 'posUp'
-        else if ((stats.onteh[nameId].status < 0)) classPos = 'posDown'
+        else if (stats.onteh[nameId].status < 0 && config.demotivation) classPos = 'posDown'
         else classPos = 'posNm'
 
         msg.innerHTML = spanPlayer + message
@@ -202,7 +202,7 @@ function main(msgMain, socket) {
     
                         let status = ''
                         if (stats.onteh[b].status > 0) status = 'topup'
-                        else if (stats.onteh[b].status < 0) status = 'topdw'
+                        else if (stats.onteh[b].status < 0 && config.demotivation) status = 'topdw'
                         else status = 'topnm'
     
                         topachiv.id = b

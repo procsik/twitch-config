@@ -30,7 +30,7 @@
 }
 
 .border {
-    border: 0px ridge #ff0000;
+    border: 1px ridge #ff0000;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -698,7 +698,47 @@
     flex-grow: 0;
     margin-right: 5px;
 }
+#moon-background {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: center;
+    justify-content: center;
 
+    background-repeat: no-repeat;
+    background-size: 150%;
+
+    height: 150px;
+}
+.moon-background-red {
+    background-position: right;
+    background-image: url(../img/redmoon-background.png);
+}
+.moon-background-yel {
+    background-position: left;
+    background-image: url(../img/yelmoon-background.png);
+}
+#redmoon {
+    flex: auto;
+
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+
+    background-image: url(../img/redmoon.png);
+}
+#yelmoon {
+    flex: auto;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+
+    background-image: url(../img/yelmoon.png);
+}
+.moon:hover {
+    cursor: pointer;
+}
 .mi-1 {
     display: flex;
     display: -webkit-flex;
