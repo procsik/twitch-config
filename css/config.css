@@ -163,6 +163,9 @@
 #ki-motiv {
     background-image: url(../img/motiv.png);
 }
+#ki-save {
+    background-image: url(../img/ki-save.png);
+}
 #steam-value {
     display: flex;
     display: -webkit-flex;
@@ -739,6 +742,9 @@
 .moon:hover {
     cursor: pointer;
 }
+#button {
+
+}
 .mi-1 {
     display: flex;
     display: -webkit-flex;
@@ -793,7 +799,7 @@
 #bp-img {
     /* display: none; */
     background-image: url(../img/bp.png);
-    opacity: 0.7;
+    opacity: 0.8;
 }
 #bp-value {
     /* display: none; */
@@ -803,7 +809,7 @@
 }
 #hs-img {
     background-image: url(../img/hs2.png);
-    opacity: 0.5;
+    opacity: 0.6;
 }
 /* #hs-value::after {
     content: " h";

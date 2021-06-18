@@ -95,7 +95,7 @@ function start() {
             document.getElementById('status-text').style.color = '#d41c1c'
             document.getElementById('status-conn').classList.toggle('status-conn-on',false)
 
-            document.getElementById('button').onclick = ''
+            document.getElementById('save').onclick = ''
 
             socket = null
             // msgIn = null
@@ -702,7 +702,7 @@ function main(msgMain, socket) {
         rankSetup(msg.data.stats.steam, false)
 
         //save
-        document.getElementById('button').onclick = () => saveSettings(socket, false)
+        document.getElementById('save').onclick = () => saveSettings(socket, false)
     })
     
     // steam
