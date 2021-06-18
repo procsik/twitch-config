@@ -49,14 +49,14 @@ function start() {
     // let sTwitch = new Object({
     //     token: {
     //         role: 'broadcaster',
-    //         opaque_user_id: 'U160635646',
-    //         channel_id: 160635646,
-    //         user_id: 160635646
+    //         opaque_user_id: '',
+    //         channel_id: '',
+    //         user_id: ''
     //     },
     //     context: {
-    //         mode: 'config'
+    //         mode: ''
     //     },
-    //     type: 'onload'
+    //     type: ''
     // })
 
     twitch.onContext((ctx) => {
@@ -98,7 +98,6 @@ function start() {
             document.getElementById('save').onclick = ''
 
             socket = null
-            // msgIn = null
             setTimeout(start, 5000)
         })
         main(msgIn, socket)
@@ -208,8 +207,6 @@ function main(msgMain, socket) {
                             char.style.display = ''
                             activeChar(configMain.charid)
                         }
-                        
-                        //char.style.display = settings.role.includes(char.classList[2]) ? '' : 'none'
                     }
                     document.getElementById('wrapper-char').style.order = parseInt(getComputedStyle(c).order) + 1
 
@@ -289,7 +286,6 @@ function main(msgMain, socket) {
             lastUpdateValue.getUTCSeconds() + ' UTC'       
 
         let main = document.createElement('div')
-        // console.log(config.main.role)
         main.id = config.main.role == 'mainkiller' ? 'main-k' : 'main-c'
         main.className = 'main border'
 
@@ -664,14 +660,14 @@ function main(msgMain, socket) {
             // let outMsg = new Object({
             //     token: {
             //         role: 'broadcaster',
-            //         opaque_user_id: 'U160635646',
-            //         channel_id: 160635646,
-            //         user_id: 160635646
+            //         opaque_user_id: '',
+            //         channel_id: '',
+            //         user_id: ''
             //     },
             //     context: {
-            //         mode: 'config'
+            //         mode: ''
             //     },
-            //     type: 'save'
+            //     type: ''
             // })
             // outMsg.config = configTmp
             secureTwitch.config = configTmp
@@ -802,14 +798,10 @@ function main(msgMain, socket) {
 
         }
         else {
-            // configTmp.main.role = m
             newMain.id = configTmp.main.role.includes('killer') 
                 ? 'main-k' : configTmp.main.role == 0 || configTmp.main.role == 'mainauto' 
                     ? 'main-dbd' : 'main-c'
         }
-
-        // newMain.id = offline ? 'main-dbd' : m.includes('killer') ? 'main-k' : 'main-c'
-
 
         desc.insertBefore(newMain, desc.firstElementChild)
     }
